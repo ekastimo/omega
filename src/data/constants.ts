@@ -1,5 +1,5 @@
-export const AUTH_TOKEN_KEY = '__demo__eva__token'
-export const AUTH_USER_KEY = '__demo__eva__user'
+export const AUTH_TOKEN_KEY = '__omega__token'
+export const AUTH_USER_KEY = '__omega__user'
 
 
 export const appRoles = {
@@ -42,8 +42,8 @@ export const localRoutes = {
 }
 
 const debug = process.env.NODE_ENV !== 'production'
-export const url = debug ? 'http://localhost:3004' :
-    'https://angie-server.herokuapp.com'
+export const url = debug ? 'https://localhost:44340' :
+    'https://jasperapitest.azurewebsites.net'
 
 export const remoteRoutes = {
     authServer: url,
