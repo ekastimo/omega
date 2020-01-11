@@ -29,7 +29,7 @@ function Layout(props: IProps) {
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <AppBar position="fixed" className={classes.appBar} color='default'>
+            <AppBar position="fixed" className={classes.appBar} color='primary'>
                 <Toolbar>
                     <IconButton
                         aria-label="open drawer"
@@ -77,9 +77,9 @@ function Layout(props: IProps) {
             </nav>
             <main className={classes.content}>
                 <div className={classes.toolbar}/>
-                <Paper className={classes.body} >
+                <div className={classes.body} >
                     {props.children}
-                </Paper>
+                </div>
             </main>
         </div>
     );

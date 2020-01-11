@@ -1,46 +1,34 @@
 import React, {useState} from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import PhoneIcon from '@material-ui/icons/Phone';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IBox from "../../../../components/ibox/IBox";
-import {IContact, IEmail} from "../../types";
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import EditIconButton, {AddIconButton} from "../../../../components/EditIconButton";
+import {IContact, IPhone} from "../../types";
+import EditIconButton, {AddIconButton, DeleteIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import PhoneEditor from "../editors/PhoneEditor";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
 
 interface IProps {
     data: IContact
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            padding: theme.spacing(2),
-            borderRadius: 0
-        },
-        noPadding: {
-            padding: 0
-        }
-    })
-);
-
 const Phones = (props: IProps) => {
-    const classes = useStyles()
-    const [selected, setSelected] = useState<IEmail | null>(null)
+    const [selected, setSelected] = useState<IPhone | null>(null)
     const [dialog, setDialog] = useState(false)
 
-    const handleClick = (email: IEmail) => () => {
-        setSelected(email)
+    const handleClick = (phone: IPhone) => () => {
+        setSelected(phone)
         setDialog(true)
     }
 
     const handleClose = () => {
         setDialog(false)
         setSelected(null)
+    }
+
+    const handleDelete = (phone: IPhone) => () => {
+        //TODO
     }
 
     const handleNew = () => {
@@ -53,22 +41,38 @@ const Phones = (props: IProps) => {
         <PhoneIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Phones</b></Typography>
     </div>
 
+
     return (
-        <IBox title={title} action={<AddIconButton onClick={handleNew}/>}>
-            <List className={classes.noPadding}>
-                {phones.map(it => (
-                    <ListItem button key={it.id} className={classes.noPadding} onClick={handleClick(it)}>
-                        <ListItemText primary={it.value} secondary={it.category}/>
-                        <ListItemSecondaryAction>
+        <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <Box display="flex" px={1}>
+                    <Box flexGrow={1} pt={1}>
+                        {title}
+                    </Box>
+                    <Box >
+                        <AddIconButton onClick={handleNew}/>
+                    </Box>
+                </Box>
+                <Divider/>
+            </Grid>
+            {phones.map(it => (
+                <Grid item xs={12} key={it.id}>
+                    <Box display="flex" p={1}>
+                        <Box flexGrow={1}>
+                            <Typography variant='body1'>{it.value}</Typography>
+                            <Typography variant='caption'>{it.category}</Typography>
+                        </Box>
+                        <Box>
                             <EditIconButton onClick={handleClick(it)}/>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                ))}
-            </List>
+                            <DeleteIconButton onClick={handleDelete(it)}/>
+                        </Box>
+                    </Box>
+                </Grid>
+            ))}
             <EditDialog title={selected ? "Edit Phone" : "New Phone"} open={dialog} onClose={handleClose}>
                 <PhoneEditor data={selected} isNew={!selected} contactId={id} done={handleClose}/>
             </EditDialog>
-        </IBox>
+        </Grid>
     );
 }
 

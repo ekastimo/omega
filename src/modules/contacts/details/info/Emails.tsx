@@ -1,35 +1,18 @@
 import React, {useState} from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IBox from "../../../../components/ibox/IBox";
 import {IContact, IEmail} from "../../types";
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import EmailEditor from "../editors/EmailEditor";
-import EditIconButton, {AddIconButton} from "../../../../components/EditIconButton";
+import EditIconButton, {AddIconButton, DeleteIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
 
 interface IProps {
     data: IContact
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            padding: theme.spacing(2),
-            borderRadius: 0
-        },
-        noPadding: {
-            padding: 0
-        }
-    })
-);
-
 const Emails = (props: IProps) => {
-    const classes = useStyles()
     const [selected, setSelected] = useState<IEmail | null>(null)
     const [dialog, setDialog] = useState(false)
     const {emails, id = ''} = props.data
@@ -37,6 +20,10 @@ const Emails = (props: IProps) => {
     const handleClick = (email: IEmail) => () => {
         setSelected(email)
         setDialog(true)
+    }
+
+    const handleDelete = (email: IEmail) => () => {
+        //TODO
     }
 
     const handleClose = () => {
@@ -50,24 +37,39 @@ const Emails = (props: IProps) => {
     }
 
     const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <MailIcon fontSize='small' /><Typography variant='body2'>&nbsp;<b>Emails</b></Typography>
+        <MailIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Emails</b></Typography>
     </div>
     return (
-        <IBox title={title} action={<AddIconButton onClick={handleNew}/>}>
-            <List className={classes.noPadding}>
-                {emails.map(it => (
-                    <ListItem button key={it.id} className={classes.noPadding} onClick={handleClick(it)}>
-                        <ListItemText primary={it.value} secondary={it.category}/>
-                        <ListItemSecondaryAction>
+        <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <Box display="flex" px={1} >
+                    <Box flexGrow={1} pt={1}>
+                        {title}
+                    </Box>
+                    <Box >
+                        <AddIconButton onClick={handleNew}/>
+                    </Box>
+                </Box>
+                <Divider/>
+            </Grid>
+            {emails.map(it => (
+                <Grid item xs={12} key={it.id}>
+                    <Box display="flex" p={1}>
+                        <Box flexGrow={1}>
+                            <Typography variant='body1' noWrap style={{maxWidth:150}}>{it.value}</Typography>
+                            <Typography variant='caption'>{it.category}</Typography>
+                        </Box>
+                        <Box>
                             <EditIconButton onClick={handleClick(it)}/>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                ))}
-            </List>
+                            <DeleteIconButton onClick={handleDelete(it)}/>
+                        </Box>
+                    </Box>
+                </Grid>
+            ))}
             <EditDialog title={selected ? "Edit Email" : "New Email"} open={dialog} onClose={handleClose}>
                 <EmailEditor data={selected} isNew={!selected} contactId={id} done={handleClose}/>
             </EditDialog>
-        </IBox>
+        </Grid>
     );
 }
 

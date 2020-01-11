@@ -34,10 +34,11 @@ const Filter = ({onFilter,loading}: IProps) => {
                     </Grid>
                     <Grid item xs={12}>
                         <XSelectInput
-                            name="contactType"
-                            label="Contact Type"
+                            name="Categories"
+                            label="Type"
                             options={toOptions(['Company', 'Person'])}
                             variant='outlined'
+                            multiple
                         />
                     </Grid>
                     <Grid item xs={12}>

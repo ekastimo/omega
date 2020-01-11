@@ -6,7 +6,6 @@ import Contacts from "./contacts/Contacts";
 import ContactDetails from "./contacts/details/Details";
 import Settings from "./settings/Settings";
 import Layout from "../components/layout/Layout";
-import Groups from "./groups/GroupsList";
 import Users from "./admin/users/Users";
 import UserGroups from "./admin/usergroups/UserGroups";
 
@@ -19,7 +18,6 @@ const ContentSwitch = () => {
         <Route path={localRoutes.contacts} component={Contacts}/>
         <Route path={localRoutes.users} component={Users}/>
         <Route path={localRoutes.usersGroups} component={UserGroups}/>
-        <Route path={localRoutes.groups} component={Groups}/>
         <Route path={localRoutes.settings} component={Settings}/>
         <Route component={NoMatch}/>
     </Switch>

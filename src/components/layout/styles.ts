@@ -1,9 +1,9 @@
 import grey from "@material-ui/core/colors/grey";
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import {themeBackground} from "../../theme/custom-colors";
+import {colors, createStyles, makeStyles, Theme} from "@material-ui/core";
 
 export const drawerWidth = 240;
-export const navBackgroundColor = grey[900];
+export const navColor = grey[900];
+export const appBarColor = colors.teal[800];
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme: Theme) =>
             width: "100%"
         },
         drawer: {
-            backgroundColor: navBackgroundColor,
+            backgroundColor: navColor,
             [theme.breakpoints.up('md')]: {
                 width: drawerWidth,
                 flexShrink: 0,
@@ -23,7 +23,7 @@ export const useStyles = makeStyles((theme: Theme) =>
                 width: `calc(100% - ${drawerWidth}px)`,
                 marginLeft: drawerWidth,
             },
-            backgroundColor: themeBackground,
+            backgroundColor: appBarColor
         },
         title: {
             flexGrow: 1,
@@ -39,7 +39,7 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
         drawerPaper: {
             width: drawerWidth,
-            backgroundColor: navBackgroundColor,
+            backgroundColor: navColor,
         },
         content: {
             flexGrow: 1,

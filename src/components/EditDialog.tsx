@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import {themeBackground} from "../theme/custom-colors";
+import {appBarColor} from "./layout/styles";
 
 interface IProps {
     open: boolean
@@ -19,7 +19,7 @@ interface IProps {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         appBar: {
-            backgroundColor: themeBackground,
+            backgroundColor: appBarColor,
             position: 'relative',
         },
         title: {

@@ -1,35 +1,21 @@
 import React, {useState} from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import PinDropIcon from '@material-ui/icons/PinDrop';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IBox from "../../../../components/ibox/IBox";
 import {IAddress, IContact, printAddress} from "../../types";
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import EditIconButton, {AddIconButton} from "../../../../components/EditIconButton";
+import EditIconButton, {AddIconButton, DeleteIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import AddressEditor from "../editors/AddressEditor";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
 
 interface IProps {
     data: IContact
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            padding: theme.spacing(2),
-            borderRadius: 0
-        },
-        noPadding: {
-            padding: 0
-        }
-    })
-);
+
 
 const Addresses = (props: IProps) => {
-    const classes = useStyles()
     const [selected, setSelected] = useState<IAddress | null>(null)
     const [dialog, setDialog] = useState(false)
 
@@ -50,25 +36,45 @@ const Addresses = (props: IProps) => {
     }
     const {addresses,id=''} = props.data
 
+    const handleDelete = (dt: IAddress) => () => {
+        //TODO
+    }
+
     const title = <div style={{display: 'flex', flexDirection: 'row'}}>
         <PinDropIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Addresses</b></Typography>
     </div>
+
     return (
-        <IBox title={title} action={<AddIconButton onClick={handleNew}/>}>
-            <List className={classes.noPadding}>
-                {addresses.map(it => (
-                    <ListItem button key={it.id} className={classes.noPadding} onClick={handleClick(it)}>
-                        <ListItemText primary={printAddress(it)} secondary={it.category}/>
-                        <ListItemSecondaryAction>
+        <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <Box display="flex" px={1}>
+                    <Box flexGrow={1} pt={1}>
+                        {title}
+                    </Box>
+                    <Box >
+                        <AddIconButton onClick={handleNew}/>
+                    </Box>
+                </Box>
+                <Divider/>
+            </Grid>
+            {addresses.map(it => (
+                <Grid item xs={12} key={it.id}>
+                    <Box display="flex" p={1}>
+                        <Box flexGrow={1}>
+                            <Typography variant='body1'>{printAddress(it)}</Typography>
+                            <Typography variant='caption'>{it.category}</Typography>
+                        </Box>
+                        <Box>
                             <EditIconButton onClick={handleClick(it)}/>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                ))}
-            </List>
+                            <DeleteIconButton onClick={handleDelete(it)}/>
+                        </Box>
+                    </Box>
+                </Grid>
+            ))}
             <EditDialog title={selected ? "Edit Address" : "New Address"} open={dialog} onClose={handleClose}>
                 <AddressEditor data={selected} isNew={!selected} contactId={id} done={handleClose}/>
             </EditDialog>
-        </IBox>
+        </Grid>
     );
 }
 

@@ -28,7 +28,7 @@ const schema = yup.object().shape(
         category: reqString.oneOf(idCategories),
         value: reqString,
         issuingCountry: reqString,
-        startDate: reqDate,
+        issueDate: reqDate,
         expiryDate: reqDate
     }
 )
@@ -85,7 +85,7 @@ const IdentificationEditor = ({data, isNew, contactId, done}: IProps) => {
                 </Grid>
                 <Grid item xs={6}>
                     <XDateInput
-                        name="startDate"
+                        name="issueDate"
                         label="Issue Date"
                         inputVariant='outlined'
                     />

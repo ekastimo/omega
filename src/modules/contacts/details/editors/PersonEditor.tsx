@@ -44,9 +44,7 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
             dateOfBirth: values.dateOfBirth,
             gender: values.gender,
             salutation: values.salutation,
-            civilStatus: values.civilStatus,
-            about: values.about,
-            avatar: ""
+            civilStatus: values.civilStatus
         }
         put(`${remoteRoutes.contactsPerson}/${contactId}`, toSave,
             (data) => {
@@ -127,16 +125,6 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
                         label="Civil Status"
                         options={toOptions(civilStatusCategories)}
                         variant='outlined'
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <XTextInput
-                        name="about"
-                        label="About"
-                        variant='outlined'
-                        multiline
-                        rowsMax="4"
-                        rows={4}
                     />
                 </Grid>
             </Grid>

@@ -1,45 +1,58 @@
 import React, {useState} from 'react';
-import {IContact, renderName} from "../../types";
-import IBox from "../../../../components/ibox/IBox";
+import {ContactCategory, IContact} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDate} from "../../../../utils/dateHelpers";
 import PersonIcon from '@material-ui/icons/PermIdentity';
-import EditIconButton from "../../../../components/EditIconButton";
+import EditIconButton, {DeleteIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import PersonEditor from "../editors/PersonEditor";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
 
 interface IProps {
     data: IContact
 }
 
 export const idFields = (data: IContact): IRec[] => {
-    const {person} = data
-    return [
-        {
-            label: 'Name',
-            value: renderName(person)
-        },
-        {
-            label: 'BirthDay',
-            value: printDate(person.dateOfBirth)
-        },
-        {
-            label: 'Gender',
-            value: person.gender
-        },
-        {
-            label: 'Marital Status',
-            value: person.civilStatus
-        }
-    ]
+    if (data.category === ContactCategory.Person) {
+        const {person} = data
+        return [
+            {
+                label: 'BirthDay',
+                value: printDate(person.dateOfBirth)
+            },
+            {
+                label: 'Gender',
+                value: person.gender
+            },
+            {
+                label: 'Marital Status',
+                value: person.civilStatus
+            }
+        ]
+    } else {
+        const {company} = data
+        return [
+            {
+                label: 'Category',
+                value: printDate(company.category)
+            },
+            {
+                label: 'Employees',
+                value: company.numberOfEmployees
+            }
+        ]
+    }
+
 }
 
 const BioData = ({data}: IProps) => {
     const [dialog, setDialog] = useState(false)
     const {id = ''} = data
 
-    const handleClick =  () => {
+    const handleClick = () => {
         setDialog(true)
     }
 
@@ -49,16 +62,30 @@ const BioData = ({data}: IProps) => {
 
     const displayData = idFields(data);
     const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <PersonIcon fontSize='small' /><Typography variant='body2'>&nbsp;<b>Basic data</b></Typography>
+        <PersonIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Basic data</b></Typography>
     </div>
-
     return (
-        <IBox title={title} action={<EditIconButton onClick={handleClick}/>}>
-            <DetailView data={displayData}/>
+        <Grid container spacing={1}>
+            <Grid item xs={12}>
+                <Box display="flex" px={1}>
+                    <Box flexGrow={1} pt={1}>
+                        {title}
+                    </Box>
+                    <Box>
+                        <EditIconButton onClick={handleClick}/>
+                    </Box>
+                </Box>
+                <Divider/>
+            </Grid>
+            <Grid item xs={12}>
+                <Box p={1}>
+                    <DetailView data={displayData}/>
+                </Box>
+            </Grid>
             <EditDialog title='Edit Basic Data' open={dialog} onClose={handleClose}>
-                <PersonEditor data={data.person}  contactId={id} done={handleClose}/>
+                <PersonEditor data={data.person} contactId={id} done={handleClose}/>
             </EditDialog>
-        </IBox>
+        </Grid>
     );
 }
 export default BioData;

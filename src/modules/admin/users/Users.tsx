@@ -126,7 +126,7 @@ const Users = () => {
 
     return (
         <Layout>
-            <Box p={2}>
+            <Box p={1}>
                 <Header title='Users' onAddNew={handleNew} onChange={handleFilter}/>
                 {
                     loading ?

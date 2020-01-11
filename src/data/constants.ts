@@ -31,7 +31,8 @@ export const localRoutes = {
     dashboard: '/dashboard',
     contacts: '/people/contacts',
     contactsDetails: '/people/contacts/:contactId',
-    groups: '/people/groups',
+    cases: '/cases',
+    casesDetails: '/cases/:caseId',
 
     users: '/admin/users',
     usersGroups: '/admin/user-groups',

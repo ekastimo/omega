@@ -8,10 +8,8 @@ export interface IPerson {
     firstName: string
     lastName: string
     middleName: string
-    about: string
     gender: string
     civilStatus: string
-    avatar: string
     dateOfBirth: Date
 }
 
@@ -55,6 +53,11 @@ export enum EmailCategory {
     Work = 'Work',
     Personal = 'Personal',
     Other = 'Other',
+}
+
+export enum ContactCategory {
+    Person = 'Person',
+    Company = 'Company'
 }
 
 export enum RelationshipCategory {
@@ -112,6 +115,8 @@ export interface IAddress {
 
 export interface ICompany {
     name: string
+    category: string
+    numberOfEmployees: string
 }
 
 export interface IMetaData {
@@ -121,14 +126,14 @@ export interface IMetaData {
 
 export interface IContact {
     id?: string
-    category: string
+    category: ContactCategory
     person: IPerson
     emails: IEmail[]
     phones: IPhone[]
     events: IContactEvent[]
     addresses: IAddress[]
     identifications: IIdentification[]
-    company?: ICompany
+    company: ICompany
     tags?: string[]
     metaData: IMetaData
 }
@@ -172,7 +177,7 @@ export const fakeContact = (): IContact => {
     const lastName = faker.name.lastName();
     return {
         id: uuid(),
-        category: 'Person',
+        category: ContactCategory.Person,
         person: {
             firstName: firstName,
             middleName: faker.name.lastName(),
@@ -180,8 +185,6 @@ export const fakeContact = (): IContact => {
             civilStatus: 'Single',
             salutation: 'Mr',
             dateOfBirth: faker.date.past(),
-            about: faker.lorem.sentence(),
-            avatar: faker.image.avatar(),
             gender: 'Male'
         },
         phones: [
@@ -234,24 +237,33 @@ export const fakeContact = (): IContact => {
         metaData: {
             cellGroup: '',
             churchLocation: '',
+        },
+        company:{
+            name:'',
+            category:'Limited',
+            numberOfEmployees:''
         }
     };
 };
 
 
-export const renderName = (person: IPerson, salutation?: boolean): string => {
-    const name: string =
-        salutation ?
-            `${person.salutation || ''} ${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`
-            : `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
+export const renderName = (contact: IContact, salutation?: boolean): string => {
+    if(contact.category=== ContactCategory.Person){
+        const person = contact.person
+        const name: string =
+            salutation ?
+                `${person.salutation || ''} ${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`
+                : `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
 
-    return name.trim().replace(/\s+/g, ' ');
+        return name.trim().replace(/\s+/g, ' ');
+    }else{
+        console.log(contact)
+        return contact.company.name
+    }
+
 };
 
-export const renderName1 = (person: IPerson): string => {
-    const name = `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
-    return name.trim().replace(/\s+/g, ' ');
-};
+
 
 export const printAddress = (data: IAddress): string => {
     const address: string =

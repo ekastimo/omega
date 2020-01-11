@@ -12,10 +12,11 @@ interface IProps {
 }
 
 const Info = ({data}: IProps) => {
+    const spacing= 4
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} xl={3} md={4} sm={6}>
-                <Grid container spacing={2}>
+        <Grid container spacing={spacing}>
+            <Grid item xs={12} lg={3} md={4} sm={6}>
+                <Grid container spacing={spacing}>
                     <Grid item xs={12}>
                         <BioData data={data}/>
                     </Grid>
@@ -24,15 +25,21 @@ const Info = ({data}: IProps) => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={12} xl={9} md={8} sm={6}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} md={6} xl={4}>
-                        <Emails data={data}/>
-                    </Grid>
-                    <Grid item xs={12} md={6} xl={4}>
+
+            <Grid item xs={12} lg={3} md={4} sm={6}>
+                <Grid container spacing={spacing}>
+                    <Grid item xs={12} >
                         <Phones data={data}/>
                     </Grid>
-                    <Grid item xs={12} md={6} xl={4}>
+                    <Grid item xs={12} >
+                        <Emails data={data}/>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid item xs={12} lg={3} md={4} sm={6}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} >
                         <Addresses data={data}/>
                     </Grid>
                 </Grid>

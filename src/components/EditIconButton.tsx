@@ -1,26 +1,39 @@
 import React from 'react';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import IconButton from "@material-ui/core/IconButton";
 import Fab from "@material-ui/core/Fab";
 import useTheme from "@material-ui/core/styles/useTheme";
+import {errorColor} from "../theme/custom-colors";
 
 interface IProps {
     onClick: () => any
 }
 
-const EditIconButton = ({onClick}: IProps) => {
+export const EditIconButton = ({onClick}: IProps) => {
     return (
-        <IconButton aria-label="delete" size="small" title='Edit' style={{marginTop: 5}} onClick={onClick}>
+        <IconButton aria-label="delete" size="small" title='Edit' color='primary' style={{marginTop: 5}}
+                    onClick={onClick}>
             <EditIcon style={{fontSize: '1rem', margin: 4}}/>
+        </IconButton>
+    );
+}
+
+export const DeleteIconButton = ({onClick}: IProps) => {
+    return (
+        <IconButton aria-label="delete" size="small" title='Edit' style={{marginTop: 5, color: errorColor}}
+                    onClick={onClick}>
+            <DeleteIcon style={{fontSize: '1rem', margin: 4}}/>
         </IconButton>
     );
 }
 
 export const AddIconButton = ({onClick}: IProps) => {
     return (
-        <IconButton aria-label="add-new" size="small" title='Add New' style={{marginTop: 5}} onClick={onClick}>
+        <IconButton aria-label="add-new" size="small" title='Add New' color='primary' style={{marginTop: 5}}
+                    onClick={onClick}>
             <AddIcon/>
         </IconButton>
     );

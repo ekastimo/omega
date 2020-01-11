@@ -102,7 +102,7 @@ export default function XTable(props: XTableProps) {
                     <Table
                         className={classes.table}
                         aria-labelledby="tableTitle"
-                        size="medium"
+                        size="small"
                     >
                         <XTableHead
                             headCells={headCells}
@@ -129,7 +129,7 @@ export default function XTable(props: XTableProps) {
                                             tabIndex={-1}
                                             key={row.id}
                                             selected={isItemSelected}
-                                            style={{backgroundColor: isEven(index) ? grey[100] : 'white'}}
+                                            style={{backgroundColor: isEven(index) ? 'white' : grey[50]}}
                                         >
                                             {
                                                 useCheckbox &&
@@ -143,6 +143,7 @@ export default function XTable(props: XTableProps) {
                                             {
                                                 headCells.map(it => (
                                                     <TableCell
+                                                        size="medium"
                                                         key={it.name}
                                                         align={it.numeric ? 'right' : 'left'}
                                                         {...it.cellProps}>

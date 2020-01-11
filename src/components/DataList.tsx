@@ -14,7 +14,6 @@ import TableBody from "@material-ui/core/TableBody";
 import {XHeadCell} from "./table/XTableHead";
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
-import Typography from "@material-ui/core/Typography";
 
 interface IProps {
     data: any[]
