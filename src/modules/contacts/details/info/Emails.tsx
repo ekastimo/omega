@@ -56,7 +56,7 @@ const Emails = (props: IProps) => {
                 <Grid item xs={12} key={it.id}>
                     <Box display="flex" p={1}>
                         <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap style={{maxWidth:150}}>{it.value}</Typography>
+                            <Typography variant='body1' noWrap >{it.value}</Typography>
                             <Typography variant='caption'>{it.category}</Typography>
                         </Box>
                         <Box>

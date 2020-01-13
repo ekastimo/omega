@@ -6,6 +6,7 @@ import Addresses from "./Addresses";
 import React from "react";
 import {IContact} from "../../types";
 import BioData from "./Biodata";
+import Divider from "@material-ui/core/Divider";
 
 interface IProps {
     data: IContact
@@ -43,6 +44,9 @@ const Info = ({data}: IProps) => {
                         <Addresses data={data}/>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid item xs={12} >
+                <Divider/>
             </Grid>
         </Grid>
     );
