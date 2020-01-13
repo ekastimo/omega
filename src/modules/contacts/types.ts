@@ -1,5 +1,4 @@
 import * as faker from 'faker';
-import {getRandomStr} from "../../utils/stringHelpers";
 
 const uuid = require('uuid/v4');
 
@@ -72,10 +71,29 @@ export enum RelationshipCategory {
 }
 
 export interface IPhone {
-    id?: string
+    id: string
     value: string
     category: string
     isPrimary: boolean
+}
+
+export interface IContactTag {
+    id: string
+    value: string
+}
+
+export interface IContactUrl {
+    id: string
+    category: string
+    value: string
+}
+
+export interface IBankAccount {
+    id: string
+    bank: string
+    branch: string
+    name: string
+    number: string
 }
 
 export interface IIdentification {
@@ -119,9 +137,10 @@ export interface ICompany {
     numberOfEmployees: string
 }
 
-export interface IMetaData {
-    churchLocation: string
-    cellGroup: string
+export interface IFinancialData {
+    monthlyNetSalary: number
+    monthlyGrossSalary: number
+    dateOfEmployment: Date
 }
 
 export interface IContact {
@@ -134,8 +153,10 @@ export interface IContact {
     addresses: IAddress[]
     identifications: IIdentification[]
     company: ICompany
-    tags?: string[]
-    metaData: IMetaData
+    tags: IContactTag[]
+    urls: IContactUrl[]
+    bankAccounts: IBankAccount[]
+    financialData: IFinancialData
 }
 
 export interface IContactQuery {
@@ -172,78 +193,79 @@ export const fakeTeam = (): ITeamMember => {
     }
 }
 
-export const fakeContact = (): IContact => {
+export const fakeContact = (): IContact|null => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
-    return {
-        id: uuid(),
-        category: ContactCategory.Person,
-        person: {
-            firstName: firstName,
-            middleName: faker.name.lastName(),
-            lastName: lastName,
-            civilStatus: 'Single',
-            salutation: 'Mr',
-            dateOfBirth: faker.date.past(),
-            gender: 'Male'
-        },
-        phones: [
-            {
-                id: uuid(),
-                category: 'Mobile',
-                isPrimary: false,
-                value: faker.phone.phoneNumber('077#######')
-            },
-            {
-                id: uuid(),
-                category: 'Office',
-                isPrimary: false,
-                value: faker.phone.phoneNumber('031#######')
-            }
-        ],
-
-        emails: [
-            {
-                id: uuid(),
-                category: 'Personal',
-                isPrimary: false,
-                value: faker.internet.email(firstName, lastName)
-            }
-        ],
-        addresses: [
-            {
-                id: uuid(),
-                category: 'Home',
-                isPrimary: false,
-                country: faker.address.country(),
-                district: faker.address.city(),
-                county: faker.address.city(),
-                freeForm: faker.address.streetName()
-            }
-        ],
-        identifications: [
-            {
-                id: uuid(),
-                category: 'Nin',
-                value: getRandomStr(),
-                cardNumber: getRandomStr(5),
-                issueDate: faker.date.past(),
-                expiryDate: faker.date.future(),
-                issuingCountry: 'Uganda',
-                isPrimary: true,
-            }
-        ],
-        events: [],
-        metaData: {
-            cellGroup: '',
-            churchLocation: '',
-        },
-        company:{
-            name:'',
-            category:'Limited',
-            numberOfEmployees:''
-        }
-    };
+    return null
+    // return {
+    //     id: uuid(),
+    //     category: ContactCategory.Person,
+    //     person: {
+    //         firstName: firstName,
+    //         middleName: faker.name.lastName(),
+    //         lastName: lastName,
+    //         civilStatus: 'Single',
+    //         salutation: 'Mr',
+    //         dateOfBirth: faker.date.past(),
+    //         gender: 'Male'
+    //     },
+    //     phones: [
+    //         {
+    //             id: uuid(),
+    //             category: 'Mobile',
+    //             isPrimary: false,
+    //             value: faker.phone.phoneNumber('077#######')
+    //         },
+    //         {
+    //             id: uuid(),
+    //             category: 'Office',
+    //             isPrimary: false,
+    //             value: faker.phone.phoneNumber('031#######')
+    //         }
+    //     ],
+    //
+    //     emails: [
+    //         {
+    //             id: uuid(),
+    //             category: 'Personal',
+    //             isPrimary: false,
+    //             value: faker.internet.email(firstName, lastName)
+    //         }
+    //     ],
+    //     addresses: [
+    //         {
+    //             id: uuid(),
+    //             category: 'Home',
+    //             isPrimary: false,
+    //             country: faker.address.country(),
+    //             district: faker.address.city(),
+    //             county: faker.address.city(),
+    //             freeForm: faker.address.streetName()
+    //         }
+    //     ],
+    //     identifications: [
+    //         {
+    //             id: uuid(),
+    //             category: 'Nin',
+    //             value: getRandomStr(),
+    //             cardNumber: getRandomStr(5),
+    //             issueDate: faker.date.past(),
+    //             expiryDate: faker.date.future(),
+    //             issuingCountry: 'Uganda',
+    //             isPrimary: true,
+    //         }
+    //     ],
+    //     events: [],
+    //     metaData: {
+    //         cellGroup: '',
+    //         churchLocation: '',
+    //     },
+    //     company:{
+    //         name:'',
+    //         category:'Limited',
+    //         numberOfEmployees:''
+    //     }
+    // };
 };
 
 

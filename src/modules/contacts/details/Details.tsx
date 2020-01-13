@@ -109,14 +109,14 @@ const Details = (props: IProps) => {
                             <Divider className={classes.divider}/>
                         </Grid>
                         <Grid item xs={12} style={{paddingTop: 0}}>
-                            <AppBar position="static" color="inherit" elevation={0}>
-                                <Tabs value={value} onChange={handleChange} aria-label="wrapped label tabs example">
+                            <AppBar position="static" color="inherit" elevation={0} style={{padding:0}}>
+                                <Tabs value={value} onChange={handleChange} >
                                     <Tab
                                         value="one"
                                         label="Summary"
                                         {...a11yProps('one')}
                                     />
-                                    <Tab value="two" label="Teams" {...a11yProps('two')} />
+                                    <Tab value="two" label="Loans" {...a11yProps('two')} />
                                 </Tabs>
                             </AppBar>
                             <Divider/>

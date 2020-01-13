@@ -25,6 +25,22 @@ export const crmConstants = {
     crmEditIdentification: "crmEditIdentification",
     crmDeleteIdentification: "crmDeleteIdentification",
 
+    crmAddTag: "crmAddTag",
+    crmEditTag: "crmEditTag",
+    crmDeleteTag: "crmDeleteTag",
+
+    crmAddUrl: "crmAddUrl",
+    crmEditUrl: "crmEditUrl",
+    crmDeleteUrl: "crmDeleteUrl",
+
+    crmAddBankAccount: "crmAddBankAccount",
+    crmEditBankAccount: "crmEditBankAccount",
+    crmDeleteBankAccount: "crmDeleteBankAccount",
+
+    crmAddOccasion: "crmAddOccasion",
+    crmEditOccasion: "crmEditOccasion",
+    crmDeleteOccasion: "crmDeleteOccasion",
+
     coreLogout: "CORE_LOGOUT"
 }
 

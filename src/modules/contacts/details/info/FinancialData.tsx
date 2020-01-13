@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {ContactCategory, IContact} from "../../types";
+import {IContact} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDate} from "../../../../utils/dateHelpers";
-import PersonIcon from '@material-ui/icons/PermIdentity';
+import MoneyIcon from '@material-ui/icons/Money';
 import EditIconButton from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import PersonEditor from "../editors/PersonEditor";
@@ -16,39 +16,20 @@ interface IProps {
 }
 
 export const idFields = (data: IContact): IRec[] => {
-    if (data.category === ContactCategory.Person) {
-        const {person} = data
-        return [
-            {
-                label: 'BirthDay',
-                value: printDate(person.dateOfBirth)
-            },
-            {
-                label: 'Gender',
-                value: person.gender
-            },
-            {
-                label: 'Marital Status',
-                value: person.civilStatus
-            }
-        ]
-    } else {
-        const {company} = data
-        return [
-            {
-                label: 'Category',
-                value: printDate(company.category)
-            },
-            {
-                label: 'Employees',
-                value: company.numberOfEmployees
-            }
-        ]
-    }
-
+    const {financialData} = data
+    return [
+        {
+            label: 'NetSalary',
+            value: '3,720,000 /='
+        },
+        {
+            label: 'Employment Date',
+            value: printDate(new Date())
+        }
+    ]
 }
 
-const BioData = ({data}: IProps) => {
+const FinancialData = ({data}: IProps) => {
     const [dialog, setDialog] = useState(false)
     const {id = ''} = data
 
@@ -62,7 +43,7 @@ const BioData = ({data}: IProps) => {
 
     const displayData = idFields(data);
     const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <PersonIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Basic data</b></Typography>
+        <MoneyIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Financial Data</b></Typography>
     </div>
     return (
         <Grid container spacing={1}>
@@ -88,4 +69,4 @@ const BioData = ({data}: IProps) => {
         </Grid>
     );
 }
-export default BioData;
+export default FinancialData;

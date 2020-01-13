@@ -15,25 +15,25 @@ import UsersByDevice from "./UsersByDevice";
 
 const data = [
     {
-        title: "Giving",
+        title: "Total Finacing",
         value: printMoney(20088766),
         percentage: -6,
         icon: Money
     },
     {
-        title: "Attendance",
+        title: "Loan Requests",
         value: printInteger(2567),
         percentage: 4,
         icon: Info
     },
     {
-        title: "MCs",
+        title: "Financed Loans",
         value: 256,
         percentage: 1,
         icon: People
     },
     {
-        title: "Salvation",
+        title: "Pending requests",
         value: 45,
         percentage: 2,
         icon: People

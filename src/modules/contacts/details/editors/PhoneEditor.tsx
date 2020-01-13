@@ -33,9 +33,10 @@ const PhoneEditor = ({data, isNew, contactId, done}: IProps) => {
     const dispatch = useDispatch();
 
     function handleSubmit(values: any, actions: FormikActions<any>) {
+        const toSave = {...values,contactId}
         const submission: ISubmission = {
-            url: `${remoteRoutes.contactsPhone}/${contactId}`,
-            values, actions, isNew,
+            url:remoteRoutes.contactsPhone,
+            values:toSave, actions, isNew,
             onAjaxComplete: (data: any) => {
                 dispatch({
                     type: isNew ? crmConstants.crmAddPhone : crmConstants.crmEditPhone,

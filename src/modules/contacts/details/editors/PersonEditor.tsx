@@ -46,13 +46,13 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
             salutation: values.salutation,
             civilStatus: values.civilStatus
         }
-        put(`${remoteRoutes.contactsPerson}/${contactId}`, toSave,
+        put(remoteRoutes.contactsPerson, {...toSave,contactId},
             (data) => {
                 Toast.info('Operation successful')
                 actions.resetForm()
                 dispatch({
                     type: crmConstants.crmEditPerson,
-                    payload: {...data},
+                    payload: {...data,contactId},
                 })
                 if (done)
                     done()

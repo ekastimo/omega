@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
@@ -7,9 +6,7 @@ import {fakeTeam, ITeamMember} from "../types";
 import {trimGuid} from "../../../utils/stringHelpers";
 import {Box} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import theme from "../../../theme";
 import Button from "@material-ui/core/Button";
-import EditDialog from "../../../components/EditDialog";
 
 const headCells: XHeadCell[] = [
     {name: 'id', label: 'ID', render: (dt) => trimGuid(dt)},

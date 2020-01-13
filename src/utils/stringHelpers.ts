@@ -6,7 +6,7 @@ export const getInitials = (fullName = '') => {
     }
 }
 
-export function getRandomStr(max=16) {
+export function getRandomStr(max = 16) {
     const letters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     let str = '';
     for (let i = 0; i < max; i++) {
@@ -20,6 +20,12 @@ export const trimGuid = (data: string) => {
     return data.substr(0, 8)
 }
 
+export const trimString = (data: string, count = 10) => {
+    if (data.length > count)
+        return data.substr(0, count) + "..."
+    return data
+}
+
 export function enumToArray(typeData: any) {
     return Object.keys(typeData)
 }
@@ -27,7 +33,7 @@ export function enumToArray(typeData: any) {
 // Split pascal case
 export function camelPad(str: string) {
     return str
-    // Look for long acronyms and filter out the last letter
+        // Look for long acronyms and filter out the last letter
         .replace(/([A-Z]+)([A-Z][a-z])/g, ' $1 $2')
         // Look for lower-case letters followed by upper-case letters
         .replace(/([a-z\d])([A-Z])/g, '$1 $2')
