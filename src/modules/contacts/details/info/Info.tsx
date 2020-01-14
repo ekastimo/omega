@@ -20,7 +20,7 @@ interface IProps {
 }
 
 const Info = ({data}: IProps) => {
-    const spacing= 4
+    const spacing= 5
     return (
         <Grid container spacing={spacing}>
             <Grid item xs={12} lg={3} md={4} sm={6}>
@@ -56,7 +56,7 @@ const Info = ({data}: IProps) => {
                 </Grid>
             </Grid>
             <Grid item xs={12} lg={3} md={4} sm={6}>
-                <Grid container spacing={3}>
+                <Grid container spacing={spacing}>
                     <Grid item xs={12} >
                         <Tags data={data}/>
                     </Grid>
@@ -67,7 +67,7 @@ const Info = ({data}: IProps) => {
                     <Divider/>
                 </Box>
 
-                <Grid container spacing={3}>
+                <Grid container spacing={spacing}>
                     <Grid item xs={12} sm={6} >
                         <FinancialData data={data}/>
                     </Grid>
@@ -80,7 +80,7 @@ const Info = ({data}: IProps) => {
                 <Box pb={2}>
                     <Divider/>
                 </Box>
-                <Grid container spacing={3}>
+                <Grid container spacing={spacing}>
                     <Grid item xs={12} sm={6} >
                         <MiniGraph data={data}/>
                     </Grid>

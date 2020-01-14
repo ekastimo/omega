@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
+import {trimString} from "../../../../utils/stringHelpers";
 
 interface IProps {
     data: IContact
@@ -56,7 +57,7 @@ const Emails = (props: IProps) => {
                 <Grid item xs={12} key={it.id}>
                     <Box display="flex" p={1}>
                         <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap >{it.value}</Typography>
+                            <Typography variant='body1' noWrap >{trimString(it.value,23)}</Typography>
                             <Typography variant='caption'>{it.category}</Typography>
                         </Box>
                         <Box>
