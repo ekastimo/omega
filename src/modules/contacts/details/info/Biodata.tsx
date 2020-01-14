@@ -3,13 +3,14 @@ import {ContactCategory, IContact} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDate} from "../../../../utils/dateHelpers";
 import PersonIcon from '@material-ui/icons/PermIdentity';
-import EditIconButton from "../../../../components/EditIconButton";
+import EditIconButton, {HiddenIcon} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import PersonEditor from "../editors/PersonEditor";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
+import SectionTitle from "./SectionTitle";
 
 interface IProps {
     data: IContact
@@ -59,27 +60,21 @@ const BioData = ({data}: IProps) => {
     const handleClose = () => {
         setDialog(false)
     }
-
     const displayData = idFields(data);
-    const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <PersonIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Basic data</b></Typography>
-    </div>
+
     return (
         <Grid container spacing={1}>
             <Grid item xs={12}>
-                <Box display="flex" px={1}>
-                    <Box flexGrow={1} pt={1}>
-                        {title}
-                    </Box>
-                    <Box>
-                        <EditIconButton onClick={handleClick}/>
-                    </Box>
-                </Box>
+                <SectionTitle
+                    title='Basic data'
+                    editButton={<EditIconButton onClick={handleClick}/>}
+                    icon={<PersonIcon fontSize='small'/>}
+                />
                 <Divider/>
             </Grid>
             <Grid item xs={12}>
                 <Box p={1}>
-                    <DetailView data={displayData}/>
+                    <DetailView data={displayData} useGrid={true}/>
                 </Box>
             </Grid>
             <EditDialog title='Edit Basic Data' open={dialog} onClose={handleClose}>

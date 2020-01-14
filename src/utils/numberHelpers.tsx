@@ -3,8 +3,7 @@ import React from "react"
 export const printMoney = (money: number) => {
     try {
         return money ? <span>
-                UGX&nbsp;
-            {new Intl.NumberFormat('en-US', {maximumFractionDigits: 2}).format(money)}
+            {new Intl.NumberFormat('en-US', {maximumFractionDigits: 2}).format(money)}/=
             </span> : ""
     } catch (e) {
         return ''

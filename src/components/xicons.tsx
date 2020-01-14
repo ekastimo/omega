@@ -8,7 +8,7 @@ import SvgIcon, {SvgIconProps} from "@material-ui/core/SvgIcon";
 
 export function SuccessIcon({completed, active,error, ...props}: any) {
     return (
-        <CheckCircleIcon {...props} style={{color: successColor}}/>
+        <CheckCircleIcon {...props} style={{color: successColor}} />
     );
 }
 

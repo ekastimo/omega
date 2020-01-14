@@ -8,6 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
+import PersonIcon from "@material-ui/icons/PermIdentity";
+import SectionTitle from "./SectionTitle";
+import {printDate} from "../../../../utils/dateHelpers";
+import SectionItem from "./SectionItem";
 
 interface IProps {
     data: IContact
@@ -40,35 +44,29 @@ const Addresses = (props: IProps) => {
         //TODO
     }
 
-    const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <PinDropIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Addresses</b></Typography>
-    </div>
-
     return (
         <Grid container spacing={1}>
             <Grid item xs={12}>
-                <Box display="flex" px={1}>
-                    <Box flexGrow={1} pt={1}>
-                        {title}
-                    </Box>
-                    <Box >
-                        <AddIconButton onClick={handleNew}/>
-                    </Box>
-                </Box>
+                <SectionTitle
+                    title='Addresses'
+                    editButton={<AddIconButton onClick={handleNew}/>}
+                    icon={ <PinDropIcon fontSize='small'/>}
+                />
                 <Divider/>
             </Grid>
             {addresses.map(it => (
                 <Grid item xs={12} key={it.id}>
-                    <Box display="flex" p={1}>
-                        <Box flexGrow={1}>
-                            <Typography variant='body1'>{printAddress(it)}</Typography>
-                            <Typography variant='caption'>{it.category}</Typography>
-                        </Box>
+                    <SectionItem buttons={
                         <Box>
                             <EditIconButton onClick={handleClick(it)}/>
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
-                    </Box>
+                    }>
+                        <Box flexGrow={1}>
+                            <Typography variant='body1'>{printAddress(it)}</Typography>
+                            <Typography variant='caption'>{it.category}</Typography>
+                        </Box>
+                    </SectionItem>
                 </Grid>
             ))}
             <EditDialog title={selected ? "Edit Address" : "New Address"} open={dialog} onClose={handleClose}>

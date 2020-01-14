@@ -3,6 +3,14 @@ import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import {chunkArray} from "../utils/arrayHelpers";
 import DataLabel from "./DataLabel";
 import DataValue from "./DataValue";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import EditIconButton, {AddIconButton, DeleteIconButton} from "./EditIconButton";
+import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
+import {trimString} from "../utils/stringHelpers";
+import EditDialog from "./EditDialog";
+import EmailEditor from "../modules/contacts/details/editors/EmailEditor";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,15 +31,32 @@ export interface IRec {
 
 interface IProps {
     data: IRec[]
-    columns?: number
+    columns?: number,
+    useGrid?: boolean
 }
 
-const TableView = ({data}: IProps) => {
+const TableView = ({data, useGrid = false}: IProps) => {
     const classes = useStyles();
+    console.log("Use grid",{useGrid})
+    if (useGrid)
+        return (
+            <Grid container spacing={0}>
+                {data.map(it => (
+                    <Grid item xs={12} key={it.label}>
+                        <Box display="flex" pb={1}>
+                            <Box flexGrow={1}>
+                                <Typography variant='body1' noWrap>{it.value}</Typography>
+                                <Typography variant='caption'>{it.label}</Typography>
+                            </Box>
+                        </Box>
+                    </Grid>
+                ))}
+            </Grid>
+        )
     return (
         <table className={classes.root}>
             <tbody>
-            {data.map(row => row.label!==''?(
+            {data.map(row => row.label !== '' ? (
                 <tr key={row.label}>
                     <td className={classes.col}>
                         <DataLabel>
@@ -44,13 +69,16 @@ const TableView = ({data}: IProps) => {
                         </DataValue>
                     </td>
                 </tr>
-            ):<tr><td colSpan={2}/>&nbsp;</tr>)}
+            ) : <tr>
+                <td colSpan={2}/>
+                &nbsp;</tr>)}
             </tbody>
         </table>
     );
+
 }
 
-const DetailView = ({data, columns}: IProps) => {
+const DetailView = ({data, columns,useGrid}: IProps) => {
     const classes = useStyles();
     if (columns) {
         const parts = chunkArray(data, columns)
@@ -60,8 +88,8 @@ const DetailView = ({data, columns}: IProps) => {
                 <tr>
                     {
                         parts.map((part, index) => (
-                            <td key={index} style={{verticalAlign:'top'}}>
-                                <TableView data={part}/>
+                            <td key={index} style={{verticalAlign: 'top'}}>
+                                <TableView data={part} useGrid={useGrid}/>
                             </td>
                         ))
                     }
@@ -70,7 +98,7 @@ const DetailView = ({data, columns}: IProps) => {
             </table>
         );
     } else {
-        return <TableView data={data}/>
+        return <TableView data={data} useGrid={useGrid}/>
     }
 }
 

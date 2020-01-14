@@ -9,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import {trimString} from "../../../../utils/stringHelpers";
+import SectionTitle from "./SectionTitle";
+import SectionItem from "./SectionItem";
 
 interface IProps {
     data: IContact
@@ -37,34 +39,30 @@ const Emails = (props: IProps) => {
         setDialog(true)
     }
 
-    const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <MailIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Emails</b></Typography>
-    </div>
+
     return (
         <Grid container spacing={1}>
             <Grid item xs={12}>
-                <Box display="flex" px={1} >
-                    <Box flexGrow={1} pt={1}>
-                        {title}
-                    </Box>
-                    <Box >
-                        <AddIconButton onClick={handleNew}/>
-                    </Box>
-                </Box>
+                <SectionTitle
+                    title='Emails'
+                    editButton={<AddIconButton onClick={handleNew}/>}
+                    icon={ <MailIcon fontSize='small'/>}
+                />
                 <Divider/>
             </Grid>
             {emails.map(it => (
                 <Grid item xs={12} key={it.id}>
-                    <Box display="flex" p={1}>
-                        <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap >{trimString(it.value,23)}</Typography>
-                            <Typography variant='caption'>{it.category}</Typography>
-                        </Box>
+                    <SectionItem buttons={
                         <Box>
                             <EditIconButton onClick={handleClick(it)}/>
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
-                    </Box>
+                    }>
+                        <Box flexGrow={1}>
+                            <Typography variant='body1' noWrap >{trimString(it.value,23)}</Typography>
+                            <Typography variant='caption'>{it.category}</Typography>
+                        </Box>
+                    </SectionItem>
                 </Grid>
             ))}
             <EditDialog title={selected ? "Edit Email" : "New Email"} open={dialog} onClose={handleClose}>

@@ -7,9 +7,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Fab from "@material-ui/core/Fab";
 import useTheme from "@material-ui/core/styles/useTheme";
 import {errorColor} from "../theme/custom-colors";
+import {SvgIcon} from "@material-ui/core";
 
 interface IProps {
     onClick: () => any
+}
+
+export const HiddenIcon = ()=>{
+    return <SvgIcon style={{fontSize: '1rem', margin: 4}}/>
 }
 
 export const EditIconButton = ({onClick}: IProps) => {

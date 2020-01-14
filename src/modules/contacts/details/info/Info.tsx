@@ -28,9 +28,6 @@ const Info = ({data}: IProps) => {
                     <Grid item xs={12}>
                         <BioData data={data}/>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Identifications data={data}/>
-                    </Grid>
                 </Grid>
             </Grid>
 
@@ -57,6 +54,9 @@ const Info = ({data}: IProps) => {
             </Grid>
             <Grid item xs={12} lg={3} md={4} sm={6}>
                 <Grid container spacing={spacing}>
+                    <Grid item xs={12}>
+                        <Identifications data={data}/>
+                    </Grid>
                     <Grid item xs={12} >
                         <Tags data={data}/>
                     </Grid>

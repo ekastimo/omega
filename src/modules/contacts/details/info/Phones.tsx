@@ -8,6 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
+import SectionTitle from "./SectionTitle";
+import ListIcon from "@material-ui/icons/List";
+import {trimString} from "../../../../utils/stringHelpers";
+import SectionItem from "./SectionItem";
 
 interface IProps {
     data: IContact
@@ -37,36 +41,30 @@ const Phones = (props: IProps) => {
     }
 
     const {phones, id = ''} = props.data
-    const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <PhoneIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Phones</b></Typography>
-    </div>
-
 
     return (
         <Grid container spacing={1}>
             <Grid item xs={12}>
-                <Box display="flex" px={1}>
-                    <Box flexGrow={1} pt={1}>
-                        {title}
-                    </Box>
-                    <Box >
-                        <AddIconButton onClick={handleNew}/>
-                    </Box>
-                </Box>
+                <SectionTitle
+                    title='Phones'
+                    editButton={<AddIconButton onClick={handleNew}/>}
+                    icon={ <PhoneIcon fontSize='small' />}
+                />
                 <Divider/>
             </Grid>
             {phones.map(it => (
                 <Grid item xs={12} key={it.id}>
-                    <Box display="flex" p={1}>
-                        <Box flexGrow={1}>
-                            <Typography variant='body1'>{it.value}</Typography>
-                            <Typography variant='caption'>{it.category}</Typography>
-                        </Box>
+                    <SectionItem buttons={
                         <Box>
                             <EditIconButton onClick={handleClick(it)}/>
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
-                    </Box>
+                    }>
+                        <Box flexGrow={1}>
+                            <Typography variant='body1'>{it.value}</Typography>
+                            <Typography variant='caption'>{it.category}</Typography>
+                        </Box>
+                    </SectionItem>
                 </Grid>
             ))}
             <EditDialog title={selected ? "Edit Phone" : "New Phone"} open={dialog} onClose={handleClose}>

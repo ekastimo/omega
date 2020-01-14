@@ -4,11 +4,10 @@ import {IContact, IContactTag} from "../../types";
 import Chip from '@material-ui/core/Chip';
 import {AddIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import TagEditor from "../editors/TagEditor";
+import SectionTitle from "./SectionTitle";
 
 interface IProps {
     data: IContact
@@ -37,25 +36,21 @@ const Tags = (props: IProps) => {
         setDialog(true)
     }
 
-    const title = <div style={{display: 'flex', flexDirection: 'row'}}>
-        <InfoIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Contact tags</b></Typography>
-    </div>
+
     return (
         <Grid container spacing={1}>
             <Grid item xs={12}>
-                <Box display="flex" px={1} >
-                    <Box flexGrow={1} pt={1}>
-                        {title}
-                    </Box>
-                    <Box >
-                        <AddIconButton onClick={handleNew}/>
-                    </Box>
-                </Box>
+                <SectionTitle
+                    title='Tags'
+                    editButton={<AddIconButton onClick={handleNew}/>}
+                    icon={ <InfoIcon fontSize='small'/>}
+                />
                 <Divider/>
             </Grid>
             <Grid item xs={12}>
                 {tags.map(it => (
                     <Chip
+                        key={it.id}
                         style={{margin:5}}
                         size='small'
                         label={it.value}
