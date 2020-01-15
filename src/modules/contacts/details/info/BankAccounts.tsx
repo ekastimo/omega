@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import MailIcon from '@material-ui/icons/Mail';
-import {IContact, IBankAccount, printAddress} from "../../types";
+import {IBankAccount, IContact} from "../../types";
 import BankAccountEditor from "../editors/BankAccountEditor";
 import EditIconButton, {AddIconButton, DeleteIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
@@ -9,7 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import SectionTitle from "./SectionTitle";
-import PinDropIcon from "@material-ui/icons/PinDrop";
 import SectionItem from "./SectionItem";
 
 interface IProps {
