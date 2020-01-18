@@ -15,9 +15,10 @@ const SectionItem = ({children, buttons}: IProps) => {
         setCanEdit(false)
     }
     return (
-        <Box display="flex" p={1}
+        <Box display="flex"
              onMouseEnter={handleEntered}
              onMouseLeave={handleLeave}
+             pb={1}
         >
             {children}
             {buttons &&

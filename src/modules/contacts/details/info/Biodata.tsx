@@ -63,18 +63,18 @@ const BioData = ({data}: IProps) => {
     const displayData = idFields(data);
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='Basic data'
                     editButton={<EditIconButton onClick={handleClick}/>}
                     icon={<PersonIcon fontSize='small'/>}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             <Grid item xs={12}>
-                <Box p={1}>
-                    <DetailView data={displayData} useGrid={true}/>
+                <Box >
+                    <DetailView data={displayData} useGrid={false}/>
                 </Box>
             </Grid>
             <EditDialog title='Edit Basic Data' open={dialog} onClose={handleClose}>

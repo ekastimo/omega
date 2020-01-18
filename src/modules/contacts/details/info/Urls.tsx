@@ -11,6 +11,7 @@ import UrlEditor from "../editors/UrlEditor";
 import {trimString} from "../../../../utils/stringHelpers";
 import SectionTitle from "./SectionTitle";
 import SectionItem from "./SectionItem";
+import {linkColor} from "../../../../theme/custom-colors";
 
 interface IProps {
     data: IContact
@@ -41,14 +42,14 @@ const Urls = (props: IProps) => {
     }
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='Urls'
                     editButton={<AddIconButton onClick={handleNew}/>}
                     icon={<PublicIcon fontSize='small'/>}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             {urls.map(it => (
                 <Grid item xs={12} key={it.id}>
@@ -59,10 +60,10 @@ const Urls = (props: IProps) => {
                         </Box>
                     }>
                         <Box flexGrow={1}>
-                            <a href={it.value} target='_blank' rel="noopener noreferrer">
-                                <Typography variant='body1' noWrap>{trimString(it.value, 30)}</Typography>
+                            <a href={it.value} target='_blank' rel="noopener noreferrer" style={{color:linkColor}}>
+                                <Typography variant='body1' noWrap display='inline'>{trimString(it.value,23)}</Typography>
                             </a>
-                            <Typography variant='caption'>{it.category}</Typography>
+                            <Typography variant='caption' display='inline'>&nbsp;({it.category})</Typography>
                         </Box>
                     </SectionItem>
                 </Grid>

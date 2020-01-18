@@ -45,13 +45,15 @@ const Tags = (props: IProps) => {
                     editButton={<AddIconButton onClick={handleNew}/>}
                     icon={ <InfoIcon fontSize='small'/>}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             <Grid item xs={12}>
                 {tags.map(it => (
                     <Chip
+                        color='primary'
+                        variant='outlined'
                         key={it.id}
-                        style={{margin:5}}
+                        style={{margin:5,marginLeft:0}}
                         size='small'
                         label={it.value}
                         onDelete={handleDelete(it)}

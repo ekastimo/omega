@@ -45,7 +45,7 @@ const TableView = ({data, useGrid = false}: IProps) => {
                     <Grid item xs={12} key={it.label}>
                         <Box display="flex" pb={1}>
                             <Box flexGrow={1}>
-                                <Typography variant='body1' noWrap>{it.value}</Typography>
+                                <Typography variant='body1' noWrap >{it.value}</Typography>
                                 <Typography variant='caption'>{it.label}</Typography>
                             </Box>
                         </Box>
@@ -58,12 +58,12 @@ const TableView = ({data, useGrid = false}: IProps) => {
             <tbody>
             {data.map(row => row.label !== '' ? (
                 <tr key={row.label}>
-                    <td className={classes.col}>
+                    <td className={classes.col} style={{width:80,padding:0}}>
                         <DataLabel>
                             {row.label}
                         </DataLabel>
                     </td>
-                    <td className={classes.col}>
+                    <td className={classes.col} style={{padding:0}}>
                         <DataValue>
                             {row.value}
                         </DataValue>
@@ -85,7 +85,7 @@ const DetailView = ({data, columns,useGrid}: IProps) => {
         return (
             <table className={classes.root}>
                 <tbody>
-                <tr>
+                <tr >
                     {
                         parts.map((part, index) => (
                             <td key={index} style={{verticalAlign: 'top'}}>

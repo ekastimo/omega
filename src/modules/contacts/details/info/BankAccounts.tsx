@@ -7,13 +7,13 @@ import EditDialog from "../../../../components/EditDialog";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
 import SectionTitle from "./SectionTitle";
 import SectionItem from "./SectionItem";
 
 interface IProps {
     data: IContact
 }
+
 const BankAccounts = (props: IProps) => {
     const [selected, setSelected] = useState<IBankAccount | null>(null)
     const [dialog, setDialog] = useState(false)
@@ -39,14 +39,14 @@ const BankAccounts = (props: IProps) => {
     }
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='BankAccounts'
                     editButton={<AddIconButton onClick={handleNew}/>}
-                    icon={ <MailIcon fontSize='small'/>}
+                    icon={<MailIcon fontSize='small'/>}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             {bankAccounts.map(it => (
                 <Grid item xs={12} key={it.id}>
@@ -57,8 +57,8 @@ const BankAccounts = (props: IProps) => {
                         </Box>
                     }>
                         <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap >{it.name}</Typography>
-                            <Typography variant='body2' noWrap >{it.number}</Typography>
+                            <Typography variant='body1' noWrap>{it.name}</Typography>
+                            <Typography variant='body2' noWrap>{it.number}</Typography>
                             <Typography variant='caption'>{it.bank}</Typography>
                         </Box>
                     </SectionItem>

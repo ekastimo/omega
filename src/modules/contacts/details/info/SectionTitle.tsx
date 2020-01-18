@@ -17,14 +17,14 @@ const SectionTitle = ({title, editButton, icon}: IProps) => {
         setCanEdit(false)
     }
     return (
-        <Box display="flex" px={1}
+        <Box display="flex"
              onMouseEnter={handleEntered}
              onMouseLeave={handleLeave}
         >
-            <Box flexGrow={1} pt={1}>
+            <Box flexGrow={1} >
                 <div style={{display: 'flex', flexDirection: 'row', marginTop: 5, marginBottom: 5}}>
-                    {icon}
-                    <Typography variant='body2'>&nbsp;<b>{title}</b></Typography>
+                    {/*{icon}*/}
+                    <Typography variant='body2'><b>{title.toUpperCase()}</b></Typography>
                 </div>
             </Box>
             {editButton &&

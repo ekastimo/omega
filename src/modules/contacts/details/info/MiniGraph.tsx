@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     chartContainer: {
         position: 'relative',
-        height: '150px'
+        height: '150px',
+        width:200
     }
 }));
 
@@ -47,21 +48,22 @@ const MiniGraph = (props: IProps) => {
         layout: {padding: 0},
     };
     const title = <div style={{display: 'flex', flexDirection: 'row',paddingBottom:theme.spacing(1)}}>
-        <AssessmentIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Loan Summary</b></Typography>
+        <Typography variant='body2'>&nbsp;<b>LOAN SUMMARY</b></Typography>
     </div>
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <Box display="flex" px={1}>
                     <Box flexGrow={1} pt={1}>
                         {title}
                     </Box>
                 </Box>
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             <Grid item xs={12}>
                 <div className={classes.chartContainer}>
                     <Pie
+                        width={150}
                         data={data}
                         options={options}
                     />

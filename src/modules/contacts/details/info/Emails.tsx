@@ -41,14 +41,14 @@ const Emails = (props: IProps) => {
 
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='Emails'
                     editButton={<AddIconButton onClick={handleNew}/>}
                     icon={ <MailIcon fontSize='small'/>}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             {emails.map(it => (
                 <Grid item xs={12} key={it.id}>
@@ -59,8 +59,8 @@ const Emails = (props: IProps) => {
                         </Box>
                     }>
                         <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap >{trimString(it.value,23)}</Typography>
-                            <Typography variant='caption'>{it.category}</Typography>
+                            <Typography variant='body1' noWrap display='inline'>{trimString(it.value,23)}</Typography>
+                            <Typography variant='caption' display='inline'>&nbsp;({it.category})</Typography>
                         </Box>
                     </SectionItem>
                 </Grid>

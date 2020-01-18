@@ -43,14 +43,14 @@ const Phones = (props: IProps) => {
     const {phones, id = ''} = props.data
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='Phones'
                     editButton={<AddIconButton onClick={handleNew}/>}
                     icon={ <PhoneIcon fontSize='small' />}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             {phones.map(it => (
                 <Grid item xs={12} key={it.id}>
@@ -61,8 +61,8 @@ const Phones = (props: IProps) => {
                         </Box>
                     }>
                         <Box flexGrow={1}>
-                            <Typography variant='body1'>{it.value}</Typography>
-                            <Typography variant='caption'>{it.category}</Typography>
+                            <Typography variant='body1' noWrap display='inline'>{it.value}</Typography>
+                            <Typography variant='caption' display='inline'>&nbsp;({it.category})</Typography>
                         </Box>
                     </SectionItem>
                 </Grid>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {IContact, IIdentification} from "../../types";
+import {IContact, IIdentification, printAddress} from "../../types";
 import {printDate} from "../../../../utils/dateHelpers";
 import EditIconButton, {AddIconButton, DeleteIconButton} from "../../../../components/EditIconButton";
 import {Divider} from "@material-ui/core";
@@ -42,14 +42,14 @@ const Identifications = ({data}: IProps) => {
     }
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='Identifications'
                     editButton={<AddIconButton onClick={handleNew}/>}
                     icon={ <ListIcon fontSize='small' />}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             {identifications.map(it => (
                 <Grid item xs={12} key={it.id}>
@@ -60,11 +60,8 @@ const Identifications = ({data}: IProps) => {
                         </Box>
                     }>
                         <Box flexGrow={1}>
-                            <Typography variant='body1'>{it.value}</Typography>
-                            <Typography variant='caption'>{it.category},&nbsp;</Typography>
-                            <Typography variant='caption'>
-                                {printDate(it.issueDate)}&nbsp;to&nbsp;{printDate(it.expiryDate)}
-                            </Typography>
+                            <Typography variant='body1' noWrap display='inline'>{it.value}</Typography>
+                            <Typography variant='caption' display='inline'>&nbsp;({it.category.toUpperCase()})</Typography>
                         </Box>
                     </SectionItem>
                 </Grid>

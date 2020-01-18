@@ -22,7 +22,7 @@ interface IProps {
 const Info = ({data}: IProps) => {
     const spacing= 5
     return (
-        <Grid container spacing={spacing}>
+        <Grid container spacing={3}>
             <Grid item xs={12} lg={3} md={4} sm={6}>
                 <Grid container spacing={spacing}>
                     <Grid item xs={12}>
@@ -30,38 +30,31 @@ const Info = ({data}: IProps) => {
                     </Grid>
                 </Grid>
             </Grid>
-
-            <Grid item xs={12} lg={3} md={4} sm={6}>
+            <Grid item xs={12} lg={9} >
                 <Grid container spacing={spacing}>
-                    <Grid item xs={12} >
+                    <Grid item xs={4} >
                         <Phones data={data}/>
                     </Grid>
-                    <Grid item xs={12} >
-                        <Emails data={data}/>
-                    </Grid>
-                </Grid>
-            </Grid>
-
-            <Grid item xs={12} lg={3} md={4} sm={6}>
-                <Grid container spacing={spacing}>
-                    <Grid item xs={12} >
+                    <Grid item xs={4} >
                         <Addresses data={data}/>
                     </Grid>
-                    <Grid item xs={12} >
-                        <Urls data={data}/>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid item xs={12} lg={3} md={4} sm={6}>
-                <Grid container spacing={spacing}>
-                    <Grid item xs={12}>
+                    <Grid item xs={4} >
                         <Identifications data={data}/>
                     </Grid>
-                    <Grid item xs={12} >
+                </Grid>
+                <Grid container spacing={spacing}>
+                    <Grid item xs={4} >
+                        <Emails data={data}/>
+                    </Grid>
+                    <Grid item xs={4} >
+                        <Urls data={data}/>
+                    </Grid>
+                    <Grid item xs={4} >
                         <Tags data={data}/>
                     </Grid>
                 </Grid>
             </Grid>
+
             <Grid item xs={12} >
                 <Box pb={2}>
                     <Divider/>

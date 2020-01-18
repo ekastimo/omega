@@ -46,17 +46,17 @@ const FinancialData = ({data}: IProps) => {
     const displayData = idFields(data);
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='Financial Data'
                     editButton={<EditIconButton onClick={handleClick}/>}
                     icon={ <MoneyIcon fontSize='small'/>}
                 />
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             <Grid item xs={12}>
-                <Box p={1}>
+                <Box >
                     <DetailView data={displayData}/>
                 </Box>
             </Grid>

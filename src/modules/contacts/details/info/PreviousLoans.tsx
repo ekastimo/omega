@@ -66,7 +66,7 @@ const loans: ILoan[] = [
 const PreviousLoans = (props: IProps) => {
     const theme: Theme = useTheme();
     const title = <div style={{display: 'flex', flexDirection: 'row' ,paddingBottom:theme.spacing(1)}}>
-        <AccountBalanceWalletIcon fontSize='small'/><Typography variant='body2'>&nbsp;<b>Recent Loans</b></Typography>
+        <Typography variant='body2'>&nbsp;<b>RECENT LOANS</b></Typography>
     </div>
     return (
         <Grid container spacing={1}>
@@ -76,17 +76,17 @@ const PreviousLoans = (props: IProps) => {
                         {title}
                     </Box>
                 </Box>
-                <Divider/>
+                {/*<Divider/>*/}
             </Grid>
             <Grid item xs={12}>
                 <TableContainer >
                     <Table  aria-label="simple table" size='small'>
                         <TableHead>
                             <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell align="right">Date</TableCell>
-                                <TableCell align="right">Amount</TableCell>
-                                <TableCell align="right">Status</TableCell>
+                                <TableCell>Loan ID</TableCell>
+                                <TableCell >Date</TableCell>
+                                <TableCell >Amount</TableCell>
+                                <TableCell >Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -95,9 +95,9 @@ const PreviousLoans = (props: IProps) => {
                                     <TableCell component="th" scope="row">
                                         <CaseLink id={row.id} name={trimGuid(row.id)}/>
                                     </TableCell>
-                                    <TableCell align="right">{printDateTime(row.applicationDate)}</TableCell>
-                                    <TableCell align="right">{printMoney(row.amount)}</TableCell>
-                                    <TableCell align="right">{
+                                    <TableCell >{printDateTime(row.applicationDate)}</TableCell>
+                                    <TableCell >{printMoney(row.amount)}</TableCell>
+                                    <TableCell >{
                                         row.status===LoanStatus.HEALTHY?
                                             <SuccessIcon fontSize='small'/>:<ErrorIcon fontSize='small'/>
                                     }</TableCell>
