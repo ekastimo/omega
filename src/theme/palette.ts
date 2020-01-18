@@ -5,9 +5,9 @@ const white = '#FFFFFF';
 const palette={
     primary: {
         contrastText: white,
-        dark: colors.teal[900],
-        main: colors.teal[500],
-        light: colors.teal[100]
+        dark: "#194657",
+        main: "#24647D",
+        light: "#4f8397"
     },
     secondary: {
         contrastText: white,

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: 'inherit',
         },
         menuItemActive: {
-            color: theme.palette.primary.main,
+            color: grey[100],
         },
         menuItemIcon: {
             color: 'inherit',

@@ -22,10 +22,11 @@ interface XTableProps {
     useCheckbox?: boolean
     handleSelection?: (id: any) => any
     onFilterToggle?: () => any
+    usePagination?: boolean
 }
 
 export default function XTable(props: XTableProps) {
-    const {title, headCells, data, useCheckbox, initialSortBy = 'id', initialOrder = 'asc', initialRowsPerPage = 10} = props
+    const {usePagination=true,title, headCells, data, useCheckbox, initialSortBy = 'id', initialOrder = 'asc', initialRowsPerPage = 10} = props
     const classes = useTableStyles();
     const [order, setOrder] = React.useState<Order>(initialOrder);
     const [orderBy, setOrderBy] = React.useState<string>(initialSortBy);
@@ -162,21 +163,24 @@ export default function XTable(props: XTableProps) {
                         </TableBody>
                     </Table>
                 </div>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    backIconButtonProps={{
-                        'aria-label': 'previous page',
-                    }}
-                    nextIconButtonProps={{
-                        'aria-label': 'next page',
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
+                {
+                   usePagination&& <TablePagination
+                        rowsPerPageOptions={[5, 10, 25]}
+                        component="div"
+                        count={data.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        backIconButtonProps={{
+                            'aria-label': 'previous page',
+                        }}
+                        nextIconButtonProps={{
+                            'aria-label': 'next page',
+                        }}
+                        onChangePage={handleChangePage}
+                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                    />
+                }
+
             </Paper>
         </div>
     );

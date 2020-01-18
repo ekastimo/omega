@@ -1,19 +1,12 @@
 import React from 'react';
 import Divider from '@material-ui/core/Divider';
-import AppsIcon from '@material-ui/icons/Apps';
-import PeopleIcon from '@material-ui/icons/People';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpIcon from '@material-ui/icons/Help';
-import {localRoutes} from "../../data/constants";
-import appLogo from "../../assets/download.png";
+import appLogo from "../../assets/logo-azima2.png";
 import {navColor} from "./styles";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import grey from '@material-ui/core/colors/grey';
 import NavList from "./NavList";
-import Navigator from "./Navigator";
 
-const menBackgroundColor = grey[800]
+const menBackgroundColor = "#194657"
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
 
@@ -21,12 +14,9 @@ const useStyles = makeStyles((theme: Theme) =>
             height: 140
         },
         logo: {
-            [theme.breakpoints.only('xs')]: {
-                height: 40,
-                width: 'auto',
-            },
-            height: 40,
-            width: 'auto',
+
+            height: "100%",
+            width: '100%',
         },
         whiteText: {
             color: 'white'

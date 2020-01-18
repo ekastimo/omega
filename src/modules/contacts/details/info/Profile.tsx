@@ -45,7 +45,12 @@ const Profile = ({data}: IProps) => {
                     <Grid item className={classes.nameHolder}>
                         <Typography variant='h5'>{renderName(data)}</Typography>
                         <Typography variant='body2'>{data.category}</Typography>
-                        <Typography variant='body2'>NIN: {nin}</Typography>
+                        {
+                            isPerson?
+                                <Typography variant='body2'>NIN: {nin}</Typography>:
+                                <Typography variant='body2'>TIN: {nin}</Typography>
+                        }
+
                     </Grid>
                 </Grid>
             </Grid>
@@ -53,7 +58,7 @@ const Profile = ({data}: IProps) => {
                 <Box style={{ border: `1px solid ${grey[400]}`}} p={1}>
                     <Box pb={1}><Typography variant='body2'><b>KYC Summary</b></Typography></Box>
                     <Box display='flex' >
-                        <Box width='50%'>
+                        <Box width='30%'>
                             <Typography variant='body2'>
                                 <SuccessIcon fontSize='inherit'/>
                                 &nbsp;AML Ok
@@ -70,11 +75,11 @@ const Profile = ({data}: IProps) => {
                         <Box width='50%'>
                             <Typography variant='body2'>
                                 <SuccessIcon fontSize='inherit'/>
-                                &nbsp;Sanctions
+                                &nbsp;Sanctions List
                             </Typography>
                             <Typography variant='body2'>
                                 <SuccessIcon fontSize='inherit'/>
-                                &nbsp;Averse Media
+                                &nbsp;PEP
                             </Typography>
                         </Box>
                     </Box>

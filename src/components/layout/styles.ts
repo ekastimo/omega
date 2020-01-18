@@ -2,8 +2,8 @@ import grey from "@material-ui/core/colors/grey";
 import {colors, createStyles, makeStyles, Theme} from "@material-ui/core";
 
 export const drawerWidth = 240;
-export const navColor = grey[900];
-export const appBarColor = colors.teal[800];
+export const navColor = "#24647D";
+export const appBarColor = "#24647D";
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {

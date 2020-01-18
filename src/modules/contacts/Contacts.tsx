@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import Layout from "../../components/layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {Avatar, createStyles, makeStyles, Theme, useTheme} from "@material-ui/core";
-import {ContactCategory, getEmail, getPhone, IContact, IContactsFilter, renderName} from "./types";
+import {ContactCategory, getEmail, getNin, getPhone, IContact, IContactsFilter, renderName} from "./types";
 import XTable from "../../components/table/XTable";
 import {XHeadCell} from "../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
@@ -53,8 +53,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const headCells: XHeadCell[] = [
     {name: 'id', label: 'Name', render: (value, rec) => <ContactLink id={value} name={renderName(rec)}/>},
     {name: 'category', label: 'Category'},
+    {name: 'tin', label: 'TIN/NIN', render: (_, rec) => getNin(rec)},
     {name: 'email', label: 'Email', render: (_, rec) => getEmail(rec)},
     {name: 'phone', label: 'Phone', render: (_, rec) => getPhone(rec)},
+
 ];
 
 const toMobileRow = (data: IContact): IMobileRow => {
@@ -68,7 +70,6 @@ const toMobileRow = (data: IContact): IMobileRow => {
         </>,
     }
 }
-
 
 const Contacts = () => {
     const dispatch = useDispatch();
@@ -139,88 +140,87 @@ const Contacts = () => {
     const createComponent = <NewContactForm data={{}} done={closeCreateDialog}/>
     const filterTitle = "Contact Filter"
     const createTitle = "New Person"
+
+    const recentContacts = <Box p={1} className={classes.root}>
+        <Box pb={2}>
+            <Grid container>
+                <Grid item sm={6}>
+                    <Typography variant='h5'>Recent Contacts</Typography>
+                </Grid>
+            </Grid>
+        </Box>
+        {
+            loading ? <Loading/> :
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <XTable
+                            headCells={headCells}
+                            data={data}
+                            initialRowsPerPage={3}
+                            usePagination={false}
+                        />
+                    </Grid>
+                </Grid>
+        }
+    </Box>
     return (
         <Layout>
-            <Box p={1} className={classes.root}>
-                <Box pb={2}>
-                    <Grid container>
-                        <Grid item sm={6}>
-                            <Typography variant='h5'>Contacts</Typography>
-                        </Grid>
-                        <Grid item sm={6}>
-                            <Box display='flex' flexDirection="row-reverse">
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    startIcon={<AddIcon/>}
-                                    onClick={handleNew}
-                                    style={{marginLeft: 8}}
-                                >
-                                    New&nbsp;&nbsp;
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    color="primary"
-                                    startIcon={<UploadIcon/>}
-                                    //onClick={onAddNew}
-                                    style={{marginLeft: 8}}
-                                >
-                                    Upload&nbsp;&nbsp;
-                                </Button>
-                            </Box>
-                        </Grid>
-                    </Grid>
-                </Box>
-                <Hidden smDown>
-                    <Grid container spacing={2}>
-                        <Grid item xs={showFilter ? 9 : 12}>
-                            {
-                                loading ? <Loading/> :
-                                    <XTable
-                                        headCells={headCells}
-                                        data={data}
-                                        initialRowsPerPage={10}
-                                    />
-                            }
-                        </Grid>
-                        <Grid item xs={3} style={{display: showFilter ? "block" : "none"}}>
-                            <Paper className={classes.filterPaper} elevation={0}>
-                                {filterComponent}
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Hidden>
-                <Hidden mdUp>
-                    <List>
+
+            <Grid container spacing={2}>
+                <Grid item xs={9}>
+                    {recentContacts}
+                    <Box p={1} className={classes.root}>
+                        <Box pb={2}>
+                            <Grid container>
+                                <Grid item sm={6}>
+                                    <Typography variant='h5'>Contacts</Typography>
+                                </Grid>
+                                <Grid item sm={6}>
+                                    <Box display='flex' flexDirection="row-reverse">
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            startIcon={<AddIcon/>}
+                                            onClick={handleNew}
+                                            style={{marginLeft: 8}}
+                                        >
+                                            New&nbsp;&nbsp;
+                                        </Button>
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            startIcon={<UploadIcon/>}
+                                            //onClick={onAddNew}
+                                            style={{marginLeft: 8}}
+                                        >
+                                            Upload&nbsp;&nbsp;
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Box>
                         {
                             loading ? <Loading/> :
-                                data.map((row: any) => {
-                                    const mobileRow = toMobileRow(row)
-                                    return <Fragment key={row.id}>
-                                        <ListItem alignItems="flex-start" button disableGutters
-                                                  onClick={handleItemClick(row.id)}
-                                        >
-                                            <ListItemAvatar>
-                                                {mobileRow.avatar}
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={mobileRow.primary}
-                                                secondary={mobileRow.secondary}
-                                            />
-                                        </ListItem>
-                                        <Divider component="li"/>
-                                    </Fragment>
-                                })
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <XTable
+                                            headCells={headCells}
+                                            data={data}
+                                            initialRowsPerPage={15}
+                                        />
+                                    </Grid>
+                                </Grid>
                         }
-                    </List>
-                    <EditDialog open={showFilter} onClose={() => setShowFilter(false)} title={filterTitle}>
+                    </Box>
+                </Grid>
+                <Grid item xs={3} >
+                    <Paper className={classes.filterPaper} elevation={0}>
                         {filterComponent}
-                    </EditDialog>
-                    <Fab aria-label='add-new' className={classes.fab} color='primary' onClick={handleNew}>
-                        <AddIcon/>
-                    </Fab>
-                </Hidden>
-            </Box>
+                    </Paper>
+                </Grid>
+            </Grid>
+
+
             <EditDialog title={createTitle} open={createDialog} onClose={closeCreateDialog}>
                 {createComponent}
             </EditDialog>
