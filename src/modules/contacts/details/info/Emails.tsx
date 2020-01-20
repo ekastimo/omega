@@ -10,7 +10,7 @@ import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import {trimString} from "../../../../utils/stringHelpers";
 import SectionTitle from "./SectionTitle";
-import SectionItem from "./SectionItem";
+import SectionItem, {SectionItemContent} from "./SectionItem";
 
 interface IProps {
     data: IContact
@@ -58,10 +58,7 @@ const Emails = (props: IProps) => {
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap display='inline'>{trimString(it.value,23)}</Typography>
-                            <Typography variant='caption' display='inline'>&nbsp;({it.category})</Typography>
-                        </Box>
+                        <SectionItemContent value={trimString(it.value,20)} category={it.category}/>
                     </SectionItem>
                 </Grid>
             ))}

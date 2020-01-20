@@ -12,7 +12,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import {menuItems} from "./navListItems";
 import clsx from "clsx";
 
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         whiteText: {

@@ -11,7 +11,8 @@ import Divider from "@material-ui/core/Divider";
 import PersonIcon from "@material-ui/icons/PermIdentity";
 import SectionTitle from "./SectionTitle";
 import {printDate} from "../../../../utils/dateHelpers";
-import SectionItem from "./SectionItem";
+import SectionItem, {SectionItemContent} from "./SectionItem";
+import {trimString} from "../../../../utils/stringHelpers";
 
 interface IProps {
     data: IContact
@@ -62,10 +63,7 @@ const Addresses = (props: IProps) => {
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap display='inline'>{printAddress(it)}</Typography>
-                            <Typography variant='caption' display='inline'>&nbsp;({it.category})</Typography>
-                        </Box>
+                        <SectionItemContent value={printAddress(it)} category={it.category}/>
                     </SectionItem>
                 </Grid>
             ))}

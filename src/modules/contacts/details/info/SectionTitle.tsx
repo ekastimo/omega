@@ -20,12 +20,10 @@ const SectionTitle = ({title, editButton, icon}: IProps) => {
         <Box display="flex"
              onMouseEnter={handleEntered}
              onMouseLeave={handleLeave}
+             className='has-edit-icon'
         >
-            <Box flexGrow={1} >
-                <div style={{display: 'flex', flexDirection: 'row', marginTop: 5, marginBottom: 5}}>
-                    {/*{icon}*/}
-                    <Typography variant='body2'><b>{title.toUpperCase()}</b></Typography>
-                </div>
+            <Box pt={1}>
+                <Typography variant='body2'><b>{title.toUpperCase()}</b>&nbsp;&nbsp;</Typography>
             </Box>
             {editButton &&
             <Box>

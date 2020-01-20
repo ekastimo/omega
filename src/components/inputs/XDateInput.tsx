@@ -35,7 +35,7 @@ const Component = ({field, form, ...other}: FieldProps) => {
             isSmall?
                 <DatePicker
                     fullWidth
-                    margin="normal"
+                    margin="dense"
                     format="dd/MM/yyyy"
                     name={field.name}
                     value={field.value || null}

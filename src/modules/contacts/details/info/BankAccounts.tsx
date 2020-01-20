@@ -4,14 +4,35 @@ import {IBankAccount, IContact} from "../../types";
 import BankAccountEditor from "../editors/BankAccountEditor";
 import EditIconButton, {AddIconButton, DeleteIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import SectionTitle from "./SectionTitle";
-import SectionItem from "./SectionItem";
+import DetailView, {IRec} from "../../../../components/DetailView";
+import {SectionItemGrid} from "./SectionItem";
 
 interface IProps {
     data: IContact
+}
+export const createFields = (data: IBankAccount): IRec[] => {
+    return [
+        {
+            label: 'Bank',
+            value:data.bank
+        },
+        {
+            label: 'Branch',
+            value: data.branch
+        },
+        {
+            label: 'Act. Name',
+            value: data.name
+        },
+        {
+            label: 'Act.  Number',
+            value: data.number
+        }
+    ]
+
 }
 
 const BankAccounts = (props: IProps) => {
@@ -49,19 +70,13 @@ const BankAccounts = (props: IProps) => {
                 {/*<Divider/>*/}
             </Grid>
             {bankAccounts.map(it => (
-                <Grid item xs={12} key={it.id}>
-                    <SectionItem buttons={
-                        <Box>
-                            <EditIconButton onClick={handleClick(it)}/>
-                            <DeleteIconButton onClick={handleDelete(it)}/>
-                        </Box>
-                    }>
-                        <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap>{it.name}</Typography>
-                            <Typography variant='body2' noWrap>{it.number}</Typography>
-                            <Typography variant='caption'>{it.bank}</Typography>
-                        </Box>
-                    </SectionItem>
+                <Grid item xs={6} key={it.id}>
+                <SectionItemGrid buttons={<Box>
+                    <EditIconButton onClick={handleClick(it)}/>
+                    <DeleteIconButton onClick={handleDelete(it)}/>
+                </Box>}>
+                    <DetailView data={createFields(it)} useGrid={false}/>
+                </SectionItemGrid>
                 </Grid>
             ))}
             <EditDialog title={selected ? "Edit Bank Account" : "New Bank Account"} open={dialog} onClose={handleClose}>

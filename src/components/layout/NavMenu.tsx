@@ -1,29 +1,32 @@
 import React from 'react';
 import Divider from '@material-ui/core/Divider';
-import appLogo from "../../assets/logo-azima2.png";
+import azLogo from "../../assets/logo-azima2.png";
+import lugLogo from "../../assets/download.png";
 import {navColor} from "./styles";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import NavList from "./NavList";
+import {isDebug} from "../../data/constants";
 
-const menBackgroundColor = "#194657"
+const appLogo = isDebug ? lugLogo : azLogo;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-
         logoHolder: {
             height: 140
         },
-        logo: {
-
+        logo: isDebug ? {
+            height: 45,
+            width: 'auto',
+        } : {
             height: "100%",
-            width: '100%',
+            width: '100%'
         },
         whiteText: {
             color: 'white'
         },
         menuItem: {
             "&:hover": {
-                backgroundColor: menBackgroundColor,
+                backgroundColor: theme.palette.primary.dark,
             }
         },
         nested: {
@@ -45,7 +48,6 @@ const NavMenu = (props: any) => {
             </Grid>
             <Divider/>
             <NavList/>
-            {/*<Navigator/>*/}
         </div>
     );
 }

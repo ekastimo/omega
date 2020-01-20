@@ -78,6 +78,7 @@ export function RemoteSelect(props: IProps) {
                         {...params}
                         label={props.label}
                         variant="outlined"
+                        margin="dense"
                         fullWidth
                         onBlur={handleTouched}
                         error={props.error}

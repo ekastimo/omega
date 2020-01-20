@@ -1,5 +1,10 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import {Grid} from "@material-ui/core";
+import DetailView from "../../../../components/DetailView";
+import EditIconButton, {DeleteIconButton} from "../../../../components/EditIconButton";
+import {createFields} from "./BankAccounts";
 
 interface IProps {
     children?: any
@@ -18,7 +23,7 @@ const SectionItem = ({children, buttons}: IProps) => {
         <Box display="flex"
              onMouseEnter={handleEntered}
              onMouseLeave={handleLeave}
-             pb={1}
+             className='has-edit-icon'
         >
             {children}
             {buttons &&
@@ -26,6 +31,42 @@ const SectionItem = ({children, buttons}: IProps) => {
                 {canEdit && buttons}
             </Box>
             }
+        </Box>
+    );
+}
+
+export const SectionItemGrid = ({children, buttons}: IProps) => {
+    const [canEdit, setCanEdit] = useState<boolean>(false)
+    const handleEntered = () => {
+        setCanEdit(true)
+    }
+    const handleLeave = () => {
+        setCanEdit(false)
+    }
+    return (
+        <Grid container onMouseEnter={handleEntered}
+              onMouseLeave={handleLeave}
+              className='has-edit-icon'>
+            <Grid item xs={10} >
+                {children}
+            </Grid>
+            <Grid item xs={2} >
+                { (buttons&&canEdit) && buttons}
+            </Grid>
+        </Grid>
+    );
+}
+
+interface IContentProps {
+    value:string
+    category:string
+}
+export const SectionItemContent = ({value, category}: IContentProps) => {
+
+    return (
+        <Box pt={1}>
+            <Typography variant='body1' noWrap display='inline'>{value}</Typography>
+            <Typography variant='caption' display='inline'>&nbsp;({category}) &nbsp;&nbsp;</Typography>
         </Box>
     );
 }

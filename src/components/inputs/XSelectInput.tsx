@@ -55,6 +55,7 @@ const Component = (props: FieldProps & IProps) => {
             multiple={rest.multiple}
             inputProps={{name}}
             labelWidth={labelWidth}
+            margin="dense"
         >
             {
                 options.map(

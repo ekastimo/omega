@@ -22,7 +22,7 @@ const Component = ({field, form, ...other}: FieldProps) => {
 
     return <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDateTimePicker
-            margin="normal"
+            margin="dense"
             KeyboardButtonProps={{
                 'aria-label': 'change time',
             }}

@@ -6,6 +6,7 @@ import {Form, Formik} from 'formik';
 import XSelectInput from "../../components/inputs/XSelectInput";
 import {toOptions} from "../../components/inputs/inputHelpers";
 import {Box} from "@material-ui/core";
+import TextField from '@material-ui/core/TextField';
 
 interface IProps {
     onFilter: (data: any) => any
@@ -16,6 +17,20 @@ const Filter = ({onFilter,loading}: IProps) => {
     function handleSubmission(values: any) {
         onFilter(values)
     }
+
+
+    // return <form>
+    //     <Grid spacing={0} container>
+    //         <Grid item xs={12}>
+    //             <TextField
+    //                 label="Name"
+    //                 margin="dense"
+    //                 variant="outlined"
+    //                 fullWidth
+    //             />
+    //         </Grid>
+    //     </Grid>
+    // </form>
 
     return <Formik
         initialValues={{name: '', contactType: '', email: '', phone: '', nin: ''}}
@@ -34,8 +49,8 @@ const Filter = ({onFilter,loading}: IProps) => {
                     </Grid>
                     <Grid item xs={12}>
                         <XSelectInput
-                            name="Categories"
-                            label="Type"
+                            name="categories"
+                            label="Categories"
                             options={toOptions(['Company', 'Person'])}
                             variant='outlined'
                             multiple
@@ -66,24 +81,13 @@ const Filter = ({onFilter,loading}: IProps) => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Box pt={2}>
-                            <Grid spacing={2} container>
-                                <Grid item xs={6}>
-                                    <Button
-                                        disabled={loading}
-                                        variant="contained"
-                                        fullWidth
-                                        onClick={submitForm}>Clear</Button>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Button
-                                        disabled={loading}
-                                        variant="contained"
-                                        color="primary"
-                                        fullWidth
-                                        onClick={submitForm}>Apply</Button>
-                                </Grid>
-                            </Grid>
+                        <Box pt={2} display='flex' alignContent='center' flexDirection='row'>
+                            <Button
+                                disabled={loading}
+                                variant="outlined"
+                                color="primary"
+                                fullWidth
+                                onClick={submitForm}>Excel Export</Button>
                         </Box>
                     </Grid>
                 </Grid>

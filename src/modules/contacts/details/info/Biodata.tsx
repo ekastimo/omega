@@ -3,13 +3,11 @@ import {ContactCategory, IContact} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDate} from "../../../../utils/dateHelpers";
 import PersonIcon from '@material-ui/icons/PermIdentity';
-import EditIconButton, {HiddenIcon} from "../../../../components/EditIconButton";
+import EditIconButton from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import PersonEditor from "../editors/PersonEditor";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
 import SectionTitle from "./SectionTitle";
 
 interface IProps {
@@ -73,9 +71,7 @@ const BioData = ({data}: IProps) => {
                 {/*<Divider/>*/}
             </Grid>
             <Grid item xs={12}>
-                <Box >
-                    <DetailView data={displayData} useGrid={false}/>
-                </Box>
+                <DetailView data={displayData} useGrid={false}/>
             </Grid>
             <EditDialog title='Edit Basic Data' open={dialog} onClose={handleClose}>
                 <PersonEditor data={data.person} contactId={id} done={handleClose}/>

@@ -53,6 +53,7 @@ const EmailEditor = ({data, isNew, contactId, done}: IProps) => {
             onSubmit={handleSubmit}
             schema={schema}
             initialValues={data}
+            onCancel={done}
         >
             <Grid spacing={0} container>
                 <Grid item xs={12}>

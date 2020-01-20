@@ -59,11 +59,11 @@ const Urls = (props: IProps) => {
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <Box flexGrow={1}>
+                        <Box pt={1}>
                             <a href={it.value} target='_blank' rel="noopener noreferrer" style={{color:linkColor}}>
                                 <Typography variant='body1' noWrap display='inline'>{trimString(it.value,23)}</Typography>
                             </a>
-                            <Typography variant='caption' display='inline'>&nbsp;({it.category})</Typography>
+                            <Typography variant='caption' display='inline'>&nbsp;({it.category})&nbsp;&nbsp;</Typography>
                         </Box>
                     </SectionItem>
                 </Grid>

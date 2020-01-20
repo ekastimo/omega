@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import SectionTitle from "./SectionTitle";
-import SectionItem from "./SectionItem";
+import SectionItem, {SectionItemContent} from "./SectionItem";
 
 interface IProps {
     data: IContact
@@ -59,10 +59,7 @@ const Identifications = ({data}: IProps) => {
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <Box flexGrow={1}>
-                            <Typography variant='body1' noWrap display='inline'>{it.value}</Typography>
-                            <Typography variant='caption' display='inline'>&nbsp;({it.category.toUpperCase()})</Typography>
-                        </Box>
+                        <SectionItemContent value={it.value} category={it.category}/>
                     </SectionItem>
                 </Grid>
             ))}

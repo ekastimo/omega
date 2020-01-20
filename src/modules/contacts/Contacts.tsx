@@ -1,34 +1,22 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/Layout";
 import Paper from '@material-ui/core/Paper';
-import {Avatar, createStyles, makeStyles, Theme, useTheme} from "@material-ui/core";
-import {ContactCategory, getEmail, getNin, getPhone, IContact, IContactsFilter, renderName} from "./types";
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
+import {getEmail, getNin, getPhone, IContactsFilter, renderName} from "./types";
 import XTable from "../../components/table/XTable";
 import {XHeadCell} from "../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
 import Filter from "./Filter";
 import ContactLink from "../../components/ContactLink";
 import {search} from "../../utils/ajax";
-import {localRoutes, remoteRoutes} from "../../data/constants";
+import {remoteRoutes} from "../../data/constants";
 import Loading from "../../components/Loading";
 import Box from "@material-ui/core/Box";
-import Hidden from "@material-ui/core/Hidden";
 import EditDialog from "../../components/EditDialog";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 import NewContactForm from "./NewContactForm";
 import AddIcon from "@material-ui/icons/Add";
 import UploadIcon from "@material-ui/icons/CloudUpload";
-import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
-import {IMobileRow} from "../../components/DataList";
-import PersonIcon from '@material-ui/icons/Person';
-import PeopleIcon from '@material-ui/icons/People';
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import {useHistory} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {crmConstants, ICrmState} from "../../data/contacts/reducer";
 import Button from "@material-ui/core/Button";
@@ -59,38 +47,15 @@ const headCells: XHeadCell[] = [
 
 ];
 
-const toMobileRow = (data: IContact): IMobileRow => {
-    const isPerson = data.category === ContactCategory.Person
-    return {
-        avatar: <Avatar>{isPerson ? <PersonIcon/> : <PeopleIcon/>}</Avatar>,
-        primary: renderName(data),
-        secondary: <>
-            <Typography variant='caption' color='textSecondary' display='block'>{getEmail(data)}</Typography>
-            <Typography variant='caption' color='textSecondary'>{getPhone(data)}</Typography>
-        </>,
-    }
-}
+
 
 const Contacts = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     const [createDialog, setCreateDialog] = useState(false);
     const {data, loading}: ICrmState = useSelector((state: any) => state.crm)
-    const [showFilter, setShowFilter] = useState(!isSmall);
+
     const [filter, setFilter] = useState<IContactsFilter>({});
     const classes = useStyles();
-    useEffect(() => {
-        if (isSmall) {
-            setShowFilter(false)
-        }
-    }, [isSmall])
-
-    function handleFilterToggle() {
-        setShowFilter(!showFilter);
-    }
-
 
     useEffect(() => {
         dispatch({
@@ -124,21 +89,13 @@ const Contacts = () => {
         setCreateDialog(true)
     }
 
-    const handleItemClick = (id: string) => () => {
-        history.push(`${localRoutes.contacts}/${id}`)
-    }
-
     function closeCreateDialog() {
         setCreateDialog(false)
     }
 
-    function handleNameSearch(query: string) {
-        setFilter({...filter, query})
-    }
-
     const filterComponent = <Filter onFilter={handleFilter} loading={loading}/>
     const createComponent = <NewContactForm data={{}} done={closeCreateDialog}/>
-    const filterTitle = "Contact Filter"
+
     const createTitle = "New Person"
 
     const recentContacts = <Box p={1} className={classes.root}>
@@ -206,7 +163,7 @@ const Contacts = () => {
                                         <XTable
                                             headCells={headCells}
                                             data={data}
-                                            initialRowsPerPage={15}
+                                            initialRowsPerPage={10}
                                         />
                                     </Grid>
                                 </Grid>
