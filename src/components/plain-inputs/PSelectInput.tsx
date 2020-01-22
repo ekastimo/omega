@@ -18,7 +18,7 @@ interface IProps {
     multiple?: boolean;
 }
 
-const PSelectInput = ({multiple,helperText, size, options, variant, label, value, onChange}: IProps) => {
+const PSelectInput = ({name, multiple, helperText, size, options, variant, label, value, onChange}: IProps) => {
     const inputLabel = React.useRef<HTMLLabelElement>(null);
     const [labelWidth, setLabelWidth] = React.useState(0);
     React.useEffect(() => {
@@ -28,6 +28,7 @@ const PSelectInput = ({multiple,helperText, size, options, variant, label, value
         <FormControl variant={variant} fullWidth size={size}>
             <InputLabel ref={inputLabel}>{label}</InputLabel>
             <Select
+                name={name}
                 value={value}
                 onChange={onChange}
                 labelWidth={variant === "outlined" ? labelWidth : undefined}

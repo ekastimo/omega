@@ -14,8 +14,8 @@ interface IProps {
 
 const Filter = ({onFilter, loading}: IProps) => {
     const [data, setData] = useState({
-        name: '',
-        categories: [],
+        query: '',
+        category: '',
         contactType: '',
         email: '',
         phone: '',
@@ -29,6 +29,7 @@ const Filter = ({onFilter, loading}: IProps) => {
     function handleChange(event: React.ChangeEvent<any>) {
         const name = event.target.name
         const value = event.target.value
+        console.log({name,value})
         const newData = {...data, [name]: value}
         setData({...newData})
         submitForm(newData)
@@ -38,10 +39,10 @@ const Filter = ({onFilter, loading}: IProps) => {
         <Grid spacing={3} container>
             <Grid item xs={12}>
                 <TextField
-                    name="name"
+                    name="query"
+                    value={data['query']}
                     onChange={handleChange}
                     label="Name"
-                    value=''
                     variant="outlined"
                     fullWidth
                     size='small'
@@ -49,17 +50,20 @@ const Filter = ({onFilter, loading}: IProps) => {
             </Grid>
             <Grid item xs={12}>
                 <PSelectInput
-                    name="nin"
+                    name="category"
+                    value={data['category']}
+                    onChange={handleChange}
                     label="Categories"
                     variant="outlined"
                     size='small'
-                    value=''
                     options={toOptions(['Company', 'Person'])}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
                     name="email"
+                    value={data['email']}
+                    onChange={handleChange}
                     label="Email"
                     type="email"
                     variant='outlined'
@@ -70,6 +74,8 @@ const Filter = ({onFilter, loading}: IProps) => {
             <Grid item xs={12}>
                 <TextField
                     name="phone"
+                    value={data['phone']}
+                    onChange={handleChange}
                     label="Phone"
                     type="text"
                     variant='outlined'
@@ -80,6 +86,8 @@ const Filter = ({onFilter, loading}: IProps) => {
             <Grid item xs={12}>
                 <TextField
                     name="nin"
+                    value={data['nin']}
+                    onChange={handleChange}
                     label="NIN"
                     type="text"
                     variant='outlined'
