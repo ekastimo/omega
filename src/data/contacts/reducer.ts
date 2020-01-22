@@ -2,11 +2,10 @@ import {IAddress, IContact, IEmail, IIdentification, IPerson, IPhone} from "../.
 
 export const crmConstants = {
     crmFetchAll: "crmFetchAll",
+    crmFetchRecent: "crmFetchRecent",
     crmFetchLoading: "crmFetchLoading",
     crmFetchOne: "crmFetchOne",
-
     crmAddContact: "crmAddContact",
-
     crmEditPerson: "crmEditPerson",
 
     crmAddEmail: "crmAddEmail",
@@ -46,18 +45,25 @@ export const crmConstants = {
 
 export interface ICrmState {
     data: IContact[]
+    recent: IContact[]
     selected?: IContact
     loading: boolean
 }
 
 const initialState: ICrmState = {
     data: [],
+    recent: [],
     loading: true,
     selected: undefined
 }
 
 export default function reducer(state = initialState, action: any) {
     switch (action.type) {
+        case crmConstants.crmFetchRecent: {
+            const recent: IContact[] = action.payload
+            return {...state, recent}
+        }
+
         case crmConstants.crmFetchAll: {
             const data: IContact[] = action.payload
             return {...state, data, loading: false,}

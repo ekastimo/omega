@@ -1,20 +1,20 @@
 import React from 'react';
 import * as yup from "yup";
-import {reqDate, reqEmail, reqString} from "../../data/validations";
-import {genderCategories} from "../../data/comboCategories";
+import {reqDate, reqEmail, reqString} from "../../../data/validations";
+import {genderCategories} from "../../../data/comboCategories";
 import {FormikActions} from "formik";
 import Grid from "@material-ui/core/Grid";
-import XForm from "../../components/forms/XForm";
-import XTextInput from "../../components/inputs/XTextInput";
-import XDateInput from "../../components/inputs/XDateInput";
-import {toOptions} from "../../components/inputs/inputHelpers";
+import XForm from "../../../components/forms/XForm";
+import XTextInput from "../../../components/inputs/XTextInput";
+import XDateInput from "../../../components/inputs/XDateInput";
+import {toOptions} from "../../../components/inputs/inputHelpers";
 
-import {remoteRoutes} from "../../data/constants";
+import {remoteRoutes} from "../../../data/constants";
 import {useDispatch} from 'react-redux'
-import {crmConstants} from "../../data/contacts/reducer";
-import {post} from "../../utils/ajax";
-import Toast from "../../utils/Toast";
-import XRadioInput from "../../components/inputs/XRadioInput";
+import {crmConstants} from "../../../data/contacts/reducer";
+import {post} from "../../../utils/ajax";
+import Toast from "../../../utils/Toast";
+import XRadioInput from "../../../components/inputs/XRadioInput";
 
 interface IProps {
     data: any | null
@@ -32,7 +32,7 @@ const schema = yup.object().shape(
     }
 )
 
-const NewContactForm = ({data, done}: IProps) => {
+const NewPersonForm = ({data, done}: IProps) => {
     const dispatch = useDispatch();
 
     function handleSubmit(values: any, actions: FormikActions<any>) {
@@ -91,6 +91,7 @@ const NewContactForm = ({data, done}: IProps) => {
             onSubmit={handleSubmit}
             schema={schema}
             initialValues={data}
+            onCancel={done}
         >
             <Grid spacing={1} container>
                 <Grid item xs={6}>
@@ -154,4 +155,4 @@ const NewContactForm = ({data, done}: IProps) => {
 }
 
 
-export default NewContactForm;
+export default NewPersonForm;

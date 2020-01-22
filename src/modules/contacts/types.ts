@@ -21,6 +21,7 @@ export interface IEmail {
 
 export enum IdentificationCategory {
     Nin = 'Nin',
+    Tin = 'Tin',
     Passport = 'Passport',
     DrivingPermit = 'DrivingPermit',
     VillageCard = 'VillageCard',
@@ -58,6 +59,13 @@ export enum ContactCategory {
     Person = 'Person',
     Company = 'Company'
 }
+
+export enum CompanyCategory {
+    Limited = 'Limited',
+    Ngo = 'Ngo',
+    Other = 'Other'
+}
+
 
 export enum RelationshipCategory {
     Mother = 'Mother',
@@ -132,9 +140,10 @@ export interface IAddress {
 }
 
 export interface ICompany {
+    category: CompanyCategory
     name: string
-    category: string
-    numberOfEmployees: string
+    dateOfPayment: Date
+    numberOfEmployees: number
 }
 
 export interface IFinancialData {
@@ -180,8 +189,8 @@ export interface ITeamMember {
 
 export interface IContactsFilter {
     query?: string
-    skip?: string
-    limit?: string
+    skip?: number
+    limit?: number
 }
 
 export const fakeTeam = (): ITeamMember => {
@@ -193,7 +202,7 @@ export const fakeTeam = (): ITeamMember => {
     }
 }
 
-export const fakeContact = (): IContact|null => {
+export const fakeContact = (): IContact | null => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     return null
@@ -270,7 +279,7 @@ export const fakeContact = (): IContact|null => {
 
 
 export const renderName = (contact: IContact, salutation?: boolean): string => {
-    if(contact.category=== ContactCategory.Person){
+    if (contact.category === ContactCategory.Person) {
         const person = contact.person
         const name: string =
             salutation ?
@@ -278,13 +287,12 @@ export const renderName = (contact: IContact, salutation?: boolean): string => {
                 : `${person.firstName || ''} ${person.middleName || ''} ${person.lastName || ''}`;
 
         return name.trim().replace(/\s+/g, ' ');
-    }else{
+    } else {
         console.log(contact)
         return contact.company.name
     }
 
 };
-
 
 
 export const printAddress = (data: IAddress): string => {

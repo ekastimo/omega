@@ -4,7 +4,7 @@ import {createStyles, makeStyles, Theme, useTheme} from "@material-ui/core";
 import XTable from "./table/XTable";
 import {XHeadCell} from "./table/XTableHead";
 import Grid from '@material-ui/core/Grid';
-import Filter from "../modules/contacts/Filter";
+import Filter from "../modules/contacts/list/Filter";
 import {localRoutes} from "../data/constants";
 import Loading from "./Loading";
 import EditDialog from "./EditDialog";

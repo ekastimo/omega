@@ -3,6 +3,7 @@ import {Form, Formik, FormikActions} from 'formik';
 
 import {Grid} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 
 interface IProps {
     schema?: any
@@ -36,41 +37,45 @@ const XForm = (props: IProps) => {
                 <Form>
                     <Grid container spacing={1}>
                         <Grid item xs={12}>
-                            {props.children}
+                            <Box p={1}>
+                                {props.children}
+                            </Box>
                         </Grid>
                         <Grid item xs={12}>
-                            <Grid container spacing={1} alignContent='flex-end' justify='flex-end'>
-                                {
-                                    props.onDelete &&
+                            <Box p={1}>
+                                <Grid container spacing={1} alignContent='flex-end' justify='flex-end'>
+                                    {
+                                        props.onDelete &&
+                                        <Grid item>
+                                            <Button
+                                                variant='contained'
+                                                color='default'
+                                                onClick={handleDelete}
+                                                disabled={isSubmitting}
+                                            >{count === 1?'! Confirm':'Delete'}</Button>
+                                        </Grid>
+                                    }
+                                    {
+                                        props.onCancel &&
+                                        <Grid item>
+                                            <Button
+                                                variant='contained'
+                                                color='default'
+                                                onClick={props.onCancel}
+                                                disabled={isSubmitting}
+                                            >Cancel</Button>
+                                        </Grid>
+                                    }
                                     <Grid item>
                                         <Button
                                             variant='contained'
-                                            color='default'
-                                            onClick={handleDelete}
+                                            color='primary'
+                                            onClick={submitForm}
                                             disabled={isSubmitting}
-                                        >{count === 1?'! Confirm':'Delete'}</Button>
+                                        >Submit</Button>
                                     </Grid>
-                                }
-                                {
-                                    props.onCancel &&
-                                    <Grid item>
-                                        <Button
-                                            variant='contained'
-                                            color='default'
-                                            onClick={props.onCancel}
-                                            disabled={isSubmitting}
-                                        >Cancel</Button>
-                                    </Grid>
-                                }
-                                <Grid item>
-                                    <Button
-                                        variant='contained'
-                                        color='primary'
-                                        onClick={submitForm}
-                                        disabled={isSubmitting}
-                                    >Submit</Button>
                                 </Grid>
-                            </Grid>
+                            </Box>
                         </Grid>
                         {
                             props.debug &&

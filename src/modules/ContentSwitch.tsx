@@ -2,7 +2,7 @@ import React from "react"
 import {Link, Route, Switch} from 'react-router-dom'
 import {localRoutes} from "../data/constants";
 import Dashboard from "./dashboard/Dashboard";
-import Contacts from "./contacts/Contacts";
+import Contacts from "./contacts/list/Contacts";
 import ContactDetails from "./contacts/details/Details";
 import Settings from "./settings/Settings";
 import Layout from "../components/layout/Layout";

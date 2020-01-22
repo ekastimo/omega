@@ -1,25 +1,26 @@
 import React, {useEffect, useState} from "react";
-import Layout from "../../components/layout/Layout";
+import Layout from "../../../components/layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import {getEmail, getNin, getPhone, IContactsFilter, renderName} from "./types";
-import XTable from "../../components/table/XTable";
-import {XHeadCell} from "../../components/table/XTableHead";
+import {getEmail, getNin, getPhone, IContactsFilter, renderName} from "../types";
+import XTable from "../../../components/table/XTable";
+import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
 import Filter from "./Filter";
-import ContactLink from "../../components/ContactLink";
-import {search} from "../../utils/ajax";
-import {remoteRoutes} from "../../data/constants";
-import Loading from "../../components/Loading";
+import ContactLink from "../../../components/ContactLink";
+import {search} from "../../../utils/ajax";
+import {remoteRoutes} from "../../../data/constants";
+import Loading from "../../../components/Loading";
 import Box from "@material-ui/core/Box";
-import EditDialog from "../../components/EditDialog";
-import NewContactForm from "./NewContactForm";
+import EditDialog from "../../../components/EditDialog";
+import NewPersonForm from "../forms/NewPersonForm";
 import AddIcon from "@material-ui/icons/Add";
 import UploadIcon from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
-import {crmConstants, ICrmState} from "../../data/contacts/reducer";
+import {crmConstants, ICrmState} from "../../../data/contacts/reducer";
 import Button from "@material-ui/core/Button";
+import RecentContacts from "./RecentContacts";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,8 +47,6 @@ const headCells: XHeadCell[] = [
     {name: 'phone', label: 'Phone', render: (_, rec) => getPhone(rec)},
 
 ];
-
-
 
 const Contacts = () => {
     const dispatch = useDispatch();
@@ -93,39 +92,11 @@ const Contacts = () => {
         setCreateDialog(false)
     }
 
-    const filterComponent = <Filter onFilter={handleFilter} loading={loading}/>
-    const createComponent = <NewContactForm data={{}} done={closeCreateDialog}/>
-
-    const createTitle = "New Person"
-
-    const recentContacts = <Box p={1} className={classes.root}>
-        <Box pb={2}>
-            <Grid container>
-                <Grid item sm={6}>
-                    <Typography variant='h5'>Recent Contacts</Typography>
-                </Grid>
-            </Grid>
-        </Box>
-        {
-            loading ? <Loading/> :
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <XTable
-                            headCells={headCells}
-                            data={data}
-                            initialRowsPerPage={3}
-                            usePagination={false}
-                        />
-                    </Grid>
-                </Grid>
-        }
-    </Box>
     return (
         <Layout>
-
             <Grid container spacing={2}>
                 <Grid item xs={9}>
-                    {recentContacts}
+                    <RecentContacts/>
                     <Box p={1} className={classes.root}>
                         <Box pb={2}>
                             <Grid container>
@@ -171,15 +142,18 @@ const Contacts = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={3} >
-                    <Paper className={classes.filterPaper} elevation={0}>
-                        {filterComponent}
-                    </Paper>
+                    <Box pb={2}>
+                        <Typography variant='h5'>&nbsp;</Typography>
+                    </Box>
+                    <Box pt={1}>
+                        <Paper className={classes.filterPaper} elevation={0}>
+                            <Filter onFilter={handleFilter} loading={loading}/>
+                        </Paper>
+                    </Box>
                 </Grid>
             </Grid>
-
-
-            <EditDialog title={createTitle} open={createDialog} onClose={closeCreateDialog}>
-                {createComponent}
+            <EditDialog title="New Person" open={createDialog} onClose={closeCreateDialog}>
+                <NewPersonForm data={{}} done={closeCreateDialog}/>
             </EditDialog>
         </Layout>
     );

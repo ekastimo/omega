@@ -18,7 +18,7 @@ const XTextInput = (props: TextFieldProps & IProps) => {
         const showError = hasValue(error) && (isTouched || wasSubmitted)
         return <TextField
             fullWidth
-            margin="dense"
+            margin="normal"
             error={Boolean(showError)}
             helperText={showError && error}
             {...field}
