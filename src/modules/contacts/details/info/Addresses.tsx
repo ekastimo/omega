@@ -63,7 +63,7 @@ const Addresses = (props: IProps) => {
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <SectionItemContent value={printAddress(it)} category={it.category}/>
+                        <SectionItemContent value={trimString(printAddress(it),20)} category={it.category}/>
                     </SectionItem>
                 </Grid>
             ))}

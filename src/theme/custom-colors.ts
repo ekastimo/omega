@@ -5,7 +5,7 @@ import amber from "@material-ui/core/colors/amber";
 import {colors} from "@material-ui/core";
 
 export const themeBackground = purple[700]
-export const successColor = green[800]
+export const successColor = green[600]
 export const warningColor = amber[800]
 export const errorColor = red[500]
 export const iconColor = colors.blueGrey[600]

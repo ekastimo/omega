@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {getEmail, getNin, getPhone, IContactsFilter, renderName} from "../types";
+import {IContactsFilter} from "../types";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
-import ContactLink from "../../../components/links/ContactLink";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import Loading from "../../../components/Loading";
@@ -11,17 +10,9 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import {crmConstants, ICrmState} from "../../../data/redux/contacts/reducer";
+import {columns} from "./config";
 
-
-const headCells: XHeadCell[] = [
-    {name: 'id', label: 'Name', render: (value, rec) => <ContactLink id={value} name={renderName(rec)}/>},
-    {name: 'category', label: 'Category'},
-    {name: 'tin', label: 'TIN/NIN', render: (_, rec) => getNin(rec)},
-    {name: 'email', label: 'Email', render: (_, rec) => getEmail(rec)},
-    {name: 'phone', label: 'Phone', render: (_, rec) => getPhone(rec)},
-
-];
-
+const headCells: XHeadCell[] = [...columns];
 
 const RecentContacts = () => {
     const dispatch = useDispatch();

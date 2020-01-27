@@ -18,13 +18,15 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             width: '100%'
         },
-        row: {},
+        row: {
+            paddingBottom: theme.spacing(2),
+        },
         col: {
+            paddingLeft:2,
             paddingBottom: theme.spacing(1),
         },
         label: {
             paddingRight: theme.spacing(2),
-            paddingTop: theme.spacing(1),
             width: 'auto',
         },
         value: {
@@ -52,7 +54,7 @@ const TableView = ({data, useGrid = false}: IProps) => {
             <Grid container spacing={0}>
                 {data.map(it => (
                     <Grid item xs={12} key={it.label}>
-                        <Box display="flex" pb={1}>
+                        <Box display="flex" pb={0}>
                             <Box flexGrow={1}>
                                 <Typography variant='body1' noWrap>{it.value}</Typography>
                                 <Typography variant='caption'>{it.label}</Typography>
@@ -72,7 +74,7 @@ const TableView = ({data, useGrid = false}: IProps) => {
                             {row.label}
                         </DataLabel>
                     </td>
-                    <td className={clsx(classes.col, classes.value)} style={{padding: 0}}>
+                    <td className={clsx(classes.col, classes.value)} >
                         <DataValue>
                             {row.value}
                         </DataValue>

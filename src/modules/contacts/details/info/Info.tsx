@@ -56,28 +56,28 @@ const Info = ({data}: IProps) => {
             </Grid>
 
             <Grid item xs={12} >
-                <Box pb={2}>
+                <Box pb={0}>
                     <Divider/>
                 </Box>
 
                 <Grid container spacing={spacing}>
-                    <Grid item xs={12} sm={6} >
+                    <Grid item xs={12} sm={4} >
                         <FinancialData data={data}/>
                     </Grid>
-                    <Grid item xs={12} sm={6} >
+                    <Grid item xs={12} sm={8} >
                         <BankAccounts data={data}/>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12} >
-                <Box pb={2}>
+                <Box >
                     <Divider/>
                 </Box>
                 <Grid container spacing={spacing}>
-                    <Grid item xs={12} sm={6} >
+                    <Grid item xs={12} sm={4} >
                         <MiniGraph data={data}/>
                     </Grid>
-                    <Grid item xs={12} sm={6} >
+                    <Grid item xs={12} sm={8} >
                         <PreviousLoans data={data}/>
                     </Grid>
                 </Grid>

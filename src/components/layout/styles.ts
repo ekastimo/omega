@@ -3,6 +3,7 @@ import {colors, createStyles, makeStyles, Theme} from "@material-ui/core";
 
 export const drawerWidth = 240;
 export const navColor = "#24647D";
+// export const navColor = "#333";
 export const appBarColor = "#24647D";
 export const useStyles = makeStyles((theme: Theme) =>
     createStyles({

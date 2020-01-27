@@ -1,24 +1,100 @@
 import React from "react";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import ContactLink from "../../../components/links/ContactLink";
-import {getEmail} from "../../contacts/types";
 import LoanLink from "../../../components/links/LoanLink";
 import {getInitials, trimGuid} from "../../../utils/stringHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
 import {printDateTime} from "../../../utils/dateHelpers";
+import Chip from "@material-ui/core/Chip";
+import {errorColor, successColor, warningColor} from "../../../theme/custom-colors";
+import {LoanStatus, LoanSubStatus} from "../types";
+import {blue} from "@material-ui/core/colors";
 
+export const renderStatus = (value: LoanStatus) => {
+    let color = successColor
+    switch (value) {
+        case LoanStatus.Closed:
+            color = successColor
+            break
+        case LoanStatus.Error:
+            color = errorColor
+            break
+        case LoanStatus.Open:
+            color = warningColor
+            break
+    }
+
+    return <Chip
+        color='primary'
+        variant='default'
+        size='small'
+        label={value}
+        style={{padding: 0, height: 18, backgroundColor: color}}
+    />
+}
+
+
+export const renderSubStatus = (value: LoanSubStatus) => {
+    let color = successColor
+    switch (value) {
+        case LoanSubStatus.Recovered:
+            color = successColor
+            break
+        case LoanSubStatus.LowCredit:
+        case LoanSubStatus.MissingInformation:
+        case LoanSubStatus.Overdue:
+        case LoanSubStatus.PayoutFailure:
+        case LoanSubStatus.ReachedLimit:
+            color = errorColor
+            break
+        case LoanSubStatus.PaidOut:
+            color = blue[600]
+            break
+    }
+
+    return <Chip
+        color='primary'
+        variant='default'
+        size='small'
+        label={value}
+        style={{padding: 0, height: 18, backgroundColor: color}}
+    />
+}
 
 export const columns: XHeadCell[] = [
-    {name: 'id', label: 'ID', render: value => <LoanLink id={value} name={trimGuid(value)}/>},
-    {name: 'category', label: 'Category'},
-    {name: 'status', label: 'Status'},
-    {name: 'subStatus', label: 'Sub-Status'},
+    {
+        name: 'id', label: 'ID', render: value => <LoanLink id={value} name={trimGuid(value)}/>,
+        cellProps: {
+            style: {
+                width: 70
+            }
+        }
+    },
+    {name: 'category', label: 'Type'},
+    {
+        name: 'status', label: 'Status',
+        cellProps: {
+            style: {
+                width: 70,
+                padding: 0
+            }
+        }, render: renderStatus
+    },
+    {name: 'subStatus', label: 'Sub-Status', render: renderSubStatus},
     {
         name: 'applicantId',
         label: 'Applicant',
-        render: (value, rec) => <ContactLink id={value} name={rec.applicant.name}/>
+        render: (value, rec) => <ContactLink id={value} name={rec.applicant.name}/>,
+
     },
-    {name: 'applicationDate', label: 'Application Date', render: printDateTime},
+    {name: 'applicationDate', label: 'Date', render: printDateTime},
     {name: 'amount', label: 'Amount', render: value => printMoney(value)},
-    {name: 'assigneeId', label: 'Assignee', render: (value, rec) => <ContactLink id={value} name={getInitials(rec.assignee.name)}/>}
+    {
+        name: 'assigneeId',
+        label: 'Assignee',
+        render: (value, rec) => <ContactLink id={value} name={getInitials(rec.assignee.name)}/>
+    }
 ];
+
+
+

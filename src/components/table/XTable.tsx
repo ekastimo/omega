@@ -144,9 +144,11 @@ export default function XTable(props: XTableProps) {
                                             {
                                                 headCells.map(it => (
                                                     <TableCell
+
                                                         size="medium"
                                                         key={it.name}
                                                         align={it.numeric ? 'right' : 'left'}
+                                                        style={{whiteSpace:'nowrap'}}
                                                         {...it.cellProps}>
                                                         {it.render ? it.render(row[it.name], row) : row[it.name]}
                                                     </TableCell>

@@ -61,10 +61,16 @@ export enum LoanDocumentCategory {
 }
 
 export enum LoanSubStatus {
-    Approved = 'Approved',
-    Declined = 'Declined',
+
     MissingInformation = 'MissingInformation',
+    LowCredit = 'LowCredit',
+    ReachedLimit = 'ReachedLimit',
+    PayoutFailure = 'PayoutFailure',
+
     PaidOut = 'PaidOut',
+    Overdue = 'Overdue',
+
+    Recovered = 'Recovered',
 }
 
 export enum LoanStatus {
@@ -72,6 +78,8 @@ export enum LoanStatus {
     Closed = 'Closed',
     Error = 'Error'
 }
+
+
 
 export enum RepaymentCycle {
     Daily = 'Daily',

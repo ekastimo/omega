@@ -22,6 +22,7 @@ import {crmConstants, ICrmState} from "../../../data/redux/contacts/reducer";
 import Button from "@material-ui/core/Button";
 import RecentContacts from "./RecentContacts";
 import {IState} from "../../../data/types";
+import {columns} from "./config";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,14 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const headCells: XHeadCell[] = [
-    {name: 'id', label: 'Name', render: (value, rec) => <ContactLink id={value} name={renderName(rec)}/>},
-    {name: 'category', label: 'Category'},
-    {name: 'tin', label: 'TIN/NIN', render: (_, rec) => getNin(rec)},
-    {name: 'email', label: 'Email', render: (_, rec) => getEmail(rec)},
-    {name: 'phone', label: 'Phone', render: (_, rec) => getPhone(rec)},
-
-];
+const headCells: XHeadCell[] = [...columns];
 
 const Contacts = () => {
     const dispatch = useDispatch();

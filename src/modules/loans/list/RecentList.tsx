@@ -12,9 +12,7 @@ import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
 import {intRange} from "../../../utils/numberHelpers";
 import {fakeLoan} from "../types";
 
-
 const headCells: XHeadCell[] = [...columns];
-
 
 const RecentList = () => {
     const dispatch = useDispatch();

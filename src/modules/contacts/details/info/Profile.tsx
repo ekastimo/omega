@@ -7,7 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 import PeopleIcon from "@material-ui/icons/Business";
 import {grey} from "@material-ui/core/colors";
-import {SuccessIcon} from "../../../../components/xicons";
+import {ErrorIcon, SuccessIcon} from "../../../../components/xicons";
 
 interface IProps {
     data: IContact
@@ -68,7 +68,7 @@ const Profile = ({data}: IProps) => {
                                 &nbsp;Risk Profile
                             </Typography>
                             <Typography variant='body2'>
-                                <SuccessIcon fontSize='inherit'/>
+                                <ErrorIcon fontSize='inherit'/>
                                 &nbsp;NIN
                             </Typography>
                         </Box>

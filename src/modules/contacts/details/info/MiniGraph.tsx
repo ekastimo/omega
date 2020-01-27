@@ -1,7 +1,7 @@
 import React from 'react';
 import {Pie} from 'react-chartjs-2';
 import {makeStyles, useTheme} from '@material-ui/styles';
-import {Divider, Theme, Typography} from '@material-ui/core';
+import {colors, Divider, Theme, Typography} from '@material-ui/core';
 import AssessmentIcon from "@material-ui/icons/AssessmentOutlined";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -30,8 +30,8 @@ const MiniGraph = (props: IProps) => {
         datasets: [{
             data: [70, 30],
             backgroundColor: [
-                theme.palette.error.main,
-                theme.palette.primary.main
+                colors.red[400],
+                colors.green[400]
             ],
         }],
         labels: [

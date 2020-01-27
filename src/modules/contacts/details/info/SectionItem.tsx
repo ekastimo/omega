@@ -1,10 +1,7 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {Grid} from "@material-ui/core";
-import DetailView from "../../../../components/DetailView";
-import EditIconButton, {DeleteIconButton} from "../../../../components/EditIconButton";
-import {createFields} from "./BankAccounts";
 
 interface IProps {
     children?: any
@@ -58,7 +55,7 @@ export const SectionItemGrid = ({children, buttons}: IProps) => {
 }
 
 interface IContentProps {
-    value:string
+    value:any
     category:string
 }
 export const SectionItemContent = ({value, category}: IContentProps) => {

@@ -7,7 +7,6 @@ import EditIconButton from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import PersonEditor from "../editors/PersonEditor";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import SectionTitle from "./SectionTitle";
 
 interface IProps {
@@ -19,7 +18,7 @@ export const idFields = (data: IContact): IRec[] => {
         const {person} = data
         return [
             {
-                label: 'BirthDay',
+                label: 'D.O.B',
                 value: printDate(person.dateOfBirth)
             },
             {

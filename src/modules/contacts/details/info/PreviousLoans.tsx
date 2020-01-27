@@ -15,7 +15,7 @@ import uuid from 'uuid/v4'
 import {trimGuid} from "../../../../utils/stringHelpers";
 import LoanLink from "../../../../components/links/LoanLink";
 import {printDateTime} from "../../../../utils/dateHelpers";
-import {printMoney} from "../../../../utils/numberHelpers";
+import {printMoney, randomInt} from "../../../../utils/numberHelpers";
 import {ErrorIcon, SuccessIcon} from "../../../../components/xicons";
 import {useTheme} from "@material-ui/styles";
 
@@ -27,6 +27,7 @@ interface ILoan {
     id:string
     applicationDate: Date
     amount: number
+    interest: number
     status: LoanStatus
 }
 
@@ -41,62 +42,68 @@ const loans: ILoan[] = [
         id: uuid(),
         applicationDate: new Date(),
         amount: 100000,
-        status: LoanStatus.HEALTHY
+        status: LoanStatus.HEALTHY,
+        interest: randomInt(8,20)
     },
     {
         id: uuid(),
         applicationDate: new Date(),
         amount: 150000,
-        status: LoanStatus.HEALTHY
+        status: LoanStatus.HEALTHY,
+        interest: randomInt(8,20)
     },
     {
         id: uuid(),
         applicationDate: new Date(),
         amount: 25000,
-        status: LoanStatus.OVERDUE
+        status: LoanStatus.OVERDUE,
+        interest: randomInt(8,20)
     },
     {
         id: uuid(),
         applicationDate: new Date(),
         amount: 400000,
-        status: LoanStatus.HEALTHY
+        status: LoanStatus.HEALTHY,
+        interest: randomInt(8,20)
     }
 ];
 
 const PreviousLoans = (props: IProps) => {
     const theme: Theme = useTheme();
     const title = <div style={{display: 'flex', flexDirection: 'row' ,paddingBottom:theme.spacing(1)}}>
-        <Typography variant='body2'>&nbsp;<b>RECENT LOANS</b></Typography>
+        <Typography variant='body2'><b>RECENT LOANS</b></Typography>
     </div>
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={0}>
             <Grid item xs={12}>
-                <Box display="flex" px={1}>
+                <Box display="flex" >
                     <Box flexGrow={1} pt={1}>
                         {title}
                     </Box>
                 </Box>
-                {/*<Divider/>*/}
+                <Divider/>
             </Grid>
             <Grid item xs={12}>
                 <TableContainer >
                     <Table  aria-label="simple table" size='small'>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Loan ID</TableCell>
+                                <TableCell style={{paddingLeft:2}}>Loan ID</TableCell>
                                 <TableCell >Date</TableCell>
-                                <TableCell >Amount</TableCell>
+                                <TableCell >Principle</TableCell>
+                                <TableCell >Interest (%)</TableCell>
                                 <TableCell >Status</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {loans.map(row => (
                                 <TableRow key={row.id}>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" style={{paddingLeft:4}}>
                                         <LoanLink id={row.id} name={trimGuid(row.id)}/>
                                     </TableCell>
                                     <TableCell >{printDateTime(row.applicationDate)}</TableCell>
                                     <TableCell >{printMoney(row.amount)}</TableCell>
+                                    <TableCell  >{row.interest}</TableCell>
                                     <TableCell >{
                                         row.status===LoanStatus.HEALTHY?
                                             <SuccessIcon fontSize='small'/>:<ErrorIcon fontSize='small'/>

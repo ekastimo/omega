@@ -4,13 +4,12 @@ import {IContact, IEmail} from "../../types";
 import EmailEditor from "../editors/EmailEditor";
 import EditIconButton, {AddIconButton, DeleteIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
 import {trimString} from "../../../../utils/stringHelpers";
 import SectionTitle from "./SectionTitle";
 import SectionItem, {SectionItemContent} from "./SectionItem";
+import EmailLink from "../../../../components/links/EmalLink";
 
 interface IProps {
     data: IContact
@@ -51,14 +50,14 @@ const Emails = (props: IProps) => {
                 {/*<Divider/>*/}
             </Grid>
             {emails.map(it => (
-                <Grid item xs={12} key={it.id}>
+                <Grid item xs={12} key={it.id} >
                     <SectionItem buttons={
-                        <Box>
+                        <Box style={{padding:0}}>
                             <EditIconButton onClick={handleClick(it)}/>
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <SectionItemContent value={trimString(it.value,20)} category={it.category}/>
+                        <SectionItemContent value={<EmailLink value={trimString(it.value,20)}/>} category={it.category}/>
                     </SectionItem>
                 </Grid>
             ))}

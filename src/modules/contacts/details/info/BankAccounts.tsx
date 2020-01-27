@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import SectionTitle from "./SectionTitle";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {SectionItemGrid} from "./SectionItem";
+import {Divider} from "@material-ui/core";
 
 interface IProps {
     data: IContact
@@ -63,11 +64,11 @@ const BankAccounts = (props: IProps) => {
         <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
-                    title='BankAccounts'
+                    title='Bank Accounts'
                     editButton={<AddIconButton onClick={handleNew}/>}
                     icon={<MailIcon fontSize='small'/>}
                 />
-                {/*<Divider/>*/}
+                <Divider/>
             </Grid>
             {bankAccounts.map(it => (
                 <Grid item xs={6} key={it.id}>

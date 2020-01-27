@@ -5,7 +5,7 @@ export const printDateTime = (value: any): string => {
         return printDateTime(strToDate(value))
     }
     if (isValid(value))
-        return format(value, 'yyyy.MM.dd HH:mm')
+        return format(value, 'dd.MM.yyyy HH:mm')
     else
         return ''
 }
@@ -66,7 +66,7 @@ export const printDate = (value: any): string => {
         return printDate(strToDate(value))
     }
     if (isValid(value))
-        return format(value, 'yyyy.MM.dd')
+        return format(value, 'dd.MM.yyyy')
     else
         return ''
 }
