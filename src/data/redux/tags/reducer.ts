@@ -1,7 +1,7 @@
-import {ITag} from "../../modules/settings/tags/types";
+import {ITag} from "../../../modules/settings/tags/types";
 import {Dispatch} from "redux";
-import {search} from "../../utils/ajax";
-import {remoteRoutes} from "../constants";
+import {search} from "../../../utils/ajax";
+import {remoteRoutes} from "../../constants";
 
 export const tagConstants = {
     tagsStartLoading: "tagsStartLoading",

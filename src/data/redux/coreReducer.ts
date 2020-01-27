@@ -1,5 +1,5 @@
-import {AUTH_TOKEN_KEY, AUTH_USER_KEY} from "./constants";
-import {ILoginResponse} from "./types";
+import {AUTH_TOKEN_KEY, AUTH_USER_KEY} from "../constants";
+import {ILoginResponse} from "../types";
 
 const initialState: any = {
     splash: true,

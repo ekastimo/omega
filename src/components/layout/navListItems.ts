@@ -13,7 +13,7 @@ export const menuItems = [
     {
         icon: MoneyIcon,
         name: "Loans",
-        route: localRoutes.cases
+        route: localRoutes.loans
     },
     {
         icon: PeopleIcon,

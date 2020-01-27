@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {localRoutes} from "../data/constants";
+import {localRoutes} from "../../data/constants";
 import {useTheme} from "@material-ui/core";
-import {linkColor} from "../theme/custom-colors";
+import {linkColor} from "../../theme/custom-colors";
 
 interface IProps {
     id: string

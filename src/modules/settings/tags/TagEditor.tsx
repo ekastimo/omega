@@ -12,8 +12,8 @@ import {remoteRoutes} from "../../../data/constants";
 import {useDispatch} from 'react-redux'
 import {handleSubmission, ISubmission} from "../../../utils/formHelpers";
 import {ITag, tagCategories} from "./types";
-import {tagConstants, tagsDeleteTag} from "../../../data/tags/reducer";
-import {coreStartGlobalLoader, coreStopGlobalLoader} from "../../../data/coreActions";
+import {tagConstants, tagsDeleteTag} from "../../../data/redux/tags/reducer";
+import {coreStartGlobalLoader, coreStopGlobalLoader} from "../../../data/redux/coreActions";
 import {del} from "../../../utils/ajax";
 import XColorPicker from "../../../components/inputs/XColorPicker";
 

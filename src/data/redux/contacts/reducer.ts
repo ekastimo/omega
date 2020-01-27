@@ -1,4 +1,4 @@
-import {IAddress, IContact, IEmail, IIdentification, IPerson, IPhone} from "../../modules/contacts/types";
+import {IAddress, IContact, IEmail, IIdentification, IPerson, IPhone} from "../../../modules/contacts/types";
 
 export const crmConstants = {
     crmFetchAll: "crmFetchAll",

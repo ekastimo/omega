@@ -12,7 +12,7 @@ import XCheckBoxInput from "../../../../components/inputs/XCheckBoxInput";
 import {IAddress} from "../../types";
 import {remoteRoutes} from "../../../../data/constants";
 import {useDispatch} from 'react-redux'
-import {crmConstants} from "../../../../data/contacts/reducer";
+import {crmConstants} from "../../../../data/redux/contacts/reducer";
 import {handleSubmission, ISubmission} from "../../../../utils/formHelpers";
 
 interface IProps {

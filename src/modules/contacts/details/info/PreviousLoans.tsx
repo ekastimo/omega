@@ -13,7 +13,7 @@ import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import uuid from 'uuid/v4'
 import {trimGuid} from "../../../../utils/stringHelpers";
-import CaseLink from "../../../../components/CaseLink";
+import LoanLink from "../../../../components/links/LoanLink";
 import {printDateTime} from "../../../../utils/dateHelpers";
 import {printMoney} from "../../../../utils/numberHelpers";
 import {ErrorIcon, SuccessIcon} from "../../../../components/xicons";
@@ -93,7 +93,7 @@ const PreviousLoans = (props: IProps) => {
                             {loans.map(row => (
                                 <TableRow key={row.id}>
                                     <TableCell component="th" scope="row">
-                                        <CaseLink id={row.id} name={trimGuid(row.id)}/>
+                                        <LoanLink id={row.id} name={trimGuid(row.id)}/>
                                     </TableCell>
                                     <TableCell >{printDateTime(row.applicationDate)}</TableCell>
                                     <TableCell >{printMoney(row.amount)}</TableCell>

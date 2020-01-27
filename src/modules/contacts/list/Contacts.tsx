@@ -7,7 +7,7 @@ import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
 import Filter from "./Filter";
-import ContactLink from "../../../components/ContactLink";
+import ContactLink from "../../../components/links/ContactLink";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import Loading from "../../../components/Loading";
@@ -18,9 +18,10 @@ import AddIcon from "@material-ui/icons/Add";
 import UploadIcon from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
-import {crmConstants, ICrmState} from "../../../data/contacts/reducer";
+import {crmConstants, ICrmState} from "../../../data/redux/contacts/reducer";
 import Button from "@material-ui/core/Button";
 import RecentContacts from "./RecentContacts";
+import {IState} from "../../../data/types";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -51,7 +52,7 @@ const headCells: XHeadCell[] = [
 const Contacts = () => {
     const dispatch = useDispatch();
     const [createDialog, setCreateDialog] = useState(false);
-    const {data, loading}: ICrmState = useSelector((state: any) => state.crm)
+    const {data, loading}: ICrmState = useSelector((state: IState) => state.crm)
 
     const [filter, setFilter] = useState<IContactsFilter>({});
     const classes = useStyles();

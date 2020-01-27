@@ -17,7 +17,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
 import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
 import {getInitials} from "../utils/stringHelpers";
-import {handleLogout} from "../data/coreActions";
+import {handleLogout} from "../data/redux/coreActions";
 
 export const BarView = (props: any) => {
     const profile = useSelector((state: IState) => state.core.user)

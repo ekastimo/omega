@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {RouteComponentProps, withRouter} from "react-router";
-import Navigation from "../../../components/layout/Layout";
+import Layout from "../../../components/layout/Layout";
 import {getRouteParam} from "../../../utils/routHelpers";
 import {IContact} from "../types";
 import Loading from "../../../components/Loading";
@@ -18,7 +18,7 @@ import Info from "./info/Info";
 import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import {useDispatch, useSelector} from "react-redux";
-import {crmConstants} from "../../../data/contacts/reducer";
+import {crmConstants} from "../../../data/redux/contacts/reducer";
 
 interface IProps extends RouteComponentProps {
 
@@ -97,7 +97,7 @@ const Details = (props: IProps) => {
     }, [dispatch, contactId])
     const hasError = !loading && !data
     return (
-        <Navigation>
+        <Layout>
             {loading && <Loading/>}
             {hasError && <Error text='Failed load contact'/>}
             {
@@ -133,7 +133,7 @@ const Details = (props: IProps) => {
                     </Grid>
                 </div>
             }
-        </Navigation>
+        </Layout>
     );
 }
 

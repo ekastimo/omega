@@ -1,9 +1,10 @@
 import React from "react"
+import {random,range} from 'lodash'
 
 export const printMoney = (money: number) => {
     try {
         return money ? <span>
-            {new Intl.NumberFormat('en-US', {maximumFractionDigits: 2}).format(money)}/=
+            {new Intl.NumberFormat('en-US', {maximumFractionDigits: 2}).format(money)}&nbsp;/=
             </span> : ""
     } catch (e) {
         return ''
@@ -32,4 +33,12 @@ export const printInteger = (number: number) => {
     } catch (e) {
         return ''
     }
+}
+
+export const randomInt = (min = 0, max = 10): number => {
+    return random(min, max)
+}
+
+export const intRange = (min = 0, max = 10): number[] => {
+    return range(min, max)
 }

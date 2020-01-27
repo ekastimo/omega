@@ -27,12 +27,12 @@ export const redux = {
 };
 
 export const localRoutes = {
-
     dashboard: '/dashboard',
-    contacts: '/people/contacts',
-    contactsDetails: '/people/contacts/:contactId',
-    cases: '/cases',
-    casesDetails: '/cases/:caseId',
+    contacts: '/contacts',
+    contactsDetails: '/contacts/:contactId',
+
+    loans: '/loans',
+    loansDetails: '/loans/:loanId',
 
     users: '/admin/users',
     usersGroups: '/admin/user-groups',

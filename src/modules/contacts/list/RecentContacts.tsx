@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import {getEmail, getNin, getPhone, IContactsFilter, renderName} from "../types";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
-import ContactLink from "../../../components/ContactLink";
+import ContactLink from "../../../components/links/ContactLink";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import Loading from "../../../components/Loading";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
-import {crmConstants, ICrmState} from "../../../data/contacts/reducer";
+import {crmConstants, ICrmState} from "../../../data/redux/contacts/reducer";
 
 
 const headCells: XHeadCell[] = [

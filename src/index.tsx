@@ -4,7 +4,7 @@ import {Provider} from 'react-redux'
 import {ThemeProvider,} from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import 'react-toastify/dist/ReactToastify.css';
-import store from "./data/store";
+import store from "./data/redux/store";
 import 'react-sortable-tree/style.css';
 import './index.css';
 import App from './App';

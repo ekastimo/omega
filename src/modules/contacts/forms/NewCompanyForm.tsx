@@ -11,7 +11,7 @@ import {toOptions} from "../../../components/inputs/inputHelpers";
 
 import {remoteRoutes} from "../../../data/constants";
 import {useDispatch} from 'react-redux'
-import {crmConstants} from "../../../data/contacts/reducer";
+import {crmConstants} from "../../../data/redux/contacts/reducer";
 import {post} from "../../../utils/ajax";
 import Toast from "../../../utils/Toast";
 import XSelectInput from "../../../components/inputs/XSelectInput";

@@ -63,7 +63,7 @@ function XTableHead(props: XTableHeadProps) {
                             direction={order}
                             onClick={createSortHandler(headCell.name)}
                         >
-                            <Typography variant='body2'><b>{headCell.label}</b></Typography>
+                            <Typography variant='body2'><b>{headCell.label.toUpperCase()}</b></Typography>
                             {orderBy === headCell.name ? (
                                 <span className={classes.visuallyHidden}>
                                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
