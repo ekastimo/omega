@@ -11,33 +11,34 @@ import {SvgIcon} from "@material-ui/core";
 
 interface IProps {
     onClick: () => any
+    style?: any
 }
 
-export const HiddenIcon = ()=>{
+export const HiddenIcon = () => {
     return <SvgIcon style={{fontSize: '1rem', margin: 4}}/>
 }
 
-export const EditIconButton = ({onClick}: IProps) => {
+export const EditIconButton = ({onClick, style}: IProps) => {
     return (
-        <IconButton aria-label="delete" size="small" title='Edit' color='primary' style={{marginTop: 5}}
+        <IconButton aria-label="delete" size="small" title='Edit' color='primary' style={{...style}}
                     onClick={onClick}>
             <EditIcon style={{fontSize: '1rem', margin: 4}}/>
         </IconButton>
     );
 }
 
-export const DeleteIconButton = ({onClick}: IProps) => {
+export const DeleteIconButton = ({onClick, style}: IProps) => {
     return (
-        <IconButton aria-label="delete" size="small" title='Edit' style={{marginTop: 5, color: errorColor}}
+        <IconButton aria-label="delete" size="small" title='Edit' style={{color: errorColor,...style}}
                     onClick={onClick}>
             <DeleteIcon style={{fontSize: '1rem', margin: 4}}/>
         </IconButton>
     );
 }
 
-export const AddIconButton = ({onClick}: IProps) => {
+export const AddIconButton = ({onClick, style}: IProps) => {
     return (
-        <IconButton aria-label="add-new" size="small" title='Add New' color='primary' style={{marginTop: 5}}
+        <IconButton aria-label="add-new" size="small" title='Add New' color='primary' style={{...style}}
                     onClick={onClick}>
             <AddIcon/>
         </IconButton>

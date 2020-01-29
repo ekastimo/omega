@@ -61,7 +61,7 @@ interface IContentProps {
 export const SectionItemContent = ({value, category}: IContentProps) => {
 
     return (
-        <Box pt={1}>
+        <Box pb={1}>
             <Typography variant='body1' noWrap display='inline'>{value}</Typography>
             <Typography variant='caption' display='inline'>&nbsp;({category}) &nbsp;&nbsp;</Typography>
         </Box>

@@ -19,13 +19,18 @@ const useStyles = makeStyles((theme: Theme) =>
             width: '100%'
         },
         row: {
+            marginLeft: 0,
+            paddingLeft: 0,
             paddingBottom: theme.spacing(2),
         },
         col: {
-            paddingLeft:2,
+            marginLeft: 0,
+            paddingLeft: 0,
             paddingBottom: theme.spacing(1),
         },
         label: {
+            margin: 0,
+            paddingLeft: 0,
             paddingRight: theme.spacing(2),
             width: 'auto',
         },
@@ -74,7 +79,7 @@ const TableView = ({data, useGrid = false}: IProps) => {
                             {row.label}
                         </DataLabel>
                     </td>
-                    <td className={clsx(classes.col, classes.value)} >
+                    <td className={clsx(classes.col, classes.value)}>
                         <DataValue>
                             {row.value}
                         </DataValue>
@@ -115,3 +120,30 @@ const DetailView = ({data, columns, useGrid}: IProps) => {
 
 
 export default DetailView;
+
+
+export const DetailViewX = ({data}: IProps) => {
+    return (
+        <Box>
+            {
+                data.map((rec, index) => (
+                    <Box display='flex' key={rec.label} pb={1}>
+                        <Box width='40%'>
+                            <DataLabel>
+                                {rec.label}
+                            </DataLabel>
+                        </Box>
+                        <Box width='70%'>
+                            <DataValue>
+                                {rec.value}
+                            </DataValue>
+                        </Box>
+                    </Box>
+                ))
+            }
+        </Box>
+    );
+}
+
+
+

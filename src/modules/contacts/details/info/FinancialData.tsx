@@ -48,7 +48,7 @@ const FinancialData = ({data}: IProps) => {
             <Grid item xs={12}>
                 <SectionTitle
                     title='Financial Data'
-                    editButton={<EditIconButton onClick={handleClick}/>}
+                    editButton={<EditIconButton onClick={handleClick} style={{marginTop:5}}/>}
                     icon={ <MoneyIcon fontSize='small'/>}
                 />
                 {/*<Divider/>*/}

@@ -46,7 +46,7 @@ const Urls = (props: IProps) => {
             <Grid item xs={12}>
                 <SectionTitle
                     title='Urls'
-                    editButton={<AddIconButton onClick={handleNew}/>}
+                    editButton={<AddIconButton onClick={handleNew} style={{marginTop:5}}/>}
                     icon={<PublicIcon fontSize='small'/>}
                 />
                 {/*<Divider/>*/}
@@ -59,7 +59,7 @@ const Urls = (props: IProps) => {
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <Box pt={1}>
+                        <Box pb={1}>
                             <a href={it.value} target='_blank' rel="noopener noreferrer" style={{color:linkColor}}>
                                 <Typography variant='body1' noWrap display='inline'>{trimString(it.value,23)}</Typography>
                             </a>

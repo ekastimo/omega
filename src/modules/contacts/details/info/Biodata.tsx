@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {ContactCategory, IContact} from "../../types";
-import DetailView, {IRec} from "../../../../components/DetailView";
+import DetailView, {DetailViewX, IRec} from "../../../../components/DetailView";
 import {printDate} from "../../../../utils/dateHelpers";
 import PersonIcon from '@material-ui/icons/PermIdentity';
 import EditIconButton from "../../../../components/EditIconButton";
@@ -64,13 +64,12 @@ const BioData = ({data}: IProps) => {
             <Grid item xs={12}>
                 <SectionTitle
                     title='Basic data'
-                    editButton={<EditIconButton onClick={handleClick}/>}
+                    editButton={<EditIconButton onClick={handleClick} style={{marginTop:5}}/>}
                     icon={<PersonIcon fontSize='small'/>}
                 />
-                {/*<Divider/>*/}
             </Grid>
-            <Grid item xs={12}>
-                <DetailView data={displayData} useGrid={false}/>
+            <Grid item xs={12} style={{paddingTop:0}}>
+                <DetailViewX data={displayData}/>
             </Grid>
             <EditDialog title='Edit Basic Data' open={dialog} onClose={handleClose}>
                 <PersonEditor data={data.person} contactId={id} done={handleClose}/>

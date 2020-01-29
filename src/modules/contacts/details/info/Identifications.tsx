@@ -46,7 +46,7 @@ const Identifications = ({data}: IProps) => {
             <Grid item xs={12}>
                 <SectionTitle
                     title='Identifications'
-                    editButton={<AddIconButton onClick={handleNew}/>}
+                    editButton={<AddIconButton onClick={handleNew} style={{marginTop:5}}/>}
                     icon={ <ListIcon fontSize='small' />}
                 />
                 {/*<Divider/>*/}

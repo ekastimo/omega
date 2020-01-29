@@ -79,8 +79,6 @@ export enum LoanStatus {
     Error = 'Error'
 }
 
-
-
 export enum RepaymentCycle {
     Daily = 'Daily',
     Weekly = 'Weekly',
@@ -101,6 +99,8 @@ export enum DisbursementCategory {
     Cheque = 'Cheque',
     WireTransfer = 'WireTransfer'
 }
+
+
 
 export const fakeLoan = (): ILoan => {
     return {
@@ -137,7 +137,6 @@ export const fakeLoan = (): ILoan => {
     }
 }
 
-
 export const fakeDownPayment = (): IDownPayment => {
     return {
         id: uuid(),
@@ -156,4 +155,3 @@ export const fakeLoanDocument = (): ILoanDocument => {
         name: ''
     }
 }
-

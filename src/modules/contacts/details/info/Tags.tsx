@@ -39,21 +39,21 @@ const Tags = (props: IProps) => {
 
     return (
         <Grid container spacing={1}>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
                 <SectionTitle
                     title='Tags'
-                    editButton={<AddIconButton onClick={handleNew}/>}
+                    editButton={<AddIconButton onClick={handleNew} style={{marginTop:5}}/>}
                     icon={ <InfoIcon fontSize='small'/>}
                 />
                 {/*<Divider/>*/}
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{paddingTop:0}}>
                 {tags.map(it => (
                     <Chip
                         color='primary'
                         variant='outlined'
                         key={it.id}
-                        style={{margin:5,marginLeft:0}}
+                        style={{margin:5,marginLeft:0,marginTop:0}}
                         size='small'
                         label={it.value}
                         onDelete={handleDelete(it)}

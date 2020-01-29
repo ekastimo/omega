@@ -41,16 +41,16 @@ const Phones = (props: IProps) => {
 
     return (
         <Grid container spacing={0}>
-            <Grid item xs={12}>
+            <Grid item xs={12} >
                 <SectionTitle
                     title='Phones'
-                    editButton={<AddIconButton onClick={handleNew}/>}
+                    editButton={<AddIconButton onClick={handleNew} style={{marginTop:5}}/>}
                     icon={ <PhoneIcon fontSize='small' />}
                 />
                 {/*<Divider/>*/}
             </Grid>
             {phones.map(it => (
-                <Grid item xs={12} key={it.id}>
+                <Grid item xs={12} key={it.id} style={{paddingTop:0}}>
                     <SectionItem buttons={
                         <Box>
                             <EditIconButton onClick={handleClick(it)}/>

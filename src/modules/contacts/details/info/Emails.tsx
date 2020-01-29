@@ -44,7 +44,7 @@ const Emails = (props: IProps) => {
             <Grid item xs={12}>
                 <SectionTitle
                     title='Emails'
-                    editButton={<AddIconButton onClick={handleNew}/>}
+                    editButton={<AddIconButton onClick={handleNew} style={{marginTop:5}}/>}
                     icon={ <MailIcon fontSize='small'/>}
                 />
                 {/*<Divider/>*/}

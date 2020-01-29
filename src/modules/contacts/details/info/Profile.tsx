@@ -81,6 +81,10 @@ const Profile = ({data}: IProps) => {
                                 <SuccessIcon fontSize='inherit'/>
                                 &nbsp;PEP
                             </Typography>
+                            <Typography variant='body2'>
+                                <ErrorIcon fontSize='inherit'/>
+                                &nbsp;CRB
+                            </Typography>
                         </Box>
                     </Box>
 

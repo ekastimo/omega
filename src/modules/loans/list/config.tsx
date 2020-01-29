@@ -29,7 +29,7 @@ export const renderStatus = (value: LoanStatus) => {
         variant='default'
         size='small'
         label={value}
-        style={{padding: 0, height: 18, backgroundColor: color}}
+        style={{padding: 0, height: 18, backgroundColor: color,marginBottom:2}}
     />
 }
 
@@ -57,7 +57,7 @@ export const renderSubStatus = (value: LoanSubStatus) => {
         variant='default'
         size='small'
         label={value}
-        style={{padding: 0, height: 18, backgroundColor: color}}
+        style={{padding: 0, height: 18, backgroundColor: color,marginBottom:2}}
     />
 }
 
@@ -70,6 +70,7 @@ export const columns: XHeadCell[] = [
             }
         }
     },
+    {name: 'applicationDate', label: 'Date', render: printDateTime},
     {name: 'category', label: 'Type'},
     {
         name: 'status', label: 'Status',
@@ -87,7 +88,7 @@ export const columns: XHeadCell[] = [
         render: (value, rec) => <ContactLink id={value} name={rec.applicant.name}/>,
 
     },
-    {name: 'applicationDate', label: 'Date', render: printDateTime},
+
     {name: 'amount', label: 'Amount', render: value => printMoney(value)},
     {
         name: 'assigneeId',

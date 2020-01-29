@@ -10,6 +10,7 @@ import {hasValue} from "./inputHelpers";
 interface IProps {
     name: string
     label: string
+    value?: string
     inputVariant?: 'outlined'|'filled'|'standard'
 }
 

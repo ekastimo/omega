@@ -6,25 +6,18 @@ import {IContactsFilter} from "../../contacts/types";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
-import Filter from "../../contacts/list/Filter";
-import {search} from "../../../utils/ajax";
-import {remoteRoutes} from "../../../data/constants";
+
 import Loading from "../../../components/Loading";
 import Box from "@material-ui/core/Box";
-import EditDialog from "../../../components/EditDialog";
-import NewPersonForm from "../../contacts/forms/NewPersonForm";
-import AddIcon from "@material-ui/icons/Add";
-import UploadIcon from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
-import Button from "@material-ui/core/Button";
-import RecentContacts from "../../contacts/list/RecentContacts";
 import {IState} from "../../../data/types";
 import {columns} from "./config";
 import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
 import {intRange} from "../../../utils/numberHelpers";
 import {fakeLoan} from "../types";
 import RecentList from "./RecentList";
+import Filter from "./Filter";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
