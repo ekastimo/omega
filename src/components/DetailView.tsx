@@ -91,7 +91,6 @@ const TableView = ({data, useGrid = false}: IProps) => {
             </tbody>
         </table>
     );
-
 }
 
 const DetailView = ({data, columns, useGrid}: IProps) => {
@@ -142,6 +141,33 @@ export const DetailViewX = ({data}: IProps) => {
                 ))
             }
         </Box>
+    );
+}
+
+
+export const BoldTableView = ({data}: IProps) => {
+    const classes = useStyles();
+    return (
+        <table className={classes.root}>
+            <tbody>
+            {data.map(row => row.label !== '' ? (
+                <tr key={row.label} className={classes.row}>
+                    <td className={clsx(classes.col, classes.label)}>
+                        <DataLabel>
+                            <b>{row.label}</b>
+                        </DataLabel>
+                    </td>
+                    <td className={clsx(classes.col, classes.value)}>
+                        <DataValue>
+                            {row.value}
+                        </DataValue>
+                    </td>
+                </tr>
+            ) : <tr key={row.label} className={classes.row}>
+                <td colSpan={2}/>
+                &nbsp;</tr>)}
+            </tbody>
+        </table>
     );
 }
 

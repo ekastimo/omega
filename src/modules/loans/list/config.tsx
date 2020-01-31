@@ -157,3 +157,8 @@ export const personLoansSumHeadCells: XHeadCell[] = [...columns.filter(it => {
 
 
 
+
+
+
+
+
