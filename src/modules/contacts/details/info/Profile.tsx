@@ -13,6 +13,21 @@ interface IProps {
     data: IContact
 }
 
+const CBLabel = ({children, ok = true}: any) => {
+    return <Box display='flex'>
+        <Box width={15} style={{display:'inline-block',height:'100%' ,paddingTop:2}} >
+            <Typography variant='body2' component="span">
+                {ok ? <SuccessIcon fontSize='inherit'/> : <ErrorIcon fontSize='inherit'/>}
+            </Typography>
+        </Box>
+        <Box style={{display:'inline-block' ,height:'100%' }}>
+            <Typography variant='body2' component="span" >
+                {children}
+            </Typography>
+        </Box>
+    </Box>
+}
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -46,8 +61,8 @@ const Profile = ({data}: IProps) => {
                         <Typography variant='h5'>{renderName(data)}</Typography>
                         <Typography variant='body2'>{data.category}</Typography>
                         {
-                            isPerson?
-                                <Typography variant='body2'>NIN: {nin}</Typography>:
+                            isPerson ?
+                                <Typography variant='body2'>NIN: {nin}</Typography> :
                                 <Typography variant='body2'>TIN: {nin}</Typography>
                         }
 
@@ -55,39 +70,20 @@ const Profile = ({data}: IProps) => {
                 </Grid>
             </Grid>
             <Grid item sm={6}>
-                <Box style={{ border: `1px solid ${grey[400]}`}} p={1}>
+                <Box style={{border: `1px solid ${grey[400]}`}} p={1}>
                     <Box pb={1}><Typography variant='body2'><b>KYC Summary</b></Typography></Box>
-                    <Box display='flex' >
+                    <Box display='flex'>
                         <Box width='30%'>
-                            <Typography variant='body2'>
-                                <SuccessIcon fontSize='inherit'/>
-                                &nbsp;AML Ok
-                            </Typography>
-                            <Typography variant='body2'>
-                                <SuccessIcon fontSize='inherit'/>
-                                &nbsp;Risk Profile
-                            </Typography>
-                            <Typography variant='body2'>
-                                <ErrorIcon fontSize='inherit'/>
-                                &nbsp;NIN
-                            </Typography>
+                            <CBLabel>AML Ok</CBLabel>
+                            <CBLabel ok={false}>Risk Profile</CBLabel>
+                            <CBLabel>NIN</CBLabel>
                         </Box>
                         <Box width='50%'>
-                            <Typography variant='body2'>
-                                <SuccessIcon fontSize='inherit'/>
-                                &nbsp;Sanctions List
-                            </Typography>
-                            <Typography variant='body2'>
-                                <SuccessIcon fontSize='inherit'/>
-                                &nbsp;PEP
-                            </Typography>
-                            <Typography variant='body2'>
-                                <ErrorIcon fontSize='inherit'/>
-                                &nbsp;CRB
-                            </Typography>
+                            <CBLabel ok={false}>Sanctions</CBLabel>
+                            <CBLabel>PEP</CBLabel>
+                            <CBLabel>CRB</CBLabel>
                         </Box>
                     </Box>
-
                 </Box>
             </Grid>
         </Grid>

@@ -6,6 +6,7 @@ import {toOptions} from "../../../components/inputs/inputHelpers";
 import {Box} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import PSelectInput from "../../../components/plain-inputs/PSelectInput";
+import PDateInput from "../../../components/plain-inputs/PDateInput";
 
 interface IProps {
     onFilter: (data: any) => any
@@ -14,7 +15,9 @@ interface IProps {
 
 const Filter = ({onFilter, loading}: IProps) => {
     const [data, setData] = useState({
-        query: '',
+
+        from: null,
+        to: null,
         category: '',
         contactType: '',
         email: '',
@@ -29,7 +32,12 @@ const Filter = ({onFilter, loading}: IProps) => {
     function handleChange(event: React.ChangeEvent<any>) {
         const name = event.target.name
         const value = event.target.value
-        console.log({name,value})
+        const newData = {...data, [name]: value}
+        setData({...newData})
+        submitForm(newData)
+    }
+
+    const handleValueChange = (name: string) => (value: any) => {
         const newData = {...data, [name]: value}
         setData({...newData})
         submitForm(newData)
@@ -38,14 +46,23 @@ const Filter = ({onFilter, loading}: IProps) => {
     return <form>
         <Grid spacing={3} container>
             <Grid item xs={12}>
-                <TextField
-                    name="query"
-                    value={data['query']}
-                    onChange={handleChange}
-                    label="Name"
-                    variant="outlined"
-                    fullWidth
-                    size='small'
+                <PDateInput
+                    name="from"
+                    value={data['from']}
+                    onChange={handleValueChange('from')}
+                    label="From"
+                    variant="inline"
+                    inputVariant='outlined'
+                />
+            </Grid>
+            <Grid item xs={12}>
+                <PDateInput
+                    name="to"
+                    value={data['to']}
+                    onChange={handleValueChange('to')}
+                    label="To"
+                    variant="inline"
+                    inputVariant='outlined'
                 />
             </Grid>
             <Grid item xs={12}>
@@ -96,7 +113,7 @@ const Filter = ({onFilter, loading}: IProps) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <Box display="flex" flexDirection="row-reverse" >
+                <Box display="flex" flexDirection="row-reverse">
                     <Button
                         disabled={loading}
                         variant="outlined"

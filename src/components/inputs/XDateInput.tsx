@@ -6,6 +6,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, DatePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers'
 import {hasValue} from "./inputHelpers";
+import {dateFormat} from "../../utils/dateHelpers";
 
 interface IProps {
     name: string
@@ -37,7 +38,7 @@ const Component = ({field, form, ...other}: FieldProps) => {
                 <DatePicker
                     fullWidth
                     margin="normal"
-                    format="dd/MM/yyyy"
+                    format={dateFormat}
                     name={field.name}
                     value={field.value || null}
                     helperText={showError && error}
@@ -55,7 +56,7 @@ const Component = ({field, form, ...other}: FieldProps) => {
                     fullWidth
                     variant="inline"
                     margin="normal"
-                    format="dd/MM/yyyy"
+                    format={dateFormat}
                     KeyboardButtonProps={{
                         'aria-label': 'change date',
                     }}

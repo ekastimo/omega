@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from '@material-ui/core/Table';
+import Table, {Size} from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -23,10 +23,12 @@ interface XTableProps {
     handleSelection?: (id: any) => any
     onFilterToggle?: () => any
     usePagination?: boolean
+    headerSize?: Size
+    bodySize?: Size
 }
 
 export default function XTable(props: XTableProps) {
-    const {usePagination=true,title, headCells, data, useCheckbox, initialSortBy = 'id', initialOrder = 'asc', initialRowsPerPage = 10} = props
+    const {usePagination=true,title, headCells, data, useCheckbox, initialSortBy = 'id', initialOrder = 'asc', initialRowsPerPage = 10, headerSize='medium',bodySize='medium'} = props
     const classes = useTableStyles();
     const [order, setOrder] = React.useState<Order>(initialOrder);
     const [orderBy, setOrderBy] = React.useState<string>(initialSortBy);
@@ -106,6 +108,7 @@ export default function XTable(props: XTableProps) {
                         size="small"
                     >
                         <XTableHead
+                            headerSize={headerSize}
                             headCells={headCells}
                             classes={classes}
                             numSelected={selected.length}
@@ -134,7 +137,7 @@ export default function XTable(props: XTableProps) {
                                         >
                                             {
                                                 useCheckbox &&
-                                                <TableCell padding="checkbox">
+                                                <TableCell padding="checkbox" size={bodySize}>
                                                     <Checkbox
                                                         checked={isItemSelected}
                                                         inputProps={{'aria-labelledby': labelId}}
@@ -144,8 +147,7 @@ export default function XTable(props: XTableProps) {
                                             {
                                                 headCells.map(it => (
                                                     <TableCell
-
-                                                        size="medium"
+                                                        size={bodySize}
                                                         key={it.name}
                                                         align={it.numeric ? 'right' : 'left'}
                                                         style={{whiteSpace:'nowrap'}}

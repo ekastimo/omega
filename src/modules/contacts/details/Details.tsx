@@ -13,12 +13,12 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Profile from "./info/Profile";
-import Groups from "./Groups";
 import Info from "./info/Info";
 import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {crmConstants} from "../../../data/redux/contacts/reducer";
+import ContactLoans from "../../loans/list/ContactLoans";
 
 interface IProps extends RouteComponentProps {
 
@@ -127,7 +127,7 @@ const Details = (props: IProps) => {
                                 <Info data={data}/>
                             </TabPanel>
                             <TabPanel value={value} index="two">
-                                <Groups/>
+                                <ContactLoans contact={data}/>
                             </TabPanel>
                         </Grid>
                     </Grid>

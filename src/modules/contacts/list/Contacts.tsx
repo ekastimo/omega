@@ -23,6 +23,7 @@ import Button from "@material-ui/core/Button";
 import RecentContacts from "./RecentContacts";
 import {IState} from "../../../data/types";
 import {columns} from "./config";
+import ContactUpload from "../details/editors/ContactUpload";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,6 +47,7 @@ const headCells: XHeadCell[] = [...columns];
 const Contacts = () => {
     const dispatch = useDispatch();
     const [createDialog, setCreateDialog] = useState(false);
+    const [uploadDialog, setUploadDialog] = useState(false);
     const {data, loading}: ICrmState = useSelector((state: IState) => state.crm)
 
     const [filter, setFilter] = useState<IContactsFilter>({});
@@ -83,6 +85,14 @@ const Contacts = () => {
         setCreateDialog(true)
     }
 
+    function handleUpload(){
+        setUploadDialog(true)
+    }
+
+    function closeUploadDialog(){
+        setUploadDialog(false)
+    }
+
     function closeCreateDialog() {
         setCreateDialog(false)
     }
@@ -113,7 +123,7 @@ const Contacts = () => {
                                             variant="outlined"
                                             color="primary"
                                             startIcon={<UploadIcon/>}
-                                            //onClick={onAddNew}
+                                            onClick={handleUpload}
                                             style={{marginLeft: 8}}
                                         >
                                             Upload&nbsp;&nbsp;
@@ -150,6 +160,7 @@ const Contacts = () => {
             <EditDialog title="New Person" open={createDialog} onClose={closeCreateDialog}>
                 <NewPersonForm data={{}} done={closeCreateDialog}/>
             </EditDialog>
+            <ContactUpload show={uploadDialog} onClose={closeUploadDialog}/>
         </Layout>
     );
 }

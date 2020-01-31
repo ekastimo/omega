@@ -18,6 +18,7 @@ import {printDateTime} from "../../../../utils/dateHelpers";
 import {printMoney, randomInt} from "../../../../utils/numberHelpers";
 import {ErrorIcon, SuccessIcon} from "../../../../components/xicons";
 import {useTheme} from "@material-ui/styles";
+import ContactLoansSummary from "../../../loans/list/ContactLoansSummary";
 
 interface IProps {
     data: IContact
@@ -68,7 +69,7 @@ const loans: ILoan[] = [
     }
 ];
 
-const PreviousLoans = (props: IProps) => {
+const PreviousLoans = ({data}: IProps) => {
     const theme: Theme = useTheme();
     const title = <div style={{display: 'flex', flexDirection: 'row' ,paddingBottom:theme.spacing(1)}}>
         <Typography variant='body2'><b>RECENT LOANS</b></Typography>
@@ -84,35 +85,7 @@ const PreviousLoans = (props: IProps) => {
                 <Divider/>
             </Grid>
             <Grid item xs={12}>
-                <TableContainer >
-                    <Table  aria-label="simple table" size='small'>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell style={{paddingLeft:2}}>Loan ID</TableCell>
-                                <TableCell >Date</TableCell>
-                                <TableCell >Principle</TableCell>
-                                <TableCell >Interest (%)</TableCell>
-                                <TableCell >Status</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {loans.map(row => (
-                                <TableRow key={row.id}>
-                                    <TableCell component="th" scope="row" style={{paddingLeft:4}}>
-                                        <LoanLink id={row.id} name={trimGuid(row.id)}/>
-                                    </TableCell>
-                                    <TableCell >{printDateTime(row.applicationDate)}</TableCell>
-                                    <TableCell >{printMoney(row.amount)}</TableCell>
-                                    <TableCell  >{row.interest}</TableCell>
-                                    <TableCell >{
-                                        row.status===LoanStatus.HEALTHY?
-                                            <SuccessIcon fontSize='small'/>:<ErrorIcon fontSize='small'/>
-                                    }</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <ContactLoansSummary contact={data}/>
             </Grid>
 
         </Grid>

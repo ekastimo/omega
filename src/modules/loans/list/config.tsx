@@ -4,7 +4,7 @@ import ContactLink from "../../../components/links/ContactLink";
 import LoanLink from "../../../components/links/LoanLink";
 import {getInitials, trimGuid} from "../../../utils/stringHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
-import {printDateTime} from "../../../utils/dateHelpers";
+import {printDate, printDateTime} from "../../../utils/dateHelpers";
 import Chip from "@material-ui/core/Chip";
 import {errorColor, successColor, warningColor} from "../../../theme/custom-colors";
 import {LoanStatus, LoanSubStatus} from "../types";
@@ -29,7 +29,7 @@ export const renderStatus = (value: LoanStatus) => {
         variant='default'
         size='small'
         label={value}
-        style={{padding: 0, height: 18, backgroundColor: color,marginBottom:2}}
+        style={{padding: 0, height: 18, backgroundColor: color, marginBottom: 2}}
     />
 }
 
@@ -57,7 +57,7 @@ export const renderSubStatus = (value: LoanSubStatus) => {
         variant='default'
         size='small'
         label={value}
-        style={{padding: 0, height: 18, backgroundColor: color,marginBottom:2}}
+        style={{padding: 0, height: 18, backgroundColor: color, marginBottom: 2}}
     />
 }
 
@@ -70,8 +70,22 @@ export const columns: XHeadCell[] = [
             }
         }
     },
-    {name: 'applicationDate', label: 'Date', render: printDateTime},
-    {name: 'category', label: 'Type'},
+    {
+        name: 'applicationDate', label: 'Date', render: printDateTime,
+        cellProps: {
+            style: {
+                width: 130
+            }
+        }
+    },
+    {
+        name: 'category', label: 'Type',
+        cellProps: {
+            style: {
+                width: 70
+            }
+        }
+    },
     {
         name: 'status', label: 'Status',
         cellProps: {
@@ -81,21 +95,65 @@ export const columns: XHeadCell[] = [
             }
         }, render: renderStatus
     },
-    {name: 'subStatus', label: 'Sub-Status', render: renderSubStatus},
+    {
+        name: 'subStatus', label: 'Sub-Status', render: renderSubStatus,
+        cellProps: {
+            style: {
+                width: 100,
+                padding: 0
+            }
+        }
+    },
     {
         name: 'applicantId',
         label: 'Applicant',
         render: (value, rec) => <ContactLink id={value} name={rec.applicant.name}/>,
-
     },
 
     {name: 'amount', label: 'Amount', render: value => printMoney(value)},
     {
         name: 'assigneeId',
         label: 'Assignee',
-        render: (value, rec) => <ContactLink id={value} name={getInitials(rec.assignee.name)}/>
+        render: (value, rec) => <ContactLink id={value} name={getInitials(rec.assignee.name)}/>,
+        cellProps: {
+            style: {
+                width: 60,
+                padding: 0
+            }
+        }
     }
 ];
+
+
+export const companyLoansHeadCells: XHeadCell[] = [...columns];
+export const personLoansHeadCells: XHeadCell[] = [...columns.filter(it => {
+    return it.name !== 'applicantId'
+}).map(({cellProps, ...rest}) => ({...rest}))];
+
+export const contactLoanSumHeaderCells: XHeadCell[] = [
+    {
+        name: 'id', label: 'ID', render: value => <LoanLink id={value} name={trimGuid(value)}/>,
+        cellProps: {style: {width: 70}}
+    },
+    {name: 'applicationDate', label: 'Date', render: printDate},
+
+    {
+        name: 'status', label: 'Status',
+        render: renderStatus
+    },
+    {name: 'subStatus', label: 'Sub-Status', render: renderSubStatus},
+    {
+        name: 'applicantId',
+        label: 'Applicant',
+        render: (value, rec) => <ContactLink id={value} name={getInitials(rec.applicant.name)}/>,
+    },
+    {name: 'amount', label: 'Amount', render: value => printMoney(value)},
+
+];
+
+export const personLoansSumHeadCells: XHeadCell[] = [...columns.filter(it => {
+    return it.name !== 'applicantId'
+})];
 
 
 
