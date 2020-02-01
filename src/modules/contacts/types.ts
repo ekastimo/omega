@@ -1,4 +1,5 @@
 import * as faker from 'faker';
+import {getRandomStr} from "../../utils/stringHelpers";
 
 const uuid = require('uuid/v4');
 
@@ -153,7 +154,7 @@ export interface IFinancialData {
 }
 
 export interface IContact {
-    id?: string
+    id: string
     category: ContactCategory
     person: IPerson
     emails: IEmail[]
@@ -205,76 +206,81 @@ export const fakeTeam = (): ITeamMember => {
 export const fakeContact = (): IContact | null => {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
-    return null
-    // return {
-    //     id: uuid(),
-    //     category: ContactCategory.Person,
-    //     person: {
-    //         firstName: firstName,
-    //         middleName: faker.name.lastName(),
-    //         lastName: lastName,
-    //         civilStatus: 'Single',
-    //         salutation: 'Mr',
-    //         dateOfBirth: faker.date.past(),
-    //         gender: 'Male'
-    //     },
-    //     phones: [
-    //         {
-    //             id: uuid(),
-    //             category: 'Mobile',
-    //             isPrimary: false,
-    //             value: faker.phone.phoneNumber('077#######')
-    //         },
-    //         {
-    //             id: uuid(),
-    //             category: 'Office',
-    //             isPrimary: false,
-    //             value: faker.phone.phoneNumber('031#######')
-    //         }
-    //     ],
-    //
-    //     emails: [
-    //         {
-    //             id: uuid(),
-    //             category: 'Personal',
-    //             isPrimary: false,
-    //             value: faker.internet.email(firstName, lastName)
-    //         }
-    //     ],
-    //     addresses: [
-    //         {
-    //             id: uuid(),
-    //             category: 'Home',
-    //             isPrimary: false,
-    //             country: faker.address.country(),
-    //             district: faker.address.city(),
-    //             county: faker.address.city(),
-    //             freeForm: faker.address.streetName()
-    //         }
-    //     ],
-    //     identifications: [
-    //         {
-    //             id: uuid(),
-    //             category: 'Nin',
-    //             value: getRandomStr(),
-    //             cardNumber: getRandomStr(5),
-    //             issueDate: faker.date.past(),
-    //             expiryDate: faker.date.future(),
-    //             issuingCountry: 'Uganda',
-    //             isPrimary: true,
-    //         }
-    //     ],
-    //     events: [],
-    //     metaData: {
-    //         cellGroup: '',
-    //         churchLocation: '',
-    //     },
-    //     company:{
-    //         name:'',
-    //         category:'Limited',
-    //         numberOfEmployees:''
-    //     }
-    // };
+
+    return {
+        bankAccounts: [],
+        financialData: {
+            dateOfEmployment: new Date(),
+            monthlyGrossSalary: 1200000,
+            monthlyNetSalary:565656
+        },
+        tags: [],
+        urls: [],
+        id: uuid(),
+        category: ContactCategory.Person,
+        person: {
+            firstName: firstName,
+            middleName: faker.name.lastName(),
+            lastName: lastName,
+            civilStatus: 'Single',
+            salutation: 'Mr',
+            dateOfBirth: faker.date.past(),
+            gender: Gender.Male
+        },
+        phones: [
+            {
+                id: uuid(),
+                category: PhoneCategory.Mobile,
+                isPrimary: false,
+                value: faker.phone.phoneNumber('077#######')
+            },
+            {
+                id: uuid(),
+                category: PhoneCategory.Mobile,
+                isPrimary: false,
+                value: faker.phone.phoneNumber('031#######')
+            }
+        ],
+
+        emails: [
+            {
+                id: uuid(),
+                category: EmailCategory.Work,
+                isPrimary: false,
+                value: faker.internet.email(firstName, lastName)
+            }
+        ],
+        addresses: [
+            {
+                id: uuid(),
+                category: 'Home',
+                isPrimary: false,
+                country: faker.address.country(),
+                district: faker.address.city(),
+                county: faker.address.city(),
+                freeForm: faker.address.streetName()
+            }
+        ],
+        identifications: [
+            {
+                id: uuid(),
+                category: IdentificationCategory.Nin,
+                value: getRandomStr(),
+                cardNumber: getRandomStr(5),
+                issueDate: faker.date.past(),
+                expiryDate: faker.date.future(),
+                issuingCountry: 'Uganda',
+                isPrimary: true,
+            }
+        ],
+        events: [],
+        company:{
+            name:'',
+            category:CompanyCategory.Limited,
+            numberOfEmployees:45,
+            dateOfPayment: new Date()
+        }
+    };
 };
 
 

@@ -74,7 +74,8 @@ export const columns: XHeadCell[] = [
         name: 'applicationDate', label: 'Date', render: printDateTime,
         cellProps: {
             style: {
-                width: 130
+                width: 130,
+                whiteSpace: 'nowrap'
             }
         }
     },
@@ -135,23 +136,55 @@ export const contactLoanSumHeaderCells: XHeadCell[] = [
         name: 'id', label: 'ID', render: value => <LoanLink id={value} name={trimGuid(value)}/>,
         cellProps: {style: {width: 70}}
     },
-    {name: 'applicationDate', label: 'Date', render: printDate},
+    {
+        name: 'applicationDate', label: 'Date', render: printDate
+    },
 
     {
         name: 'status', label: 'Status',
         render: renderStatus
     },
-    {name: 'subStatus', label: 'Sub-Status', render: renderSubStatus},
+    {
+        name: 'subStatus', label: 'Sub-Status', render: renderSubStatus
+    },
     {
         name: 'applicantId',
         label: 'Applicant',
         render: (value, rec) => <ContactLink id={value} name={getInitials(rec.applicant.name)}/>,
     },
-    {name: 'amount', label: 'Amount', render: value => printMoney(value)},
-
+    {
+        name: 'amount', label: 'Amount', render: value => printMoney(value)
+    }
 ];
 
-export const personLoansSumHeadCells: XHeadCell[] = [...columns.filter(it => {
+export const personLoansSumHeadCells: XHeadCell[] = [...contactLoanSumHeaderCells.filter(it => {
+    return it.name !== 'applicantId'
+})];
+
+
+export const contactPrevHeaderCells: XHeadCell[] = [
+    {
+        name: 'id', label: 'ID', render: value => <LoanLink id={value} name={trimGuid(value)}/>,
+        cellProps: {style: {width: 70}}
+    },
+    {
+        name: 'status', label: 'Status',
+        render: renderStatus
+    },
+    {
+        name: 'subStatus', label: 'Sub-Status', render: renderSubStatus
+    },
+    {
+        name: 'applicantId',
+        label: 'Applicant',
+        render: (value, rec) => <ContactLink id={value} name={getInitials(rec.applicant.name)}/>,
+    },
+    {
+        name: 'amount', label: 'Amount', render: value => printMoney(value)
+    }
+];
+
+export const personPrevHeaderCells: XHeadCell[] = [...contactPrevHeaderCells.filter(it => {
     return it.name !== 'applicantId'
 })];
 

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Stepper from '@material-ui/core/Stepper';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {getRouteParam} from "../../../utils/routHelpers";
 import {useDispatch, useSelector} from "react-redux";
@@ -11,9 +10,6 @@ import {loanConstants} from "../../../data/redux/loans/reducer";
 import Layout from "../../../components/layout/Layout";
 import Box from "@material-ui/core/Box";
 import {RouteComponentProps, withRouter} from "react-router";
-import {successColor} from "../../../theme/custom-colors";
-import {XStep} from "../stepper/XStepLabel";
-import {SuccessIcon} from "../../../components/xicons";
 import ApplicantDetails from "./ApplicantDetails";
 import Loading from "../../../components/Loading";
 import Grid from "@material-ui/core/Grid";
@@ -22,6 +18,8 @@ import {renderStatus, renderSubStatus} from "../list/config";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import Summary from "./Summary";
+import PreviousLoans from "./PreviousLoans";
+import {fakeContact} from "../../contacts/types";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,8 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: '100%',
             padding: 0
         },
-        paperStyle:{
-            borderRadius:0
+        paperStyle: {
+            borderRadius: 0
         }
 
     }),
@@ -47,8 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
  */
 
 
-
-
 const Details = (props: RouteComponentProps) => {
     const [loading, setLoading] = useState(false);
     const loanId = getRouteParam(props, 'loanId')
@@ -60,6 +56,7 @@ const Details = (props: RouteComponentProps) => {
         setLoading(true)
         setTimeout(() => {
             const data = fakeLoan()
+            data.applicant = fakeContact()
             dispatch({
                 type: loanConstants.loanFetchOne,
                 payload: data,
@@ -84,12 +81,11 @@ const Details = (props: RouteComponentProps) => {
                         </Box>
                     </Paper>
                 </Grid>
-
                 <Grid item xs={8}>
                     <Paper elevation={0} className={classes.paperStyle}>
                         <Box p={1}>
                             <Typography
-                                variant='h6' style={{fontSize:'1.0rem'}}>
+                                variant='h6' style={{fontSize: '1.0rem'}}>
                                 Status:&nbsp;
                                 {renderStatus(data.status)}&nbsp;
                                 {renderSubStatus(data.subStatus)}
@@ -98,8 +94,8 @@ const Details = (props: RouteComponentProps) => {
                         <Divider/>
                     </Paper>
                     <Stepper orientation="vertical">
-                        <ApplicantDetails data={data} />
                         <ApplicantDetails data={data}/>
+                        <PreviousLoans data={data}/>
                         <ApplicantDetails data={data}/>
                         <ApplicantDetails data={data}/>
                     </Stepper>
@@ -107,15 +103,14 @@ const Details = (props: RouteComponentProps) => {
                 <Grid item xs={4}>
                     <Paper elevation={0} className={classes.paperStyle}>
                         <Box p={1}>
-                            <Typography variant='h6' style={{fontSize:'1.0rem'}}>Loan summary</Typography>
+                            <Typography variant='h6' style={{fontSize: '1.0rem'}}>Loan summary</Typography>
                         </Box>
                         <Divider/>
-                        <Box p={1}>
+                        <Box p={2}>
                             <Summary data={data}/>
                         </Box>
                     </Paper>
                 </Grid>
-
             </Grid>
         </Layout>
     );

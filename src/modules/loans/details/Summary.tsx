@@ -1,22 +1,22 @@
 import React from 'react';
 import {ILoan} from "../types";
-import {ContactCategory, IContact} from "../../contacts/types";
-import DetailView, {BoldTableView, IRec} from "../../../components/DetailView";
-import {printDate} from "../../../utils/dateHelpers";
+import {BoldTableView, IRec} from "../../../components/DetailView";
+import {printDate, printDateTime} from "../../../utils/dateHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
 import ContactLink from "../../../components/links/ContactLink";
+import {renderName} from "../../contacts/types";
 
 
 export const idFields = (data: ILoan): IRec[] => {
     return [
         {
-            label: 'Application Date',
-            value: printDate(data.applicationDate)
+            label: 'Date',
+            value: printDateTime(data.applicationDate)
         }
         ,
         {
             label: 'Applicant',
-            value: <ContactLink id={data.applicantId} name={data.applicant.name}/>
+            value: <ContactLink id={data.applicantId} name={renderName(data.applicant)}/>
         },
         {
             label: 'Amount',

@@ -44,7 +44,6 @@ const ContactLoansSummary = ({contact}: IProps) => {
                             bodySize='small'
                         />
                     </Box>
-
             }
         </Box>
     );

@@ -57,7 +57,7 @@ const Emails = (props: IProps) => {
                             <DeleteIconButton onClick={handleDelete(it)}/>
                         </Box>
                     }>
-                        <SectionItemContent value={<EmailLink value={trimString(it.value,20)}/>} category={it.category}/>
+                        <SectionItemContent value={<EmailLink value={trimString(it.value,15)}/>} category={it.category}/>
                     </SectionItem>
                 </Grid>
             ))}

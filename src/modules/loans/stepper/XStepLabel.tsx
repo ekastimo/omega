@@ -20,10 +20,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         stepLabel: {
             backgroundColor: grey[100],
-            padding: theme.spacing(1)
+            padding: 4
         },
         stepContent: {
             paddingRight: 0
+        },
+        stepRoot: {
+            padding: 0
         },
         expand: {
             transform: 'rotate(0deg)',
@@ -53,13 +56,15 @@ export const XStep = (props: IStepProps) => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-    return <Step active={expanded}>
+    return <Step active={expanded} classes={{
+        root: classes.stepRoot
+    }} orientation="vertical">
         <StepLabel StepIconComponent={props.icon}>
             <Paper className={classes.stepPaper} elevation={0}>
                 <Grid container spacing={0} className={classes.stepLabel}>
                     <Grid item xs={6}>
                         <Flex>
-                            <Typography variant='h6' style={{fontSize:'1.0rem'}} >
+                            <Typography variant='h6' style={{fontSize: '1.0rem'}}>
                                 &nbsp;{props.title}
                             </Typography>
                         </Flex>

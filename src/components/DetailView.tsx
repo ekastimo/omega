@@ -150,22 +150,19 @@ export const BoldTableView = ({data}: IProps) => {
     return (
         <table className={classes.root}>
             <tbody>
-            {data.map(row => row.label !== '' ? (
-                <tr key={row.label} className={classes.row}>
-                    <td className={clsx(classes.col, classes.label)}>
-                        <DataLabel>
-                            <b>{row.label}</b>
-                        </DataLabel>
-                    </td>
-                    <td className={clsx(classes.col, classes.value)}>
-                        <DataValue>
-                            {row.value}
-                        </DataValue>
-                    </td>
-                </tr>
-            ) : <tr key={row.label} className={classes.row}>
-                <td colSpan={2}/>
-                &nbsp;</tr>)}
+            {data.map(row => <tr key={row.label} >
+                <td style={{width:100}}>
+                    <DataLabel>
+                        {row.label}
+                    </DataLabel>
+                </td>
+                <td style={{padding:5}}>
+                    <DataValue>
+                        {row.value}
+                    </DataValue>
+                </td>
+            </tr>)
+            }
             </tbody>
         </table>
     );
