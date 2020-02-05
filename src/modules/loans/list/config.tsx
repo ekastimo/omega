@@ -168,16 +168,14 @@ export const contactPrevHeaderCells: XHeadCell[] = [
         cellProps: {style: {width: 70}}
     },
     {
+        name: 'applicationDate', label: 'Date', render: printDate
+    },
+    {
         name: 'status', label: 'Status',
         render: renderStatus
     },
     {
         name: 'subStatus', label: 'Sub-Status', render: renderSubStatus
-    },
-    {
-        name: 'applicantId',
-        label: 'Applicant',
-        render: (value, rec) => <ContactLink id={value} name={getInitials(rec.applicant.name)}/>,
     },
     {
         name: 'amount', label: 'Amount', render: value => printMoney(value)

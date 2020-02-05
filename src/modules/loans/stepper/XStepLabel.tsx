@@ -9,21 +9,22 @@ import IconButton from '@material-ui/core/IconButton';
 
 import Grid from "@material-ui/core/Grid";
 import {Flex} from "../../../components/widgets";
-import {grey} from "@material-ui/core/colors";
 import StepContent from "@material-ui/core/StepContent";
 import Step from "@material-ui/core/Step";
+import Box from "@material-ui/core/Box";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         stepPaper: {
-            borderRadius: 0,
+            borderRadius: 0
         },
         stepLabel: {
-            backgroundColor: grey[100],
             padding: 4
         },
         stepContent: {
-            paddingRight: 0
+            paddingRight: 0,
+            marginTop: 0
         },
         stepRoot: {
             padding: 0
@@ -88,10 +89,15 @@ export const XStep = (props: IStepProps) => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Divider/>
             </Paper>
         </StepLabel>
         <StepContent className={classes.stepContent}>
-            {props.children}
+            <Paper elevation={0} style={{borderRadius: 0}}>
+                <Box p={2}>
+                    {props.children}
+                </Box>
+            </Paper>
         </StepContent>
     </Step>
 }

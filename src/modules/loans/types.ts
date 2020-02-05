@@ -6,11 +6,13 @@ const uuid = require('uuid/v4');
 
 export interface ILoan {
     id: string
+    loanNumber: string
     category: LoanCategory
     status: LoanStatus
     subStatus: LoanSubStatus
     applicationDate: Date
     releaseDate: Date
+
 
     amount: number
     durationInMonths: number
@@ -18,21 +20,60 @@ export interface ILoan {
     administrationFee: number
     interestRate: number
     repaymentCycle: RepaymentCycle
+    score: ILoanScore
+    request: ILoanRequest
 
     referenceNumber: string
     disbursementCategory: DisbursementCategory
 
+    //People
     applicantId: string
     applicant: any
     assigneeId: string
     assignee: any
     agentId: string
     agent: any
-
     internalContactId: string
     internalContact: any
+
     repaymentPlan: IDownPayment[]
     documents: ILoanDocument[]
+}
+
+export enum LoanScoreDecision {
+    Approved = 'Approved',
+    Manual = 'Manual',
+    Declined = 'Declined'
+}
+
+export enum RequestCategory {
+    Ussd = 'Ussd',
+    MobileApp = 'MobileApp',
+    WebApp = 'WebApp'
+}
+
+export interface ILoanScore {
+    id: string
+    decision: LoanScoreDecision
+    runDate: Date
+    amount: number
+    model: string
+    remarks: string
+}
+
+export interface ILoanRequest {
+    id: string
+    category: RequestCategory
+    entryDate: Date
+    userId: string
+    metaData: any
+}
+
+export interface IUssdMeta {
+    sessionId: string
+    code: string
+    sessionTime: number
+    network: string
 }
 
 export interface IDownPayment {
@@ -101,10 +142,10 @@ export enum DisbursementCategory {
 }
 
 
-
 export const fakeLoan = (): ILoan => {
     return {
         id: uuid(),
+        loanNumber:randomInt(100000, 500000)+'',
         category: faker.random.arrayElement(Object.values(LoanCategory)),
         status: faker.random.arrayElement(Object.values(LoanStatus)),
         subStatus: faker.random.arrayElement(Object.values(LoanSubStatus)),
@@ -131,9 +172,29 @@ export const fakeLoan = (): ILoan => {
         agent: {name: `${faker.name.firstName()} ${faker.name.lastName()}`},
 
         internalContactId: getRandomStr(10),
+        score: {
+            amount:randomInt(100000, 500000),
+            decision:faker.random.arrayElement(Object.values(LoanScoreDecision)),
+            id: uuid(),
+            model:'FICO score',
+            remarks:faker.lorem.sentence(5),
+            runDate: new Date()
+        },
+        request:{
+            id: uuid(),
+            category:RequestCategory.Ussd,
+            entryDate: new Date(),
+            userId:faker.phone.phoneNumber('07########'),
+            metaData:{
+                sessionId: faker.phone.phoneNumber('U7########'),
+                code: '*156#',
+                sessionTime: randomInt(60, 180),
+                network: faker.random.arrayElement(['MTN','AIRTEL','AFRICELL']),
+            }
+        },
         internalContact: {name: `${faker.name.firstName()} ${faker.name.lastName()}`},
-        repaymentPlan: intRange(1,4).map(fakeDownPayment),
-        documents: intRange(1,3).map(fakeLoanDocument),
+        repaymentPlan: intRange(1, 4).map(fakeDownPayment),
+        documents: intRange(1, 3).map(fakeLoanDocument),
     }
 }
 

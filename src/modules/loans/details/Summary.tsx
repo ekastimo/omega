@@ -1,16 +1,20 @@
 import React from 'react';
 import {ILoan} from "../types";
 import {BoldTableView, IRec} from "../../../components/DetailView";
-import {printDate, printDateTime} from "../../../utils/dateHelpers";
+import {printDateTime} from "../../../utils/dateHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
 import ContactLink from "../../../components/links/ContactLink";
 import {renderName} from "../../contacts/types";
+import Box from '@material-ui/core/Box';
+import {Typography} from "@material-ui/core";
+import {applicantFields} from "./PersonalInformation";
+import {requestFields} from "./LoanRequest";
 
 
-export const idFields = (data: ILoan): IRec[] => {
+export const appDetailsFields = (data: ILoan): IRec[] => {
     return [
         {
-            label: 'Date',
+            label: 'Application Date',
             value: printDateTime(data.applicationDate)
         }
         ,
@@ -19,23 +23,25 @@ export const idFields = (data: ILoan): IRec[] => {
             value: <ContactLink id={data.applicantId} name={renderName(data.applicant)}/>
         },
         {
-            label: 'Amount',
+            label: 'Loan Amount',
             value: printMoney(data.amount)
         },
         {
-            label: 'Admin Fee',
-            value: printMoney(data.administrationFee)
+            label: 'Duration',
+            value: `${data.durationInMonths} mths`
         },
         {
-            label: 'Inception Fee',
-            value: printMoney(data.inceptionFee)
+            label: 'Interest',
+            value: `${data.interestRate} %`
         },
         {
-            label: 'Agent',
+            label: 'Assignee',
             value: <ContactLink id={data.agentId} name={data.agent.name}/>
         }
     ]
 }
+
+
 
 interface IProps {
     data: ILoan
@@ -43,7 +49,19 @@ interface IProps {
 
 const Summary = (props: IProps) => {
     return (
-        <BoldTableView data={idFields(props.data)}/>
+        <Box>
+
+            <BoldTableView data={appDetailsFields(props.data)}/>
+            <Box py={1}>
+                <Typography variant='h6' style={{fontSize: '1.0rem'}}>Applicant Details</Typography>
+            </Box>
+            <BoldTableView data={applicantFields(props.data)}/>
+            <Box py={1}>
+                <Typography variant='h6' style={{fontSize: '1.0rem'}}>Request</Typography>
+            </Box>
+            <BoldTableView data={requestFields(props.data)}/>
+        </Box>
+
     );
 }
 

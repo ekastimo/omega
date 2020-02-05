@@ -10,7 +10,7 @@ import {loanConstants} from "../../../data/redux/loans/reducer";
 import Layout from "../../../components/layout/Layout";
 import Box from "@material-ui/core/Box";
 import {RouteComponentProps, withRouter} from "react-router";
-import ApplicantDetails from "./ApplicantDetails";
+import PersonalInformation from "./PersonalInformation";
 import Loading from "../../../components/Loading";
 import Grid from "@material-ui/core/Grid";
 import {trimGuid} from "../../../utils/stringHelpers";
@@ -18,14 +18,18 @@ import {renderStatus, renderSubStatus} from "../list/config";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import Summary from "./Summary";
-import PreviousLoans from "./PreviousLoans";
 import {fakeContact} from "../../contacts/types";
+import SoreCard from "./ScoreCard";
+import LoanApplication from "./LoanApplication";
+import LoanRequest from "./LoanRequest";
+import PreviousLoans from './PreviousLoans';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             width: '100%',
-            padding: 0
+            padding: 0,
+            backgroundColor: 'transparent'
         },
         paperStyle: {
             borderRadius: 0
@@ -83,7 +87,7 @@ const Details = (props: RouteComponentProps) => {
                 </Grid>
                 <Grid item xs={8}>
                     <Paper elevation={0} className={classes.paperStyle}>
-                        <Box p={1}>
+                        <Box p={1} mb={1}>
                             <Typography
                                 variant='h6' style={{fontSize: '1.0rem'}}>
                                 Status:&nbsp;
@@ -91,13 +95,13 @@ const Details = (props: RouteComponentProps) => {
                                 {renderSubStatus(data.subStatus)}
                             </Typography>
                         </Box>
-                        <Divider/>
                     </Paper>
-                    <Stepper orientation="vertical">
-                        <ApplicantDetails data={data}/>
+                    <Stepper orientation="vertical" className={classes.root}>
+                        <LoanApplication data={data}/>
+                        <PersonalInformation data={data}/>
+                        <LoanRequest data={data}/>
+                        <SoreCard data={data}/>
                         <PreviousLoans data={data}/>
-                        <ApplicantDetails data={data}/>
-                        <ApplicantDetails data={data}/>
                     </Stepper>
                 </Grid>
                 <Grid item xs={4}>

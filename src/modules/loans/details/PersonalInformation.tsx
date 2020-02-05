@@ -1,11 +1,10 @@
 import React from 'react';
 import {SuccessIcon} from "../../../components/xicons";
 import {XStep} from "../stepper/XStepLabel";
-import {Box} from "@material-ui/core";
 import {ILoan} from "../types";
-import {BoldTableView, IRec} from "../../../components/DetailView";
+import DetailView, {IRec} from "../../../components/DetailView";
 import ContactLink from "../../../components/links/ContactLink";
-import {getEmail, getPhone, IContact, renderName} from "../../contacts/types";
+import {getAddress, getEmail, getPhone, IContact, printAddress, renderName} from "../../contacts/types";
 import {printDate} from "../../../utils/dateHelpers";
 import EmailLink from "../../../components/links/EmalLink";
 
@@ -13,7 +12,7 @@ interface IProps {
     data: ILoan
 }
 
-export const idFields = (data: ILoan): IRec[] => {
+export const applicantFields = (data: ILoan): IRec[] => {
     const applicant: IContact = data.applicant
     return [
         {
@@ -39,18 +38,20 @@ export const idFields = (data: ILoan): IRec[] => {
         {
             label: 'Email',
             value: <EmailLink value={getEmail(applicant)}/>
+        },
+        {
+            label: 'Address',
+            value: printAddress(getAddress(applicant))
         }
     ]
 }
 
-const ApplicantDetails = (props: IProps) => {
+const PersonalInformation = (props: IProps) => {
     return (
-        <XStep icon={SuccessIcon} title='Applicant Details' rightLabelComponent={''} open={true}>
-            <Box>
-                <BoldTableView data={idFields(props.data)}/>
-            </Box>
+        <XStep icon={SuccessIcon} title='Personal Information' rightLabelComponent={''} open={true}>
+            <DetailView data={applicantFields(props.data)} columns={2} bold={true}/>
         </XStep>
     );
 }
 
-export default ApplicantDetails;
+export default PersonalInformation;

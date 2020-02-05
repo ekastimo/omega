@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SuccessIcon} from "../../../components/xicons";
 import {Box} from "@material-ui/core";
-import {XStep} from "../stepper/XStepLabel";
 import {fakeLoan, ILoan} from "../types";
 import {ContactCategory, IContact} from "../../contacts/types";
 import {contactPrevHeaderCells, personPrevHeaderCells} from "../list/config";
@@ -9,6 +7,8 @@ import {intRange} from "../../../utils/numberHelpers";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Loading from "../../../components/Loading";
 import XTable from "../../../components/table/XTable";
+import {SuccessIcon} from "../../../components/xicons";
+import {XStep} from "../stepper/XStepLabel";
 
 interface IProps {
     data: ILoan
@@ -33,22 +33,21 @@ const PreviousLoans = ({data}: IProps) => {
     }, [])
     return (
         <XStep icon={SuccessIcon} title='Previous Loans' rightLabelComponent={''} open={true}>
-            <Box width='100%'>
-                {
-                    loading ? <Loading/> :
-                        <Box p={0}>
-                            <XTable
-                                headCells={headCells}
-                                data={loans}
-                                initialRowsPerPage={3}
-                                usePagination={false}
-                                headerSize='small'
-                                bodySize='medium'
-                            />
-                        </Box>
-                }
-            </Box>
+            {
+                loading ? <Loading/> :
+                    <Box p={0}>
+                        <XTable
+                            headCells={headCells}
+                            data={loans}
+                            initialRowsPerPage={3}
+                            usePagination={false}
+                            headerSize='small'
+                            bodySize='small'
+                        />
+                    </Box>
+            }
         </XStep>
+
     );
 }
 

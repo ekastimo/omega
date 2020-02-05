@@ -372,7 +372,7 @@ export const getNin = (data: IContact): string => {
     return "";
 };
 
-export const getAddress = (data: IContact): IAddress | {} => {
+export const getAddress = (data: IContact): IAddress=> {
     const {addresses} = data
     if (addresses && addresses.length > 1) {
         const pri = addresses.find(it => it.isPrimary)
@@ -380,6 +380,6 @@ export const getAddress = (data: IContact): IAddress | {} => {
             return pri
         else return addresses[0]
     }
-    return {};
+    return {} as IAddress;
 };
 

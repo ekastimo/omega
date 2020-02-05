@@ -87,7 +87,6 @@ const PreviousLoans = ({data}: IProps) => {
             <Grid item xs={12}>
                 <ContactLoansSummary contact={data}/>
             </Grid>
-
         </Grid>
     );
 }
