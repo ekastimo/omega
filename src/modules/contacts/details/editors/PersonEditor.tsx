@@ -35,9 +35,9 @@ const schema = yup.object().shape(
 
 const PersonEditor = ({data, done,contactId}: IProps) => {
     const dispatch = useDispatch();
-
     function handleSubmit(values: any, actions: FormikActions<any>) {
         const toSave: IPerson = {
+            id: values.id,
             firstName: values.firstName,
             middleName: values.middleName,
             lastName: values.lastName,

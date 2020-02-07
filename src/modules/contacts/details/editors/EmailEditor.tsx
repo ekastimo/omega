@@ -34,7 +34,7 @@ const EmailEditor = ({data, isNew, contactId, done}: IProps) => {
 
     function handleSubmit(values: any, actions: FormikActions<any>) {
         const submission: ISubmission = {
-            url: `${remoteRoutes.contactsEmail}/${contactId}`,
+            url: remoteRoutes.contactsEmail,
             values:{...values,contactId}, actions, isNew,
             onAjaxComplete: (data: any) => {
                 dispatch({

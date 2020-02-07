@@ -5,12 +5,7 @@ import DataLabel from "./DataLabel";
 import DataValue from "./DataValue";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import EditIconButton, {AddIconButton, DeleteIconButton} from "./EditIconButton";
-import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
-import {trimString} from "../utils/stringHelpers";
-import EditDialog from "./EditDialog";
-import EmailEditor from "../modules/contacts/details/editors/EmailEditor";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme: Theme) =>

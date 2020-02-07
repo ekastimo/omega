@@ -4,6 +4,7 @@ import {getRandomStr} from "../../utils/stringHelpers";
 const uuid = require('uuid/v4');
 
 export interface IPerson {
+    id: string
     salutation: string,
     firstName: string
     lastName: string
@@ -14,7 +15,7 @@ export interface IPerson {
 }
 
 export interface IEmail {
-    id?: string
+    id: string
     value: string
     category: string
     isPrimary: boolean
@@ -106,7 +107,7 @@ export interface IBankAccount {
 }
 
 export interface IIdentification {
-    id?: string
+    id: string
     value: string
     cardNumber?: string
     issuingCountry: string
@@ -123,7 +124,7 @@ export interface IContactEvent {
 }
 
 export interface IAddress {
-    id?: string
+    id: string
     category: string
     isPrimary: boolean
     country: string
@@ -182,7 +183,7 @@ enum TeamRole {
 }
 
 export interface ITeamMember {
-    id?: string
+    id: string
     name: string
     details: string
     role: TeamRole
@@ -212,13 +213,14 @@ export const fakeContact = (): IContact | null => {
         financialData: {
             dateOfEmployment: new Date(),
             monthlyGrossSalary: 1200000,
-            monthlyNetSalary:565656
+            monthlyNetSalary: 565656
         },
         tags: [],
         urls: [],
         id: uuid(),
         category: ContactCategory.Person,
         person: {
+            id: uuid(),
             firstName: firstName,
             middleName: faker.name.lastName(),
             lastName: lastName,
@@ -274,10 +276,10 @@ export const fakeContact = (): IContact | null => {
             }
         ],
         events: [],
-        company:{
-            name:'',
-            category:CompanyCategory.Limited,
-            numberOfEmployees:45,
+        company: {
+            name: '',
+            category: CompanyCategory.Limited,
+            numberOfEmployees: 45,
             dateOfPayment: new Date()
         }
     };
@@ -372,7 +374,7 @@ export const getNin = (data: IContact): string => {
     return "";
 };
 
-export const getAddress = (data: IContact): IAddress=> {
+export const getAddress = (data: IContact): IAddress => {
     const {addresses} = data
     if (addresses && addresses.length > 1) {
         const pri = addresses.find(it => it.isPrimary)

@@ -1,5 +1,5 @@
 export const contactCategories = ['Person', 'Company']
-export const idCategories = ['Nin', 'Passport', 'DrivingPermit', 'VillageCard', 'Nssf', 'Other']
+export const idCategories = ['NIN', 'FCN','NSSF','Passport', 'DrivingPermit', 'VillageCard', 'Other']
 export const genderCategories = ['Male', 'Female']
 export const salutationCategories = ['Mr', 'Mrs', 'Ms', 'Dr', 'Prof']
 export const civilStatusCategories = ['Single', 'Married', 'Divorced', 'Other']
