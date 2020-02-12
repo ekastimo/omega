@@ -3,6 +3,22 @@ import {getRandomStr} from "../../utils/stringHelpers";
 import {intRange, randomInt} from "../../utils/numberHelpers";
 
 const uuid = require('uuid/v4');
+export interface ILoanFilter {
+    id?: string
+    referenceNumber?: string
+    externalReference?: string
+    userId?: string
+    applicant?: string
+    assignee?: string
+    showNew?: boolean
+    showAssigned?: boolean
+    statuses?: string[]
+    from?: Date|null
+    to?: Date|null
+    subStatuses?: string[]
+    categories?: string[]
+}
+
 
 export interface ILoan {
     id: string
@@ -12,7 +28,6 @@ export interface ILoan {
     subStatus: LoanSubStatus
     applicationDate: Date
     releaseDate: Date
-
 
     amount: number
     durationInMonths: number

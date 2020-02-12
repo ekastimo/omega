@@ -10,6 +10,9 @@ import {remoteRoutes} from "../../../../data/constants";
 import {useDispatch} from 'react-redux'
 import {crmConstants} from "../../../../data/redux/contacts/reducer";
 import {handleSubmission, ISubmission} from "../../../../utils/formHelpers";
+import XSelectInput from "../../../../components/inputs/XSelectInput";
+import {toOptions} from "../../../../components/inputs/inputHelpers";
+import {emailCategories} from "../../../../data/comboCategories";
 
 interface IProps {
     contactId: string
@@ -50,9 +53,17 @@ const UrlEditor = ({data, isNew, contactId, done}: IProps) => {
         >
             <Grid spacing={0} container>
                 <Grid item xs={12}>
+                    <XSelectInput
+                        name="category"
+                        label="Category"
+                        options={toOptions([])}
+                        variant='outlined'
+                    />
+                </Grid>
+                <Grid item xs={12}>
                     <XTextInput
                         name="value"
-                        label="Tag"
+                        label="Url"
                         type="text"
                         variant='outlined'
                     />

@@ -7,6 +7,8 @@ import {Box} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import PSelectInput from "../../../components/plain-inputs/PSelectInput";
 import PDateInput from "../../../components/plain-inputs/PDateInput";
+import {enumToArray} from "../../../utils/stringHelpers";
+import {ILoanFilter, LoanSubStatus} from "../types";
 
 interface IProps {
     onFilter: (data: any) => any
@@ -14,15 +16,15 @@ interface IProps {
 }
 
 const Filter = ({onFilter, loading}: IProps) => {
-    const [data, setData] = useState({
-
+    const [data, setData] = useState<ILoanFilter>({
         from: null,
         to: null,
-        category: '',
-        contactType: '',
-        email: '',
-        phone: '',
-        nin: ''
+        categories: [],
+        statuses: [],
+        subStatuses: [],
+        userId: '',
+        applicant: '',
+        assignee: ''
     })
 
     function submitForm(values: any) {
@@ -48,7 +50,7 @@ const Filter = ({onFilter, loading}: IProps) => {
             <Grid item xs={12}>
                 <PDateInput
                     name="from"
-                    value={data['from']}
+                    value={data['from'] || null}
                     onChange={handleValueChange('from')}
                     label="From"
                     variant="inline"
@@ -58,7 +60,7 @@ const Filter = ({onFilter, loading}: IProps) => {
             <Grid item xs={12}>
                 <PDateInput
                     name="to"
-                    value={data['to']}
+                    value={data['to'] || null}
                     onChange={handleValueChange('to')}
                     label="To"
                     variant="inline"
@@ -67,33 +69,32 @@ const Filter = ({onFilter, loading}: IProps) => {
             </Grid>
             <Grid item xs={12}>
                 <PSelectInput
-                    name="category"
-                    value={data['category']}
+                    name="statuses"
+                    value={data['statuses']}
                     onChange={handleChange}
                     label="Categories"
                     variant="outlined"
                     size='small'
-                    options={toOptions(['Company', 'Person'])}
+                    options={toOptions(enumToArray(LoanSubStatus))}
                 />
             </Grid>
             <Grid item xs={12}>
-                <TextField
-                    name="email"
-                    value={data['email']}
+                <PSelectInput
+                    name="subStatuses"
+                    value={data['subStatuses']}
                     onChange={handleChange}
-                    label="Email"
-                    type="email"
-                    variant='outlined'
+                    label="Sub Status"
+                    variant="outlined"
                     size='small'
-                    fullWidth
+                    options={toOptions(enumToArray(LoanSubStatus))}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
-                    name="phone"
-                    value={data['phone']}
+                    name="assignee"
+                    value={data['assignee']}
                     onChange={handleChange}
-                    label="Phone"
+                    label="Assignee"
                     type="text"
                     variant='outlined'
                     size='small'
@@ -102,10 +103,22 @@ const Filter = ({onFilter, loading}: IProps) => {
             </Grid>
             <Grid item xs={12}>
                 <TextField
-                    name="nin"
-                    value={data['nin']}
+                    name="applicant"
+                    value={data['applicant']}
                     onChange={handleChange}
-                    label="NIN"
+                    label="Applicant"
+                    type="text"
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                />
+            </Grid>
+            <Grid item xs={12}>
+                <TextField
+                    name="userId"
+                    value={data['userId']}
+                    onChange={handleChange}
+                    label="User/Agent"
                     type="text"
                     variant='outlined'
                     size='small'
