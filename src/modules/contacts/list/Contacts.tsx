@@ -2,12 +2,11 @@ import React, {useEffect, useState} from "react";
 import Layout from "../../../components/layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import {getEmail, getNin, getPhone, IContactsFilter, renderName} from "../types";
+import {IContactsFilter} from "../types";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
 import Filter from "./Filter";
-import ContactLink from "../../../components/links/ContactLink";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import Loading from "../../../components/Loading";
@@ -24,6 +23,7 @@ import RecentContacts from "./RecentContacts";
 import {IState} from "../../../data/types";
 import {columns} from "./config";
 import ContactUpload from "../details/editors/ContactUpload";
+import NewCompanyForm from "../forms/NewCompanyForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -46,7 +46,8 @@ const headCells: XHeadCell[] = [...columns];
 
 const Contacts = () => {
     const dispatch = useDispatch();
-    const [createDialog, setCreateDialog] = useState(false);
+    const [createPersonDialog, setCreatePersonDialog] = useState(false);
+    const [createCompanyDialog, setCreateCompanyDialog] = useState(false);
     const [uploadDialog, setUploadDialog] = useState(false);
     const {data, loading}: ICrmState = useSelector((state: IState) => state.crm)
 
@@ -82,7 +83,11 @@ const Contacts = () => {
     }
 
     function handleNew() {
-        setCreateDialog(true)
+        setCreatePersonDialog(true)
+    }
+
+    function handleNewCompany() {
+        setCreateCompanyDialog(true)
     }
 
     function handleUpload(){
@@ -94,7 +99,8 @@ const Contacts = () => {
     }
 
     function closeCreateDialog() {
-        setCreateDialog(false)
+        setCreatePersonDialog(false)
+        setCreateCompanyDialog(false)
     }
 
     return (
@@ -117,7 +123,16 @@ const Contacts = () => {
                                             onClick={handleNew}
                                             style={{marginLeft: 8}}
                                         >
-                                            New&nbsp;&nbsp;
+                                            Person&nbsp;&nbsp;
+                                        </Button>
+                                        <Button
+                                            variant="outlined"
+                                            color="primary"
+                                            startIcon={<AddIcon/>}
+                                            onClick={handleNewCompany}
+                                            style={{marginLeft: 8}}
+                                        >
+                                            Company&nbsp;&nbsp;
                                         </Button>
                                         <Button
                                             variant="outlined"
@@ -157,8 +172,11 @@ const Contacts = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <EditDialog title="New Person" open={createDialog} onClose={closeCreateDialog}>
+            <EditDialog title="New Person" open={createPersonDialog} onClose={closeCreateDialog}>
                 <NewPersonForm data={{}} done={closeCreateDialog}/>
+            </EditDialog>
+            <EditDialog title="New Company" open={createCompanyDialog} onClose={closeCreateDialog}>
+                <NewCompanyForm data={{}} done={closeCreateDialog}/>
             </EditDialog>
             <ContactUpload show={uploadDialog} onClose={closeUploadDialog}/>
         </Layout>

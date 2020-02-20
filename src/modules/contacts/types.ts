@@ -143,9 +143,25 @@ export interface IAddress {
 
 export interface ICompany {
     category: CompanyCategory
-    name: string
-    dateOfPayment: Date
-    numberOfEmployees: number
+    name: string,
+    numberOfEmployees: number,
+    invoicingDay: number,
+    dateOfIncorporation: Date,
+    contactId: string,
+    id: string,
+}
+
+export interface ICompanyCreateModel {
+    category: string
+    email:string,
+    phone:string,
+    name:string,
+    tinNumber:string,
+    dateOfIncorporation:string,
+    numberOfEmployees:number,
+    invoicingDay:string,
+    contactPersonId:string,
+    responsibleContactId:string,
 }
 
 export interface IFinancialData {
@@ -177,9 +193,15 @@ export interface IContactQuery {
 }
 
 
-enum TeamRole {
+export enum TeamRole {
     Leader = "Leader",
     Member = "Member"
+}
+export enum UrlCategory {
+    Website = "Website",
+    Facebook = "Facebook",
+    Linkedin = "Linkedin",
+    Twitter = "Twitter"
 }
 
 export interface ITeamMember {
@@ -280,7 +302,10 @@ export const fakeContact = (): IContact | null => {
             name: '',
             category: CompanyCategory.Limited,
             numberOfEmployees: 45,
-            dateOfPayment: new Date()
+            "invoicingDay": 0,
+            "dateOfIncorporation": new Date(),
+            "contactId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
         }
     };
 };

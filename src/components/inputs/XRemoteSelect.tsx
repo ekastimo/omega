@@ -18,6 +18,7 @@ interface IProps {
     error?: boolean;
     fullWidth?: boolean;
     helperText?: React.ReactNode;
+    variant?: 'standard' | 'outlined' | 'filled'
 }
 
 export interface ISelectOpt {
@@ -58,7 +59,7 @@ export function RemoteSelect(props: IProps) {
         props.onBlur && props.onBlur()
     }
 
-    const getOptionLabel = (option: any) => option.label
+    const getOptionLabel = (option: any) => option.name
 
     return (
         <Box pt={2} pb={1}>
@@ -78,7 +79,6 @@ export function RemoteSelect(props: IProps) {
                         {...params}
                         label={props.label}
                         variant="outlined"
-                        margin="normal"
                         fullWidth
                         onBlur={handleTouched}
                         error={props.error}

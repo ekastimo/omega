@@ -125,7 +125,7 @@ export enum LoanSubStatus {
 
     PaidOut = 'PaidOut',
     Overdue = 'Overdue',
-
+    
     Recovered = 'Recovered',
 }
 

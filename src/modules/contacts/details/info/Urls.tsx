@@ -68,7 +68,7 @@ const Urls = (props: IProps) => {
                     </SectionItem>
                 </Grid>
             ))}
-            <EditDialog title={selected ? "Edit Tag" : "New Tag"} open={dialog} onClose={handleClose}>
+            <EditDialog title={selected ? "Edit URL" : "New URL"} open={dialog} onClose={handleClose}>
                 <UrlEditor data={selected} isNew={!selected} contactId={id} done={handleClose}/>
             </EditDialog>
         </Grid>

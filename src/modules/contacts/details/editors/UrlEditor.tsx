@@ -5,7 +5,7 @@ import {FormikActions} from "formik";
 import Grid from "@material-ui/core/Grid";
 import XForm from "../../../../components/forms/XForm";
 import XTextInput from "../../../../components/inputs/XTextInput";
-import {IContactUrl} from "../../types";
+import {CompanyCategory, IContactUrl, UrlCategory} from "../../types";
 import {remoteRoutes} from "../../../../data/constants";
 import {useDispatch} from 'react-redux'
 import {crmConstants} from "../../../../data/redux/contacts/reducer";
@@ -13,6 +13,7 @@ import {handleSubmission, ISubmission} from "../../../../utils/formHelpers";
 import XSelectInput from "../../../../components/inputs/XSelectInput";
 import {toOptions} from "../../../../components/inputs/inputHelpers";
 import {emailCategories} from "../../../../data/comboCategories";
+import {enumToArray} from "../../../../utils/stringHelpers";
 
 interface IProps {
     contactId: string
@@ -35,7 +36,7 @@ const UrlEditor = ({data, isNew, contactId, done}: IProps) => {
             values:{...values,contactId}, actions, isNew,
             onAjaxComplete: (data: any) => {
                 dispatch({
-                    type: isNew ? crmConstants.crmAddTag : crmConstants.crmEditTag,
+                    type: isNew ? crmConstants.crmAddUrl : crmConstants.crmEditUrl,
                     payload: {...data},
                 })
                 if (done)
@@ -56,7 +57,7 @@ const UrlEditor = ({data, isNew, contactId, done}: IProps) => {
                     <XSelectInput
                         name="category"
                         label="Category"
-                        options={toOptions([])}
+                        options={toOptions(enumToArray(UrlCategory))}
                         variant='outlined'
                     />
                 </Grid>

@@ -9,7 +9,6 @@ import LoaderDialog from "./components/LoaderDialog";
 
 const App: React.FC = () => {
     const coreState: any = useSelector((state: any) => state.core)
-
     const {isLoadingUser, user, globalLoader} = coreState
     if (isLoadingUser) {
         return <Splash/>

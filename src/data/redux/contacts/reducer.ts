@@ -1,4 +1,12 @@
-import {IAddress, IContact, IEmail, IIdentification, IPerson, IPhone} from "../../../modules/contacts/types";
+import {
+    IAddress,
+    IBankAccount,
+    IContact, IContactTag, IContactUrl,
+    IEmail,
+    IIdentification,
+    IPerson,
+    IPhone
+} from "../../../modules/contacts/types";
 
 export const crmConstants = {
     crmFetchAll: "crmFetchAll",
@@ -209,6 +217,100 @@ export default function reducer(state = initialState, action: any) {
             if (state.selected) {
                 const {addresses, ...rest} = state.selected
                 const selected: IContact = {...rest, addresses: addresses.filter(it => it.id === id)}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmAddBankAccount: {
+            const bankAccount: IBankAccount = action.payload
+            if (state.selected) {
+                const {bankAccounts, ...rest} = state.selected
+                const selected: IContact = {...rest, bankAccounts: [...bankAccounts, bankAccount]}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmEditBankAccount: {
+            const bankAccount: IBankAccount = action.payload
+            if (state.selected) {
+                const {bankAccounts: oldBankAccounts, ...rest} = state.selected
+                const bankAccounts = oldBankAccounts.map(it => it.id === bankAccount.id ? bankAccount : it)
+                const selected: IContact = {...rest, bankAccounts}
+                return {...state, selected}
+            }
+            return state
+        }
+        case crmConstants.crmDeleteBankAccount: {
+            const id: string = action.payload
+            if (state.selected) {
+                const {bankAccounts, ...rest} = state.selected
+                const selected: IContact = {...rest, bankAccounts: bankAccounts.filter(it => it.id === id)}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmAddTag: {
+            const tag: IContactTag = action.payload
+            if (state.selected) {
+                const {tags, ...rest} = state.selected
+                const selected: IContact = {...rest, tags: [...tags, tag]}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmEditTag: {
+            const tag: IContactTag = action.payload
+            if (state.selected) {
+                const {tags: oldTags, ...rest} = state.selected
+                const tags = oldTags.map(it => it.id === tag.id ? tag : it)
+                const selected: IContact = {...rest, tags}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmDeleteTag: {
+            const id: string = action.payload
+            if (state.selected) {
+                const {tags, ...rest} = state.selected
+                const selected: IContact = {...rest, tags: tags.filter(it => it.id === id)}
+                return {...state, selected}
+            }
+            return state
+        }
+
+
+
+        case crmConstants.crmAddUrl: {
+            const url: IContactUrl = action.payload
+            if (state.selected) {
+                const {urls, ...rest} = state.selected
+                const selected: IContact = {...rest, urls: [...urls, url]}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmEditUrl: {
+            const url: IContactUrl = action.payload
+            if (state.selected) {
+                const {urls: oldUrls, ...rest} = state.selected
+                const urls = oldUrls.map(it => it.id === url.id ? url : it)
+                const selected: IContact = {...rest, urls}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmDeleteUrl: {
+            const id: string = action.payload
+            if (state.selected) {
+                const {urls, ...rest} = state.selected
+                const selected: IContact = {...rest, urls: urls.filter(it => it.id === id)}
                 return {...state, selected}
             }
             return state

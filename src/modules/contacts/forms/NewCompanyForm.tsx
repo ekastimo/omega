@@ -1,6 +1,6 @@
 import React from 'react';
 import * as yup from "yup";
-import {reqDate, reqEmail, reqNumber, reqString} from "../../../data/validations";
+import {reqDate, reqEmail, reqNumber, reqObject, reqString} from "../../../data/validations";
 import {idCategories} from "../../../data/comboCategories";
 import {FormikActions} from "formik";
 import Grid from "@material-ui/core/Grid";
@@ -15,7 +15,9 @@ import {crmConstants} from "../../../data/redux/contacts/reducer";
 import {post} from "../../../utils/ajax";
 import Toast from "../../../utils/Toast";
 import XSelectInput from "../../../components/inputs/XSelectInput";
-import {EmailCategory, IdentificationCategory, PhoneCategory} from "../types";
+import {CompanyCategory, EmailCategory, ICompanyCreateModel, IdentificationCategory, PhoneCategory} from "../types";
+import {ISelectOpt, XRemoteSelect} from "../../../components/inputs/XRemoteSelect";
+import {enumToArray} from "../../../utils/stringHelpers";
 
 interface IProps {
     data: any | null
@@ -26,11 +28,14 @@ const schema = yup.object().shape(
     {
         name: reqString,
         category: reqString,
-        dateOfPayment: reqDate,
+        dateOfIncorporation: reqDate,
         numberOfEmployees: reqNumber,
+        //invoicingDay: reqNumber,
         email: reqEmail,
         tinNumber: reqString,
         phone: reqString,
+        contactPerson: reqObject,
+        responsibleContact: reqObject,
     }
 )
 
@@ -38,41 +43,20 @@ const NewCompanyForm = ({data, done}: IProps) => {
     const dispatch = useDispatch();
 
     function handleSubmit(values: any, actions: FormikActions<any>) {
-        const toSave = {
-            category: 'Person',
-            internalContact: values.internalContact,
-            externalContact: values.externalContact,
-            company: {
-                name: values.name,
-                category: values.category,
-                dateOfPayment: values.dateOfPayment,
-                numberOfEmployees: values.numberOfEmployees
-            },
-            phones: [
-                {
-                    category: PhoneCategory.Office,
-                    isPrimary: true,
-                    value: values.phone
-                }
-            ],
-            emails: [
-                {
-                    category: EmailCategory.Work,
-                    isPrimary: true,
-                    value: values.email
-                }
-            ],
-            addresses: [],
-            identifications: [
-                {
-                    category: IdentificationCategory.Tin,
-                    isPrimary: true,
-                    value: values.tinNumber
-                }
-            ],
-            events: []
+        const model: ICompanyCreateModel = {
+            dateOfIncorporation: values.dateOfIncorporation,
+            invoicingDay: values.invoicingDay,
+            category: values.category,
+            contactPersonId: values.contactPerson.id,
+            responsibleContactId: values.responsibleContact.id,
+            name: values.name,
+            numberOfEmployees: values.numberOfEmployees,
+            phone: values.phone,
+            email: values.email,
+            tinNumber: values.tinNumber
         }
-        post(remoteRoutes.contacts, toSave,
+
+        post(remoteRoutes.contactsCompany, model,
             (data) => {
                 Toast.info('Operation successful')
                 actions.resetForm()
@@ -86,7 +70,6 @@ const NewCompanyForm = ({data, done}: IProps) => {
             undefined,
             () => {
                 actions.setSubmitting(false);
-
             }
         )
     }
@@ -97,6 +80,7 @@ const NewCompanyForm = ({data, done}: IProps) => {
             schema={schema}
             initialValues={data}
             onCancel={done}
+            debug
         >
             <Grid spacing={1} container>
                 <Grid item xs={8}>
@@ -111,15 +95,24 @@ const NewCompanyForm = ({data, done}: IProps) => {
                     <XSelectInput
                         name="category"
                         label="Category"
-                        options={toOptions(idCategories)}
+                        options={toOptions(enumToArray(CompanyCategory))}
+                        variant='outlined'
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    <XTextInput
-                        name="name"
-                        label="Name"
-                        type="text"
-                        variant='outlined'
+                    <XRemoteSelect
+                        name="contactPerson"
+                        label="Contact Person"
+                        remote={remoteRoutes.contactsPerson}
+                        parser={(dt: ISelectOpt) => dt}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <XRemoteSelect
+                        name="responsibleContact"
+                        label="Responsible Contact"
+                        remote={remoteRoutes.contactsPerson}
+                        parser={(dt: ISelectOpt) => dt}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -132,9 +125,17 @@ const NewCompanyForm = ({data, done}: IProps) => {
                 </Grid>
                 <Grid item xs={6}>
                     <XDateInput
-                        name="dateOfPayment"
-                        label="Date of Payment"
+                        name="dateOfIncorporation"
+                        label="Date of Incorporation"
                         inputVariant='outlined'
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <XTextInput
+                        name="tinNumber"
+                        label="Tin Number"
+                        type="text"
+                        variant='outlined'
                     />
                 </Grid>
                 <Grid item xs={12}>

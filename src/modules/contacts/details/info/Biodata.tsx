@@ -35,7 +35,11 @@ export const idFields = (data: IContact): IRec[] => {
         return [
             {
                 label: 'Category',
-                value: printDate(company.category)
+                value: company.category
+            },
+            {
+                label: 'D.O.Inc',
+                value: printDate(company.dateOfIncorporation)
             },
             {
                 label: 'Employees',

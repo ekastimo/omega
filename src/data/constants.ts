@@ -70,7 +70,7 @@ export const remoteRoutes = {
 
     groups: url + '/api/groups/group',
 
-    contactsCompany: url + '/api/crm/contact/company',
+    contactsCompany: url + '/api/crm/company',
     contactsAvatar: url + '/api/crm/contact/avatar',
 
 }
