@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {IContact} from "../../types";
+import {ContactCategory, IContact} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDate} from "../../../../utils/dateHelpers";
 import MoneyIcon from '@material-ui/icons/Money';
@@ -10,16 +10,29 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import SectionTitle from "./SectionTitle";
 import {printMoney} from "../../../../utils/numberHelpers";
+import AdminView from "./AdminView";
 
 interface IProps {
     data: IContact
 }
 
 export const idFields = (data: IContact): IRec[] => {
-    const {financialData} = data
+
+    if (data.category === ContactCategory.Person) {
+        return [
+            {
+                label: 'Net Salary',
+                value: printMoney(data.person.monthlyNetSalary)
+            },
+            {
+                label: 'Employment Date',
+                value: printDate(data.person.dateOfEmployment)
+            }
+        ]
+    }
     return [
         {
-            label: 'Net Salary',
+            label: 'Responsible',
             value: printMoney(3720000)
         },
         {
@@ -48,14 +61,20 @@ const FinancialData = ({data}: IProps) => {
             <Grid item xs={12}>
                 <SectionTitle
                     title='Financial Data'
-                    editButton={<EditIconButton onClick={handleClick} style={{marginTop:5}}/>}
-                    icon={ <MoneyIcon fontSize='small'/>}
+                    editButton={<EditIconButton onClick={handleClick} style={{marginTop: 5}}/>}
+                    icon={<MoneyIcon fontSize='small'/>}
                 />
                 {/*<Divider/>*/}
             </Grid>
             <Grid item xs={12}>
-                <Box >
+                <Box>
                     <DetailView data={displayData}/>
+                </Box>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Box>
+                    <AdminView data={data}/>
                 </Box>
             </Grid>
             <EditDialog title='Edit Basic Data' open={dialog} onClose={handleClose}>

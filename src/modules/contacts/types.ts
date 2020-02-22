@@ -1,17 +1,21 @@
 import * as faker from 'faker';
 import {getRandomStr} from "../../utils/stringHelpers";
+import {randomInt} from "../../utils/numberHelpers";
 
 const uuid = require('uuid/v4');
 
 export interface IPerson {
-    id: string
-    salutation: string,
-    firstName: string
-    lastName: string
-    middleName: string
-    gender: string
-    civilStatus: string
-    dateOfBirth: Date
+    id: string,
+    contactId: string,
+    salutation?: string,
+    firstName: string,
+    middleName?: string,
+    lastName: string,
+    gender: string,
+    civilStatus?: string,
+    dateOfBirth: Date,
+    monthlyNetSalary: number,
+    dateOfEmployment: Date
 }
 
 export interface IEmail {
@@ -22,12 +26,12 @@ export interface IEmail {
 }
 
 export enum IdentificationCategory {
-    Nin = 'Nin',
-    Tin = 'Tin',
+    NIN = 'NIN',
+    TIN = 'TIN',
     Passport = 'Passport',
     DrivingPermit = 'DrivingPermit',
     VillageCard = 'VillageCard',
-    Nssf = 'Nssf',
+    NSSF = 'NSSF',
     Other = 'Other'
 }
 
@@ -153,15 +157,35 @@ export interface ICompany {
 
 export interface ICompanyCreateModel {
     category: string
-    email:string,
-    phone:string,
-    name:string,
-    tinNumber:string,
-    dateOfIncorporation:string,
-    numberOfEmployees:number,
-    invoicingDay:string,
-    contactPersonId:string,
-    responsibleContactId:string,
+    email: string,
+    phone: string,
+    name: string,
+    tinNumber: string,
+    dateOfIncorporation: string,
+    numberOfEmployees: number,
+    invoicingDay: string,
+    contactPersonId: string,
+    responsibleContactId: string,
+}
+
+export interface IPersonCreateModel {
+
+    idCategory: string
+    idNumber: string
+    idIssueDate: string
+    idExpiryDate: string
+
+    firstName: string
+    lastName: string
+    middleName: string
+    gender: string
+    dateOfBirth: string
+
+    email: string,
+    phone: string,
+
+    monthlyNetSalary: number
+    dateOfEmployment: number
 }
 
 export interface IFinancialData {
@@ -173,6 +197,12 @@ export interface IFinancialData {
 export interface IContact {
     id: string
     category: ContactCategory
+    organizationId?: string
+    organization?: any
+    contactPersonId?: string
+    contactPerson?: any
+    responsibleContactId?: string
+    responsibleContact?: any
     person: IPerson
     emails: IEmail[]
     phones: IPhone[]
@@ -197,6 +227,7 @@ export enum TeamRole {
     Leader = "Leader",
     Member = "Member"
 }
+
 export enum UrlCategory {
     Website = "Website",
     Facebook = "Facebook",
@@ -249,7 +280,10 @@ export const fakeContact = (): IContact | null => {
             civilStatus: 'Single',
             salutation: 'Mr',
             dateOfBirth: faker.date.past(),
-            gender: Gender.Male
+            gender: Gender.Male,
+            contactId: uuid(),
+            dateOfEmployment: faker.date.past(),
+            monthlyNetSalary: randomInt(20000, 30000)
         },
         phones: [
             {
@@ -288,7 +322,7 @@ export const fakeContact = (): IContact | null => {
         identifications: [
             {
                 id: uuid(),
-                category: IdentificationCategory.Nin,
+                category: IdentificationCategory.NIN,
                 value: getRandomStr(),
                 cardNumber: getRandomStr(5),
                 issueDate: faker.date.past(),

@@ -7,12 +7,13 @@ import {linkColor} from "../../theme/custom-colors";
 interface IProps {
     id: string
     name: string
+    title?: string
 }
 
-const ContactLink = ({id, name}: IProps) => {
+const ContactLink = ({id, name,title}: IProps) => {
     const theme =useTheme()
     return (
-        <Link style={{textDecoration: 'none' ,color:linkColor}} to={`${localRoutes.contacts}/${id}`}>{name}</Link>
+        <Link style={{textDecoration: 'none' ,color:linkColor}} to={`${localRoutes.contacts}/${id}`} title={title}>{name}</Link>
     );
 };
 

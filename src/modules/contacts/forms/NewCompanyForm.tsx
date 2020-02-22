@@ -80,7 +80,6 @@ const NewCompanyForm = ({data, done}: IProps) => {
             schema={schema}
             initialValues={data}
             onCancel={done}
-            debug
         >
             <Grid spacing={1} container>
                 <Grid item xs={8}>

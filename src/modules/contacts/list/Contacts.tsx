@@ -172,10 +172,10 @@ const Contacts = () => {
                     </Box>
                 </Grid>
             </Grid>
-            <EditDialog title="New Person" open={createPersonDialog} onClose={closeCreateDialog}>
+            <EditDialog title="New Person" open={createPersonDialog} onClose={closeCreateDialog} maxWidth="sm">
                 <NewPersonForm data={{}} done={closeCreateDialog}/>
             </EditDialog>
-            <EditDialog title="New Company" open={createCompanyDialog} onClose={closeCreateDialog}>
+            <EditDialog title="New Company" open={createCompanyDialog} onClose={closeCreateDialog} maxWidth="sm">
                 <NewCompanyForm data={{}} done={closeCreateDialog}/>
             </EditDialog>
             <ContactUpload show={uploadDialog} onClose={closeUploadDialog}/>

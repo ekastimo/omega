@@ -1,6 +1,6 @@
 import React from 'react';
 import * as yup from "yup";
-import {reqDate, reqEmail, reqString} from "../../../data/validations";
+import {reqDate, reqEmail, reqNumber, reqString} from "../../../data/validations";
 import {genderCategories} from "../../../data/comboCategories";
 import {FormikActions} from "formik";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +15,10 @@ import {crmConstants} from "../../../data/redux/contacts/reducer";
 import {post} from "../../../utils/ajax";
 import Toast from "../../../utils/Toast";
 import XRadioInput from "../../../components/inputs/XRadioInput";
+import {IdentificationCategory, IPersonCreateModel} from "../types";
+import XSelectInput from "../../../components/inputs/XSelectInput";
+import {enumToArray} from "../../../utils/stringHelpers";
+import {Box} from "@material-ui/core";
 
 interface IProps {
     data: any | null
@@ -27,8 +31,19 @@ const schema = yup.object().shape(
         lastName: reqString,
         gender: reqString,
         dateOfBirth: reqDate,
+
         email: reqEmail,
         phone: reqString,
+
+
+        idCategory: reqString,
+        idNumber: reqString,
+        idExpiryDate: reqDate,
+        idIssueDate: reqDate,
+
+
+        dateOfEmployment: reqDate,
+        monthlyNetSalary: reqNumber,
     }
 )
 
@@ -36,38 +51,26 @@ const NewPersonForm = ({data, done}: IProps) => {
     const dispatch = useDispatch();
 
     function handleSubmit(values: any, actions: FormikActions<any>) {
-        const toSave = {
-            category: 'Person',
-            person: {
-                firstName: values.firstName,
-                middleName: values.middleName,
-                lastName: values.lastName,
-                dateOfBirth: values.dateOfBirth,
-                gender: values.gender
-            },
-            phones: [
-                {
-                    category: 'Mobile',
-                    isPrimary: true,
-                    value: values.phone
-                }
-            ],
-            emails: [
-                {
-                    category: 'Personal',
-                    isPrimary: true,
-                    value: values.email
-                }
-            ],
-            addresses: [],
-            identifications: [],
-            events: [],
-            metaData: {
-                cellGroup: 'Music MC',
-                churchLocation: 'WHDowntown',
-            }
+        const model: IPersonCreateModel = {
+
+            firstName: values.firstName,
+            middleName: values.middleName,
+            lastName: values.lastName,
+            dateOfBirth: values.dateOfBirth,
+            gender: values.gender,
+
+            phone: values.phone,
+            email: values.email,
+
+            idCategory: values.idCategory,
+            idExpiryDate: values.idExpiryDate,
+            idIssueDate: values.idIssueDate,
+            idNumber: values.idNumber,
+            dateOfEmployment: values.dateOfEmployment,
+            monthlyNetSalary: values.monthlyNetSalary,
         }
-        post(remoteRoutes.contacts, toSave,
+
+        post(remoteRoutes.contactsPerson, model,
             (data) => {
                 Toast.info('Operation successful')
                 actions.resetForm()
@@ -118,22 +121,24 @@ const NewPersonForm = ({data, done}: IProps) => {
                         variant='outlined'
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <XRadioInput
-                        name="gender"
-                        label="Gender"
-                        options={toOptions(genderCategories)}
-                    />
+                <Grid item xs={6}>
+                    <Box pt={2} pl={1}>
+                        <XRadioInput
+                            name="gender"
+                            label="Gender"
+                            options={toOptions(genderCategories)}
+                        />
+                    </Box>
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <XDateInput
                         name="dateOfBirth"
                         label="Date of Birth"
                         inputVariant='outlined'
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <XTextInput
                         name="phone"
                         label="Phone"
@@ -141,11 +146,60 @@ const NewPersonForm = ({data, done}: IProps) => {
                         variant='outlined'
                     />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     <XTextInput
                         name="email"
                         label="Email"
                         type="email"
+                        variant='outlined'
+                    />
+                </Grid>
+
+                <Grid item xs={4}>
+                    <XSelectInput
+                        name="idCategory"
+                        label="ID Type"
+                        options={toOptions(enumToArray(IdentificationCategory))}
+                        variant='outlined'
+                    />
+                </Grid>
+                <Grid item xs={8}>
+                    <XTextInput
+                        name="idNumber"
+                        label="ID Number"
+                        type="text"
+                        variant='outlined'
+                    />
+                </Grid>
+
+                <Grid item xs={6}>
+                    <XDateInput
+                        name="idIssueDate"
+                        label="ID Issue Date"
+                        inputVariant='outlined'
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <XDateInput
+                        name="idExpiryDate"
+                        label="ID Expiry Date"
+                        inputVariant='outlined'
+                    />
+                </Grid>
+
+                <Grid item xs={6}>
+                    <XDateInput
+                        name="dateOfEmployment"
+                        label="Date of Employment"
+                        inputVariant='outlined'
+                    />
+                </Grid>
+
+                <Grid item xs={6}>
+                    <XTextInput
+                        name="monthlyNetSalary"
+                        label="Monthly NetSalary"
+                        type="number"
                         variant='outlined'
                     />
                 </Grid>

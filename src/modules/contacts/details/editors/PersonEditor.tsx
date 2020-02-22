@@ -1,6 +1,6 @@
 import React from 'react';
 import * as yup from "yup";
-import {reqDate, reqString} from "../../../../data/validations";
+import {reqDate, reqNumber, reqString} from "../../../../data/validations";
 import {civilStatusCategories, genderCategories, salutationCategories} from "../../../../data/comboCategories";
 import {FormikActions} from "formik";
 import Grid from "@material-ui/core/Grid";
@@ -17,6 +17,7 @@ import Toast from "../../../../utils/Toast";
 import XRadioInput from "../../../../components/inputs/XRadioInput";
 import {IPerson} from "../../types";
 import XSelectInput from "../../../../components/inputs/XSelectInput";
+import {Box} from "@material-ui/core";
 
 interface IProps {
     data: IPerson
@@ -29,7 +30,9 @@ const schema = yup.object().shape(
         firstName: reqString,
         lastName: reqString,
         gender: reqString,
-        dateOfBirth: reqDate
+        dateOfBirth: reqDate,
+        dateOfEmployment: reqDate,
+        monthlyNetSalary: reqNumber.moreThan(10000),
     }
 )
 
@@ -37,6 +40,10 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
     const dispatch = useDispatch();
     function handleSubmit(values: any, actions: FormikActions<any>) {
         const toSave: IPerson = {
+            ...values,
+            contactId: values.contactId,
+            dateOfEmployment: values.dateOfEmployment,
+            monthlyNetSalary: values.monthlyNetSalary,
             id: values.id,
             firstName: values.firstName,
             middleName: values.middleName,
@@ -72,7 +79,7 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
             initialValues={data}
         >
             <Grid spacing={1} container>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <XSelectInput
                         name="salutation"
                         label="Title"
@@ -80,7 +87,7 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
                         variant='outlined'
                     />
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={9}>
                     <XTextInput
                         name="firstName"
                         label="First Name"
@@ -104,14 +111,15 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
                         variant='outlined'
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <XRadioInput
-                        name="gender"
-                        label="Gender"
-                        options={toOptions(genderCategories)}
-                    />
+                <Grid item xs={6}>
+                    <Box pt={2} pl={1}>
+                        <XRadioInput
+                            name="gender"
+                            label="Gender"
+                            options={toOptions(genderCategories)}
+                        />
+                    </Box>
                 </Grid>
-
                 <Grid item xs={6}>
                     <XDateInput
                         name="dateOfBirth"
@@ -119,11 +127,27 @@ const PersonEditor = ({data, done,contactId}: IProps) => {
                         inputVariant='outlined'
                     />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <XSelectInput
                         name="civilStatus"
                         label="Civil Status"
                         options={toOptions(civilStatusCategories)}
+                        variant='outlined'
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <XDateInput
+                        name="dateOfEmployment"
+                        label="Date of Employment"
+                        inputVariant='outlined'
+                    />
+                </Grid>
+
+                <Grid item xs={6}>
+                    <XTextInput
+                        name="monthlyNetSalary"
+                        label="Monthly NetSalary"
+                        type="number"
                         variant='outlined'
                     />
                 </Grid>
