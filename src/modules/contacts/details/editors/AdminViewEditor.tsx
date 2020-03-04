@@ -6,33 +6,36 @@ import XForm from "../../../../components/forms/XForm";
 import {remoteRoutes} from "../../../../data/constants";
 import {useDispatch} from 'react-redux'
 import {crmConstants} from "../../../../data/redux/contacts/reducer";
-import {put} from "../../../../utils/ajax";
+import {post, put} from "../../../../utils/ajax";
 import Toast from "../../../../utils/Toast";
 import {ISelectOpt, XRemoteSelect} from "../../../../components/inputs/XRemoteSelect";
+import {ContactCategory} from "../../types";
 
 interface IProps {
     data: any
     contactId: string
+    contactType: ContactCategory
     done?: () => any
 }
 
 
-
-const AdminViewEditor = ({data, done,contactId}: IProps) => {
+const AdminViewEditor = ({data, done, contactId, contactType}: IProps) => {
     const dispatch = useDispatch();
+
     function handleSubmit(values: any, actions: FormikActions<any>) {
         const toSave = {
-            contactId,
+            id: contactId,
             contactPersonId: values.contactPerson.id,
             responsibleContactId: values.responsibleContact.id,
+            organizationId: values.organization.id,
         }
-        put(remoteRoutes.contactsPerson, {...toSave,contactId},
+        post(remoteRoutes.contactsData, {...toSave, contactId},
             (data) => {
                 Toast.info('Operation successful')
                 actions.resetForm()
                 dispatch({
-                    type: crmConstants.crmEditPerson,
-                    payload: {...data,contactId},
+                    type: crmConstants.crmEditContactData,
+                    payload: {...data, contactId},
                 })
                 if (done)
                     done()
@@ -40,7 +43,6 @@ const AdminViewEditor = ({data, done,contactId}: IProps) => {
             undefined,
             () => {
                 actions.setSubmitting(false);
-
             }
         )
     }
@@ -67,14 +69,17 @@ const AdminViewEditor = ({data, done,contactId}: IProps) => {
                         parser={(dt: ISelectOpt) => dt}
                     />
                 </Grid>
-                <Grid item xs={12}>
-                    <XRemoteSelect
-                        name="organization"
-                        label="Organization"
-                        remote={remoteRoutes.contactsCompany}
-                        parser={(dt: ISelectOpt) => dt}
-                    />
-                </Grid>
+                {
+                    contactType === ContactCategory.Person &&
+                    <Grid item xs={12}>
+                        <XRemoteSelect
+                            name="organization"
+                            label="Organization"
+                            remote={remoteRoutes.contactsCompany}
+                            parser={(dt: ISelectOpt) => dt}
+                        />
+                    </Grid>
+                }
             </Grid>
         </XForm>
     );

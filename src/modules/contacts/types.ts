@@ -188,10 +188,13 @@ export interface IPersonCreateModel {
     dateOfEmployment: number
 }
 
-export interface IFinancialData {
-    monthlyNetSalary: number
-    monthlyGrossSalary: number
-    dateOfEmployment: Date
+export interface IContactData {
+    organizationId?: string
+    organization?: any
+    contactPersonId?: string
+    contactPerson?: any
+    responsibleContactId?: string
+    responsibleContact?: any
 }
 
 export interface IContact {
@@ -213,7 +216,6 @@ export interface IContact {
     tags: IContactTag[]
     urls: IContactUrl[]
     bankAccounts: IBankAccount[]
-    financialData: IFinancialData
 }
 
 export interface IContactQuery {
@@ -263,11 +265,6 @@ export const fakeContact = (): IContact | null => {
 
     return {
         bankAccounts: [],
-        financialData: {
-            dateOfEmployment: new Date(),
-            monthlyGrossSalary: 1200000,
-            monthlyNetSalary: 565656
-        },
         tags: [],
         urls: [],
         id: uuid(),

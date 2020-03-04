@@ -1,51 +1,76 @@
 import React, {useState} from 'react';
 import {ContactCategory, IContact} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
-import {printDate} from "../../../../utils/dateHelpers";
 import MoneyIcon from '@material-ui/icons/Money';
 import EditIconButton from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
-import PersonEditor from "../editors/PersonEditor";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import SectionTitle from "./SectionTitle";
-import {printMoney} from "../../../../utils/numberHelpers";
-import AdminView from "./AdminView";
+import AdminViewEditor from "../editors/AdminViewEditor";
+import ContactLink from "../../../../components/links/ContactLink";
+import {trimString} from "../../../../utils/stringHelpers";
+import Typography from "@material-ui/core/Typography";
 
 interface IProps {
     data: IContact
 }
 
-export const idFields = (data: IContact): IRec[] => {
-
+export const displayFields = (data: IContact): IRec[] => {
+    const {contactPerson, responsibleContact, organization} = data;
     if (data.category === ContactCategory.Person) {
         return [
             {
-                label: 'Net Salary',
-                value: printMoney(data.person.monthlyNetSalary)
+                label: 'Organization',
+                value: organization ? <ContactLink
+                    id={organization.id}
+                    name={trimString(organization.name, 25)}
+                    title={organization.name}
+                /> : <Typography>-NA-</Typography>
             },
             {
-                label: 'Employment Date',
-                value: printDate(data.person.dateOfEmployment)
+                label: 'Contact Person',
+                value: contactPerson ? <ContactLink
+                    id={contactPerson.id}
+                    name={trimString(contactPerson.name, 25)}
+                    title={contactPerson.name}
+                /> : <Typography>-NA-</Typography>
+            },
+            {
+                label: 'Internal Contact',
+                value: responsibleContact ? <ContactLink
+                    id={responsibleContact.id}
+                    name={trimString(responsibleContact.name, 25)}
+                    title={responsibleContact.name}
+                /> : <Typography>-NA-</Typography>
             }
         ]
     }
     return [
         {
-            label: 'Responsible',
-            value: printMoney(3720000)
+            label: 'Contact Person',
+            value: contactPerson ? <ContactLink
+                id={contactPerson.id}
+                name={trimString(contactPerson.name, 25)}
+                title={contactPerson.name}
+            /> : <Typography>-NA-</Typography>
         },
         {
-            label: 'Employment Date',
-            value: printDate(new Date())
+            label: 'Internal Contact',
+            value: responsibleContact ? <ContactLink
+                id={responsibleContact.id}
+                name={trimString(responsibleContact.name, 25)}
+                title={responsibleContact.name}
+            /> : <Typography>-NA-</Typography>
         }
     ]
 }
 
+
 const FinancialData = ({data}: IProps) => {
     const [dialog, setDialog] = useState(false)
-    const {id = ''} = data
 
+    const {contactPerson, responsibleContact, organization} = data;
     const handleClick = () => {
         setDialog(true)
     }
@@ -54,31 +79,29 @@ const FinancialData = ({data}: IProps) => {
         setDialog(false)
     }
 
-    const displayData = idFields(data);
 
     return (
         <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
-                    title='Financial Data'
+                    title='Admin Data'
                     editButton={<EditIconButton onClick={handleClick} style={{marginTop: 5}}/>}
                     icon={<MoneyIcon fontSize='small'/>}
                 />
                 {/*<Divider/>*/}
             </Grid>
-            <Grid item xs={12}>
-                <Box>
-                    <DetailView data={displayData}/>
-                </Box>
-            </Grid>
 
             <Grid item xs={12}>
                 <Box>
-                    <AdminView data={data}/>
+                    <Grid item xs={12}>
+                        <DetailView data={displayFields(data)}/>
+                    </Grid>
                 </Box>
             </Grid>
-            <EditDialog title='Edit Basic Data' open={dialog} onClose={handleClose}>
-                <PersonEditor data={data.person} contactId={id} done={handleClose}/>
+            <EditDialog title="Admin Setup" open={dialog} onClose={handleClose}>
+                <AdminViewEditor data={{contactPerson, responsibleContact, organization}}
+                                 contactId={data.id}
+                                 done={handleClose} contactType={data.category}/>
             </EditDialog>
         </Grid>
     );

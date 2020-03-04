@@ -82,10 +82,7 @@ const AdminView = ({data}: IProps) => {
                 <DetailView data={displayFields(data)}/>
             </Grid>
 
-            <EditDialog title="Admin Setup" open={dialog} onClose={handleClose}>
-                <AdminViewEditor data={{contactPerson, responsibleContact, organization}} contactId={data.id}
-                                 done={handleClose}/>
-            </EditDialog>
+
         </Grid>
     );
 }

@@ -15,7 +15,7 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
     if ((res && res.forbidden) || (res && res.unauthorized)) {
         Toast.error("Authentication Error")
     } else if (res && res.badRequest) {
-        const {message, errors} = res.body
+        const {message, errors=[]} = res.body
         let msg = message + '\n'
         for (const err of errors) {
             const error = Object.values(err)[0]

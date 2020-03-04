@@ -8,6 +8,7 @@ import EditDialog from "../../../../components/EditDialog";
 import PersonEditor from "../editors/PersonEditor";
 import Grid from "@material-ui/core/Grid";
 import SectionTitle from "./SectionTitle";
+import {printMoney} from "../../../../utils/numberHelpers";
 
 interface IProps {
     data: IContact
@@ -26,8 +27,16 @@ export const idFields = (data: IContact): IRec[] => {
                 value: person.gender
             },
             {
-                label: 'Marital Status',
+                label: 'Civil status',
                 value: person.civilStatus
+            },
+            {
+                label: 'Net salary',
+                value: printMoney(person.monthlyNetSalary)
+            },
+            {
+                label: 'Employment date',
+                value: printDate(person.dateOfEmployment)
             }
         ]
     } else {
@@ -49,7 +58,7 @@ export const idFields = (data: IContact): IRec[] => {
     }
 }
 
-const BioData = ({data}: IProps) => {
+const Basicdata = ({data}: IProps) => {
     const [dialog, setDialog] = useState(false)
     const {id = ''} = data
 
@@ -80,4 +89,4 @@ const BioData = ({data}: IProps) => {
         </Grid>
     );
 }
-export default BioData;
+export default Basicdata;

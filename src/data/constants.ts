@@ -53,6 +53,7 @@ export const remoteRoutes = {
     register: url + '/api/auth/register',
     resetPass: url + '/reset',
     contacts: url + '/api/crm/contact',
+    contactsData: url + '/api/crm/contactData',
     contactSearch: url + '/api/crm/contact/search',
     contactById: url + '/api/crm/contact/id',
     contactsPerson: url + '/api/crm/person',
@@ -72,6 +73,9 @@ export const remoteRoutes = {
 
     contactsCompany: url + '/api/crm/company',
     contactsAvatar: url + '/api/crm/contact/avatar',
+
+
+    loans: url + '/api/loans/loan',
 
 }
 

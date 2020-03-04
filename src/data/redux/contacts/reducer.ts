@@ -1,7 +1,7 @@
 import {
     IAddress,
     IBankAccount,
-    IContact, IContactTag, IContactUrl,
+    IContact, IContactData, IContactTag, IContactUrl,
     IEmail,
     IIdentification,
     IPerson,
@@ -15,6 +15,8 @@ export const crmConstants = {
     crmFetchOne: "crmFetchOne",
     crmAddContact: "crmAddContact",
     crmEditPerson: "crmEditPerson",
+
+    crmEditContactData: "crmEditContactData",
 
     crmAddEmail: "crmAddEmail",
     crmEditEmail: "crmEditEmail",
@@ -98,6 +100,15 @@ export default function reducer(state = initialState, action: any) {
         case crmConstants.crmFetchOne: {
             const selected: IContact = action.payload
             return {...state, selected}
+        }
+
+        case crmConstants.crmEditContactData: {
+            const contactData: IContactData = action.payload
+            if (state.selected) {
+                const selected: IContact = {...state.selected, ...contactData}
+                return {...state, selected}
+            }
+            return state
         }
 
         case crmConstants.crmAddEmail: {

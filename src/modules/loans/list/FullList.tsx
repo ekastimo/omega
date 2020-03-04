@@ -18,6 +18,8 @@ import {intRange} from "../../../utils/numberHelpers";
 import {fakeLoan} from "../types";
 import RecentList from "./RecentList";
 import Filter from "./Filter";
+import {search} from "../../../utils/ajax";
+import {remoteRoutes} from "../../../data/constants";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -47,14 +49,14 @@ const FullList = () => {
 
     useEffect(() => {
         setLoading(true)
-        setTimeout(()=>{
-            const data = intRange(1,20).map(fakeLoan)
+        search(remoteRoutes.loans,filter,resp=>{
             dispatch({
                 type: loanConstants.loanFetchAll,
-                payload: [...data],
+                payload: [...resp],
             })
+        },undefined,() => {
             setLoading(false)
-        },500)
+        })
     }, [filter, dispatch])
 
     function handleFilter(value: any) {

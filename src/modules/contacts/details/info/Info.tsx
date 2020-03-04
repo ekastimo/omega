@@ -6,7 +6,7 @@ import Addresses from "./Addresses";
 import Tags from "./Tags";
 import React from "react";
 import {IContact} from "../../types";
-import BioData from "./Biodata";
+import Basicdata from "./Basicdata";
 import Divider from "@material-ui/core/Divider";
 import FinancialData from "./FinancialData";
 import BankAccounts from "./BankAccounts";
@@ -26,7 +26,7 @@ const Info = ({data}: IProps) => {
             <Grid item xs={12} lg={3} md={4} sm={6}>
                 <Grid container spacing={spacing}>
                     <Grid item xs={12}>
-                        <BioData data={data}/>
+                        <Basicdata data={data}/>
                     </Grid>
                 </Grid>
             </Grid>
