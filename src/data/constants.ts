@@ -43,7 +43,7 @@ export const localRoutes = {
 }
 
 export const isDebug = process.env.NODE_ENV !== 'production'
-export const url = isDebug ? 'https://localhost:44340' :
+export const url = isDebug ? 'http://localhost:6001' :
     'https://jasperapitest.azurewebsites.net'
 
 export const remoteRoutes = {
