@@ -47,17 +47,29 @@ const FullList = () => {
     const [filter, setFilter] = useState<IContactsFilter>({});
     const classes = useStyles();
 
+    // useEffect(() => {
+    //     setLoading(true)
+    //     search(remoteRoutes.loans,filter,resp=>{
+    //         dispatch({
+    //             type: loanConstants.loanFetchAll,
+    //             payload: [...resp],
+    //         })
+    //     },undefined,() => {
+    //         setLoading(false)
+    //     })
+    // }, [filter, dispatch])
+
     useEffect(() => {
         setLoading(true)
-        search(remoteRoutes.loans,filter,resp=>{
+        setTimeout(()=>{
+            const data = intRange(1,15).map(fakeLoan)
             dispatch({
                 type: loanConstants.loanFetchAll,
-                payload: [...resp],
+                payload: [...data],
             })
-        },undefined,() => {
             setLoading(false)
-        })
-    }, [filter, dispatch])
+        },500)
+    }, [ dispatch])
 
     function handleFilter(value: any) {
         setFilter({...filter, ...value})
