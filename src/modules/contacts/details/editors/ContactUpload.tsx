@@ -14,18 +14,14 @@ const useStyles = makeStyles((theme: Theme) =>
         zone: {
             width: 400
         },
-
     }),
 );
 
 const ContactUpload = ({show, onClose}: IProps) => {
-
     const classes = useStyles()
-
     function handleChange() {
 
     }
-
     return (
         <EditDialog title='Upload Contacts' open={show} onClose={onClose}>
             <Box pb={2}>

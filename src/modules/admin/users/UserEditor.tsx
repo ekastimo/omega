@@ -28,8 +28,7 @@ const schemaNew = yup.object().shape(
     {
         password: reqString,
         username: reqString,
-        contact: yup.object().required(),
-        group: yup.object().required()
+        contact: yup.object().required()
     }
 )
 
@@ -63,14 +62,6 @@ const UserEditor = ({data, isNew, done}: IProps) => {
                         name="contact"
                         label="Person"
                         remote={remoteRoutes.contactsPerson}
-                        parser={({id, name}: any): ISelectOpt => ({id, label: name})}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <XRemoteSelect
-                        name="group"
-                        label="Group"
-                        remote={remoteRoutes.userGroups}
                         parser={({id, name}: any): ISelectOpt => ({id, label: name})}
                     />
                 </Grid>

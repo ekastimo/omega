@@ -9,7 +9,6 @@ import Loans from "./loans/list/FullList";
 import Settings from "./settings/Settings";
 import Layout from "../components/layout/Layout";
 import Users from "./admin/users/Users";
-import UserGroups from "./admin/usergroups/UserGroups";
 
 
 const ContentSwitch = () => {
@@ -21,7 +20,6 @@ const ContentSwitch = () => {
         <Route path={localRoutes.loansDetails} component={LoanDetails}/>
         <Route path={localRoutes.loans} component={Loans}/>
         <Route path={localRoutes.users} component={Users}/>
-        <Route path={localRoutes.usersGroups} component={UserGroups}/>
         <Route path={localRoutes.settings} component={Settings}/>
         <Route component={NoMatch}/>
     </Switch>

@@ -2,11 +2,9 @@ import React, {useState} from 'react';
 import {ContactCategory, IContact} from "../../types";
 import Grid from "@material-ui/core/Grid";
 import DetailView, {IRec} from "../../../../components/DetailView";
-import EditDialog from "../../../../components/EditDialog";
 import {trimString} from "../../../../utils/stringHelpers";
 import ContactLink from "../../../../components/links/ContactLink";
 import Typography from "@material-ui/core/Typography";
-import AdminViewEditor from "../editors/AdminViewEditor";
 
 interface IProps {
     data: IContact
@@ -81,8 +79,6 @@ const AdminView = ({data}: IProps) => {
             <Grid item xs={12}>
                 <DetailView data={displayFields(data)}/>
             </Grid>
-
-
         </Grid>
     );
 }

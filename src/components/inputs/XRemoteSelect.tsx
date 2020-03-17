@@ -59,7 +59,7 @@ export function RemoteSelect(props: IProps) {
         props.onBlur && props.onBlur()
     }
 
-    const getOptionLabel = (option: any) => option.name
+    const getOptionLabel = (option: any) => option.label
 
     return (
         <Box pt={2} pb={1}>

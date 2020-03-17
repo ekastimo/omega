@@ -24,6 +24,7 @@ import {IState} from "../../../data/types";
 import {columns} from "./config";
 import ContactUpload from "../details/editors/ContactUpload";
 import NewCompanyForm from "../forms/NewCompanyForm";
+import {isPrimaryUser} from "../../../data/appRoles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -50,6 +51,7 @@ const Contacts = () => {
     const [createCompanyDialog, setCreateCompanyDialog] = useState(false);
     const [uploadDialog, setUploadDialog] = useState(false);
     const {data, loading}: ICrmState = useSelector((state: IState) => state.crm)
+    const user = useSelector((state: IState) => state.core.user)
 
     const [filter, setFilter] = useState<IContactsFilter>({});
     const classes = useStyles();
@@ -125,15 +127,18 @@ const Contacts = () => {
                                         >
                                             Person&nbsp;&nbsp;
                                         </Button>
-                                        <Button
-                                            variant="outlined"
-                                            color="primary"
-                                            startIcon={<AddIcon/>}
-                                            onClick={handleNewCompany}
-                                            style={{marginLeft: 8}}
-                                        >
-                                            Company&nbsp;&nbsp;
-                                        </Button>
+                                        {
+                                            isPrimaryUser(user)&&
+                                            <Button
+                                                variant="outlined"
+                                                color="primary"
+                                                startIcon={<AddIcon/>}
+                                                onClick={handleNewCompany}
+                                                style={{marginLeft: 8}}
+                                            >
+                                                Company&nbsp;&nbsp;
+                                            </Button>
+                                        }
                                         <Button
                                             variant="outlined"
                                             color="primary"

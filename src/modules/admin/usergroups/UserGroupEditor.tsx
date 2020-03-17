@@ -6,10 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import XForm from "../../../components/forms/XForm";
 import XTextInput from "../../../components/inputs/XTextInput";
 
-import {appRoles, remoteRoutes} from "../../../data/constants";
+import { remoteRoutes} from "../../../data/constants";
 import {handleSubmission, ISubmission} from "../../../utils/formHelpers";
 import XSelectInput from "../../../components/inputs/XSelectInput";
 import {toOptions} from "../../../components/inputs/inputHelpers";
+import {appRoles} from "../../../data/appRoles";
 
 interface IProps {
     data: any

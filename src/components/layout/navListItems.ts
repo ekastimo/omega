@@ -28,15 +28,7 @@ export const menuItems = [
             {
                 name: "Users",
                 route: localRoutes.users
-            },
-            {
-                name: "User Groups",
-                route: localRoutes.usersGroups
-            },
-            {
-                name: "Settings",
-                route: localRoutes.settings
-            },
+            }
         ]
     }
 ]
