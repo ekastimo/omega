@@ -1,11 +1,11 @@
 import React from "react"
 import {random,range} from 'lodash'
-import {Typography} from "@material-ui/core";
 
 export const printMoney = (money: number) => {
     try {
         return money ? <span>
-            {new Intl.NumberFormat('en-US', {maximumFractionDigits: 2}).format(money)} <Typography variant='caption'>UGX</Typography>
+                UGX&nbsp;
+            {new Intl.NumberFormat('en-US', {maximumFractionDigits: 2}).format(money)}
             </span> : ""
     } catch (e) {
         return ''

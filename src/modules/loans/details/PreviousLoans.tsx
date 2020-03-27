@@ -7,8 +7,6 @@ import {intRange} from "../../../utils/numberHelpers";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Loading from "../../../components/Loading";
 import XTable from "../../../components/table/XTable";
-import {SuccessIcon} from "../../../components/xicons";
-import {XStep} from "../stepper/XStepLabel";
 
 interface IProps {
     data: ILoan
@@ -22,7 +20,6 @@ const PreviousLoans = ({data}: IProps) => {
     if (contact.category === ContactCategory.Person) {
         headCells = personPrevHeaderCells;
     }
-    console.log("PrevLoans",headCells.length)
     useEffect(() => {
         setLoading(true)
         setTimeout(() => {
@@ -32,7 +29,7 @@ const PreviousLoans = ({data}: IProps) => {
         }, 1000)
     }, [])
     return (
-        <XStep icon={SuccessIcon} title='Previous Loans' rightLabelComponent={''} open={true}>
+        <div >
             {
                 loading ? <Loading/> :
                     <Box p={0}>
@@ -46,10 +43,7 @@ const PreviousLoans = ({data}: IProps) => {
                         />
                     </Box>
             }
-        </XStep>
-
+        </div>
     );
 }
-
-
 export default PreviousLoans;

@@ -7,7 +7,7 @@ import ContactLink from "../../../components/links/ContactLink";
 import {renderName} from "../../contacts/types";
 import Box from '@material-ui/core/Box';
 import {Typography} from "@material-ui/core";
-import {applicantFields} from "./PersonalInformation";
+import {applicantFields} from "./ApplicantDetails";
 import {requestFields} from "./LoanRequest";
 
 
@@ -36,7 +36,7 @@ export const appDetailsFields = (data: ILoan): IRec[] => {
         },
         {
             label: 'Assignee',
-            value: <ContactLink id={data.agentId} name={data.agent.name}/>
+            value: <ContactLink id={data.assigneeId} name={data.assignee.name}/>
         }
     ]
 }
@@ -50,7 +50,6 @@ interface IProps {
 const Summary = (props: IProps) => {
     return (
         <Box>
-
             <BoldTableView data={appDetailsFields(props.data)}/>
             <Box py={1}>
                 <Typography variant='h6' style={{fontSize: '1.0rem'}}>Applicant Details</Typography>

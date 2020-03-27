@@ -2,7 +2,7 @@ import React from 'react';
 import * as yup from "yup";
 import { reqString} from "../../../../data/validations";
 import {phoneCategories} from "../../../../data/comboCategories";
-import {FormikActions} from "formik";
+import {FormikHelpers} from "formik";
 import Grid from "@material-ui/core/Grid";
 import XForm from "../../../../components/forms/XForm";
 import XTextInput from "../../../../components/inputs/XTextInput";
@@ -32,7 +32,7 @@ const schema = yup.object().shape(
 const PhoneEditor = ({data, isNew, contactId, done}: IProps) => {
     const dispatch = useDispatch();
 
-    function handleSubmit(values: any, actions: FormikActions<any>) {
+    function handleSubmit(values: any, actions: FormikHelpers<any>) {
         const toSave = {...values,contactId}
         const submission: ISubmission = {
             url:remoteRoutes.contactsPhone,

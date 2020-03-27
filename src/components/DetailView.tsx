@@ -5,7 +5,6 @@ import DataLabel from "./DataLabel";
 import DataValue from "./DataValue";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,7 +48,6 @@ interface IProps {
 
 const TableView = ({data, useGrid = false,bold=false}: IProps) => {
     const classes = useStyles();
-    console.log("Use grid", {useGrid})
     if (useGrid)
         return (
             <Grid container spacing={0}>
@@ -59,12 +57,12 @@ const TableView = ({data, useGrid = false,bold=false}: IProps) => {
                             {
                                 bold?
                                     <Box flexGrow={1}>
-                                        <Typography variant='body1' noWrap>{it.value}</Typography>
-                                        <Typography variant='caption'><b>{it.label}</b></Typography>
+                                        <DataValue>{it.value}</DataValue>
+                                        <DataLabel bold>{it.label}</DataLabel>
                                     </Box>:
                                     <Box flexGrow={1}>
-                                        <Typography variant='body1' noWrap>{it.value}</Typography>
-                                        <Typography variant='caption'>{it.label}</Typography>
+                                        <DataValue>{it.value}</DataValue>
+                                        <DataLabel bold>{it.label}</DataLabel>
                                     </Box>
                             }
                         </Box>
@@ -150,7 +148,7 @@ export const BoldTableView = ({data}: IProps) => {
             <tbody>
             {data.map(row => <tr key={row.label}>
                 <td style={{width: 100}}>
-                    <DataLabel>
+                    <DataLabel >
                         {row.label}
                     </DataLabel>
                 </td>

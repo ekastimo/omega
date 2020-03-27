@@ -89,11 +89,10 @@ export const XStep = (props: IStepProps) => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Divider/>
             </Paper>
         </StepLabel>
         <StepContent className={classes.stepContent}>
-            <Paper elevation={0} style={{borderRadius: 0}}>
+            <Paper elevation={0} style={{borderRadius: 0, marginTop: 8}}>
                 <Box p={2}>
                     {props.children}
                 </Box>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormikActions} from "formik";
+import {FormikHelpers} from "formik";
 import Grid from "@material-ui/core/Grid";
 import XForm from "../../../../components/forms/XForm";
 import {remoteRoutes} from "../../../../data/constants";
@@ -7,8 +7,9 @@ import {useDispatch} from 'react-redux'
 import {crmConstants} from "../../../../data/redux/contacts/reducer";
 import {post} from "../../../../utils/ajax";
 import Toast from "../../../../utils/Toast";
-import {ISelectOpt, XRemoteSelect} from "../../../../components/inputs/XRemoteSelect";
+import {XRemoteSelect} from "../../../../components/inputs/XRemoteSelect";
 import {ContactCategory} from "../../types";
+import {comboParser} from "../../../../components/inputs/inputHelpers";
 
 interface IProps {
     data: any
@@ -19,24 +20,32 @@ interface IProps {
 
 const AdminViewEditor = ({data, done, contactId, contactType}: IProps) => {
     const dispatch = useDispatch();
+    const isPerson = contactType === ContactCategory.Person;
 
-    function handleSubmit(values: any, actions: FormikActions<any>) {
+    function handleSubmit(values: any, actions: FormikHelpers<any>) {
 
         const toSave = {
             id: contactId,
-            contactPersonId: values.contactPerson ? values.contactPerson.id : undefined,
-            responsibleContactId: values.responsibleContact ? values.responsibleContact.id : undefined,
-            organizationId: values.organization ? values.organization.id : undefined,
+            contactPersonId: values.contactPerson ? values.contactPerson.value : undefined,
+            responsibleContactId: values.responsibleContact ? values.responsibleContact.value : undefined,
+            organizationId: values.organization ? values.organization.value : undefined,
         }
-
-        post(remoteRoutes.contactsData, {...toSave, contactId},
+        const url = isPerson ? remoteRoutes.contactsAdminOrg : remoteRoutes.contactsAdminResponsible;
+        post(url, {...toSave, contactId},
             (data) => {
                 Toast.info('Operation successful')
                 actions.resetForm()
-                dispatch({
-                    type: crmConstants.crmEditContactData,
-                    payload: {...data, contactId},
-                })
+                if(isPerson){
+                    dispatch({
+                        type: crmConstants.crmEditContactOrg,
+                        payload: {...data},
+                    })
+                }else{
+                    dispatch({
+                        type: crmConstants.crmEditContactAdmin,
+                        payload: {...data},
+                    })
+                }
                 if (done)
                     done()
             },
@@ -53,32 +62,37 @@ const AdminViewEditor = ({data, done, contactId, contactType}: IProps) => {
             initialValues={data}
         >
             <Grid spacing={1} container>
-                <Grid item xs={12}>
-                    <XRemoteSelect
-                        name="contactPerson"
-                        label="Contact Person"
-                        remote={remoteRoutes.contactsPerson}
-                        parser={(dt: ISelectOpt) => dt}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <XRemoteSelect
-                        name="responsibleContact"
-                        label="Responsible Contact"
-                        remote={remoteRoutes.contactsPerson}
-                        parser={(dt: ISelectOpt) => dt}
-                    />
-                </Grid>
                 {
-                    contactType === ContactCategory.Person &&
-                    <Grid item xs={12}>
-                        <XRemoteSelect
-                            name="organization"
-                            label="Organization"
-                            remote={remoteRoutes.contactsCompany}
-                            parser={(dt: ISelectOpt) => dt}
-                        />
-                    </Grid>
+                    contactType === ContactCategory.Person ?
+                        <Grid item xs={12}>
+                            <XRemoteSelect
+                                name="organization"
+                                label="Organization"
+                                variant='outlined'
+                                remote={remoteRoutes.contactsCompany}
+                                parser={comboParser}
+                            />
+                        </Grid> :
+                        <>
+                            <Grid item xs={12}>
+                                <XRemoteSelect
+                                    name="contactPerson"
+                                    label="Contact Person"
+                                    remote={remoteRoutes.contactsPerson}
+                                    parser={comboParser}
+                                    variant='outlined'
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <XRemoteSelect
+                                    name="responsibleContact"
+                                    label="Responsible Contact"
+                                    remote={remoteRoutes.contactsPerson}
+                                    parser={comboParser}
+                                    variant='outlined'
+                                />
+                            </Grid>
+                        </>
                 }
             </Grid>
         </XForm>

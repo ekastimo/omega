@@ -124,6 +124,11 @@ const Users = () => {
         setDialog(false)
     }
 
+    function handleDeleted(dt: any) {
+        const newData = data.filter((it: any) => it.id !== dt.id)
+        setData(newData)
+    }
+
     return (
         <Layout>
             <Box p={1}>
@@ -143,7 +148,7 @@ const Users = () => {
                 <AddFabButton onClick={handleNew}/>
             </Hidden>
             <EditDialog title={selected ? 'Edit User' : 'Create User'} open={dialog} onClose={handleClose}>
-                <UserEditor data={selected} isNew={!selected} done={handleComplete}/>
+                <UserEditor data={selected} isNew={!selected} done={handleComplete} onDeleted={handleDeleted}/>
             </EditDialog>
         </Layout>
     );

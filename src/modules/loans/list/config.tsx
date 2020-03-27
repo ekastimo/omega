@@ -11,7 +11,7 @@ import {LoanStatus, LoanSubStatus} from "../types";
 import {blue} from "@material-ui/core/colors";
 
 export const renderStatus = (value: LoanStatus) => {
-    let color = successColor
+    let color: any = successColor
     switch (value) {
         case LoanStatus.Closed:
             color = successColor
@@ -35,7 +35,7 @@ export const renderStatus = (value: LoanStatus) => {
 
 
 export const renderSubStatus = (value: LoanSubStatus) => {
-    let color = successColor
+    let color: any = successColor
     switch (value) {
         case LoanSubStatus.Recovered:
             color = successColor
@@ -125,6 +125,10 @@ export const columns: XHeadCell[] = [
     }
 ];
 
+
+export const recentLoansHeadCells: XHeadCell[] = [...columns.filter(it => {
+    return it.name !== 'assigneeId'
+}).map(({cellProps, ...rest}) => ({...rest}))];
 
 export const companyLoansHeadCells: XHeadCell[] = [...columns];
 export const personLoansHeadCells: XHeadCell[] = [...columns.filter(it => {

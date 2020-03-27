@@ -8,7 +8,7 @@ import React from "react";
 import {IContact} from "../../types";
 import Basicdata from "./Basicdata";
 import Divider from "@material-ui/core/Divider";
-import FinancialData from "./FinancialData";
+import AdminData from "./AdminData";
 import BankAccounts from "./BankAccounts";
 import MiniGraph from "./MiniGraph";
 import PreviousLoans from "./PreviousLoans";
@@ -62,7 +62,7 @@ const Info = ({data}: IProps) => {
 
                 <Grid container spacing={spacing}>
                     <Grid item xs={12} sm={4} >
-                        <FinancialData data={data}/>
+                        <AdminData data={data}/>
                     </Grid>
                     <Grid item xs={12} sm={8} >
                         <BankAccounts data={data}/>

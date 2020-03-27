@@ -6,31 +6,34 @@ import Loading from "../../../components/Loading";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
-import {columns} from "./config";
+import {recentLoansHeadCells} from "./config";
 import {IState} from "../../../data/types";
 import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
-import {intRange} from "../../../utils/numberHelpers";
-import {fakeLoan} from "../types";
+import {ILoanFilter} from "../types";
+import {search} from "../../../utils/ajax";
+import {remoteRoutes} from "../../../data/constants";
 
-const headCells: XHeadCell[] = [...columns];
+const headCells: XHeadCell[] = [...recentLoansHeadCells];
 
-const RecentList = () => {
+const RecentLoansList = () => {
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
     const {recent}: ILoanState = useSelector((state: IState) => state.loans)
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
+        const filter: ILoanFilter = {
+            showAssigned: false,
+            showNew: true,
+        }
         setLoading(true)
-        setTimeout(()=>{
-            const data = intRange(1,4).map(fakeLoan)
+        search(remoteRoutes.loans, filter, resp => {
             dispatch({
                 type: loanConstants.loanFetchRecent,
-                payload: [...data],
+                payload: [...resp],
             })
+        }, undefined, () => {
             setLoading(false)
-        },500)
-    }, [ dispatch])
-
+        })
+    }, [dispatch])
     return (
         <Box p={1} width='100%'>
             <Box pb={2}>
@@ -53,4 +56,4 @@ const RecentList = () => {
     );
 }
 
-export default RecentList
+export default RecentLoansList

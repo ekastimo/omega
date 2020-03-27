@@ -16,14 +16,12 @@ export function getRandomStr(max = 16) {
 }
 
 
-export const trimGuid = (data: string) => {
-    return data.substr(0, 8)
+export const trimString = (data: string, len: number = 20) => {
+    return data.substr(0, len)
 }
 
-export const trimString = (data: string, count = 10) => {
-    if (data.length > count)
-        return data.substr(0, count) + "..."
-    return data
+export const trimGuid = (data: string) => {
+    return data.substr(0, 8)
 }
 
 export function enumToArray(typeData: any) {

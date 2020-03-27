@@ -1,22 +1,26 @@
 import React, {useState} from "react";
-import {Form, Formik, FormikActions} from 'formik';
+import {Form, Formik, FormikHelpers} from 'formik';
 
 import {Grid} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
+import {Alert} from "@material-ui/lab";
+import {hasValue} from "../inputs/inputHelpers";
 
 interface IProps {
     schema?: any
-    onSubmit: (values: any, actions: FormikActions<any>) => any
+    onSubmit: (values: any, actions: FormikHelpers<any>) => any
     onCancel?: () => any
     onDelete?: () => any
     debug?: boolean
+    loading?: boolean
     children?: React.ReactNode
     initialValues?: any
 }
 
 const XForm = (props: IProps) => {
     const [count, setCount] = useState<number>(0)
+
     function handleDelete() {
         if (count === 1) {
             setCount(0)
@@ -26,70 +30,74 @@ const XForm = (props: IProps) => {
         }
     }
 
-    return <>
-        <Formik
-            initialValues={props.initialValues}
-            onSubmit={props.onSubmit}
-            validationSchema={props.schema}
-            validateOnBlur
-            enableReinitialize
-            render={({submitForm, isSubmitting, values, errors, touched}) => (
-                <Form>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <Box p={1}>
-                                {props.children}
-                            </Box>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Box p={1}>
-                                <Grid container spacing={1} alignContent='flex-end' justify='flex-end'>
-                                    {
-                                        props.onDelete &&
-                                        <Grid item>
-                                            <Button
-                                                variant='contained'
-                                                color='default'
-                                                onClick={handleDelete}
-                                                disabled={isSubmitting}
-                                            >{count === 1?'! Confirm':'Delete'}</Button>
-                                        </Grid>
-                                    }
-                                    {
-                                        props.onCancel &&
-                                        <Grid item>
-                                            <Button
-                                                variant='contained'
-                                                color='default'
-                                                onClick={props.onCancel}
-                                                disabled={isSubmitting}
-                                            >Cancel</Button>
-                                        </Grid>
-                                    }
-                                    <Grid item>
-                                        <Button
-                                            variant='contained'
-                                            color='primary'
-                                            onClick={submitForm}
-                                            disabled={isSubmitting}
-                                        >Submit</Button>
-                                    </Grid>
+    return <Formik
+        initialValues={props.initialValues}
+        onSubmit={props.onSubmit}
+        validationSchema={props.schema}
+        validateOnBlur
+        enableReinitialize
+
+    >{({submitForm, isSubmitting, values, errors, touched}) => (
+        <Form>
+            <Grid container spacing={0} style={{minWidth: 350}}>
+                {
+                    hasValue(errors) &&
+                    <Box p={1} display='flex' justifyContent='center'>
+                        <Alert severity="warning">Validation error(s)</Alert>
+                    </Box>
+                }
+                <Grid item xs={12}>
+                    <Box p={1}>
+                        {props.children}
+                    </Box>
+                </Grid>
+                <Grid item xs={12}>
+                    <Box p={1}>
+                        <Grid container spacing={1} alignContent='flex-end' justify='flex-end'>
+                            {
+                                props.onDelete &&
+                                <Grid item>
+                                    <Button
+                                        variant='contained'
+                                        color='default'
+                                        onClick={handleDelete}
+                                        disabled={isSubmitting}
+                                    >{count === 1 ? '! Confirm' : 'Delete'}</Button>
                                 </Grid>
-                            </Box>
+                            }
+                            {
+                                props.onCancel &&
+                                <Grid item>
+                                    <Button
+                                        variant='contained'
+                                        color='default'
+                                        onClick={props.onCancel}
+                                        disabled={isSubmitting || props.loading}
+                                    >Cancel</Button>
+                                </Grid>
+                            }
+                            <Grid item>
+                                <Button
+                                    variant='contained'
+                                    color='primary'
+                                    onClick={submitForm}
+                                    disabled={isSubmitting || props.loading}
+                                >Submit</Button>
+                            </Grid>
                         </Grid>
-                        {
-                            props.debug &&
-                            <Grid item xs={12}>
+                    </Box>
+                </Grid>
+                {
+                    props.debug &&
+                    <Grid item xs={12}>
                                 <pre style={{width: '100%', height: "100%"}}>
                                     {JSON.stringify({values, errors, touched}, null, 2)}
                                 </pre>
-                            </Grid>
-                        }
                     </Grid>
-                </Form>
-            )}
-        />
-    </>
+                }
+            </Grid>
+        </Form>
+    )}</Formik>
 }
 
 export default XForm

@@ -5,11 +5,18 @@ const theme = createMuiTheme({
     palette,
     typography: {
         fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
             '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"',
+            'Arial',
+            'sans-serif',
+            '"Apple Color Emoji"',
             '"Segoe UI Emoji"',
-            '"Segoe UI Symbol"',
+            '"Segoe UI Symbol"'
         ].join(','),
-        fontSize: 13
+        fontSize: 13.5
     }
 });
 export default responsiveFontSizes(theme);

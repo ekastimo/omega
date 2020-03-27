@@ -11,14 +11,18 @@ import AdminViewEditor from "../editors/AdminViewEditor";
 import ContactLink from "../../../../components/links/ContactLink";
 import {trimString} from "../../../../utils/stringHelpers";
 import Typography from "@material-ui/core/Typography";
+import {useSelector} from "react-redux";
+import {IState} from "../../../../data/types";
+import {isPrimaryUser} from "../../../../data/appRoles";
 
 interface IProps {
     data: IContact
 }
 
 export const displayFields = (data: IContact): IRec[] => {
-    const {contactPerson, responsibleContact, organization} = data;
+
     if (data.category === ContactCategory.Person) {
+        const {organization} = data;
         return [
             {
                 label: 'Organization',
@@ -27,25 +31,10 @@ export const displayFields = (data: IContact): IRec[] => {
                     name={trimString(organization.name, 25)}
                     title={organization.name}
                 /> : <Typography>-NA-</Typography>
-            },
-            {
-                label: 'Contact Person',
-                value: contactPerson ? <ContactLink
-                    id={contactPerson.id}
-                    name={trimString(contactPerson.name, 25)}
-                    title={contactPerson.name}
-                /> : <Typography>-NA-</Typography>
-            },
-            {
-                label: 'Internal Contact',
-                value: responsibleContact ? <ContactLink
-                    id={responsibleContact.id}
-                    name={trimString(responsibleContact.name, 25)}
-                    title={responsibleContact.name}
-                /> : <Typography>-NA-</Typography>
             }
         ]
     }
+    const {company: {contactPerson, responsibleContact}} = data;
     return [
         {
             label: 'Contact Person',
@@ -56,7 +45,7 @@ export const displayFields = (data: IContact): IRec[] => {
             /> : <Typography>-NA-</Typography>
         },
         {
-            label: 'Internal Contact',
+            label: 'Responsible Contact',
             value: responsibleContact ? <ContactLink
                 id={responsibleContact.id}
                 name={trimString(responsibleContact.name, 25)}
@@ -66,11 +55,11 @@ export const displayFields = (data: IContact): IRec[] => {
     ]
 }
 
-
-const FinancialData = ({data}: IProps) => {
+const AdminData = ({data}: IProps) => {
     const [dialog, setDialog] = useState(false)
-
-    const {contactPerson, responsibleContact, organization} = data;
+    const user = useSelector((state: IState) => state.core.user)
+    const {organization, company} = data;
+    const {contactPerson, responsibleContact} = company || {}
     const handleClick = () => {
         setDialog(true)
     }
@@ -79,18 +68,16 @@ const FinancialData = ({data}: IProps) => {
         setDialog(false)
     }
 
-
     return (
         <Grid container spacing={0}>
             <Grid item xs={12}>
                 <SectionTitle
                     title='Admin Data'
-                    editButton={<EditIconButton onClick={handleClick} style={{marginTop: 5}}/>}
+                    editButton={isPrimaryUser(user) && <EditIconButton onClick={handleClick} style={{marginTop: 5}}/>}
                     icon={<MoneyIcon fontSize='small'/>}
                 />
                 {/*<Divider/>*/}
             </Grid>
-
             <Grid item xs={12}>
                 <Box>
                     <Grid item xs={12}>
@@ -106,4 +93,4 @@ const FinancialData = ({data}: IProps) => {
         </Grid>
     );
 }
-export default FinancialData;
+export default AdminData;

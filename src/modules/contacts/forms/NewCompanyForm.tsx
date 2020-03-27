@@ -1,13 +1,12 @@
 import React from 'react';
 import * as yup from "yup";
 import {reqDate, reqEmail, reqNumber, reqObject, reqString} from "../../../data/validations";
-import {idCategories} from "../../../data/comboCategories";
-import {FormikActions} from "formik";
+import {FormikHelpers} from "formik";
 import Grid from "@material-ui/core/Grid";
 import XForm from "../../../components/forms/XForm";
 import XTextInput from "../../../components/inputs/XTextInput";
 import XDateInput from "../../../components/inputs/XDateInput";
-import {toOptions} from "../../../components/inputs/inputHelpers";
+import {comboParser, IOption, toOptions} from "../../../components/inputs/inputHelpers";
 
 import {remoteRoutes} from "../../../data/constants";
 import {useDispatch} from 'react-redux'
@@ -15,8 +14,8 @@ import {crmConstants} from "../../../data/redux/contacts/reducer";
 import {post} from "../../../utils/ajax";
 import Toast from "../../../utils/Toast";
 import XSelectInput from "../../../components/inputs/XSelectInput";
-import {CompanyCategory, EmailCategory, ICompanyCreateModel, IdentificationCategory, PhoneCategory} from "../types";
-import {ISelectOpt, XRemoteSelect} from "../../../components/inputs/XRemoteSelect";
+import {CompanyCategory, ICompanyCreateModel} from "../types";
+import {XRemoteSelect} from "../../../components/inputs/XRemoteSelect";
 import {enumToArray} from "../../../utils/stringHelpers";
 
 interface IProps {
@@ -41,14 +40,13 @@ const schema = yup.object().shape(
 
 const NewCompanyForm = ({data, done}: IProps) => {
     const dispatch = useDispatch();
-
-    function handleSubmit(values: any, actions: FormikActions<any>) {
+    function handleSubmit(values: any, actions: FormikHelpers<any>) {
         const model: ICompanyCreateModel = {
             dateOfIncorporation: values.dateOfIncorporation,
             invoicingDay: values.invoicingDay,
             category: values.category,
-            contactPersonId: values.contactPerson.id,
-            responsibleContactId: values.responsibleContact.id,
+            contactPersonId: values.contactPerson.value,
+            responsibleContactId: values.responsibleContact.value,
             name: values.name,
             numberOfEmployees: values.numberOfEmployees,
             phone: values.phone,
@@ -103,7 +101,7 @@ const NewCompanyForm = ({data, done}: IProps) => {
                         name="contactPerson"
                         label="Contact Person"
                         remote={remoteRoutes.contactsPerson}
-                        parser={(dt: ISelectOpt) => dt}
+                        parser={comboParser}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -111,7 +109,7 @@ const NewCompanyForm = ({data, done}: IProps) => {
                         name="responsibleContact"
                         label="Responsible Contact"
                         remote={remoteRoutes.contactsPerson}
-                        parser={(dt: ISelectOpt) => dt}
+                        parser={comboParser}
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -126,7 +124,7 @@ const NewCompanyForm = ({data, done}: IProps) => {
                     <XDateInput
                         name="dateOfIncorporation"
                         label="Date of Incorporation"
-                        inputVariant='outlined'
+                        variant='outlined'
                     />
                 </Grid>
                 <Grid item xs={12}>

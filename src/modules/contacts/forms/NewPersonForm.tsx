@@ -2,7 +2,7 @@ import React from 'react';
 import * as yup from "yup";
 import {reqDate, reqEmail, reqNumber, reqString} from "../../../data/validations";
 import {genderCategories} from "../../../data/comboCategories";
-import {FormikActions} from "formik";
+import {FormikHelpers} from "formik";
 import Grid from "@material-ui/core/Grid";
 import XForm from "../../../components/forms/XForm";
 import XTextInput from "../../../components/inputs/XTextInput";
@@ -50,7 +50,7 @@ const schema = yup.object().shape(
 const NewPersonForm = ({data, done}: IProps) => {
     const dispatch = useDispatch();
 
-    function handleSubmit(values: any, actions: FormikActions<any>) {
+    function handleSubmit(values: any, actions: FormikHelpers<any>) {
         const model: IPersonCreateModel = {
 
             firstName: values.firstName,
@@ -130,12 +130,11 @@ const NewPersonForm = ({data, done}: IProps) => {
                         />
                     </Box>
                 </Grid>
-
                 <Grid item xs={6}>
                     <XDateInput
                         name="dateOfBirth"
                         label="Date of Birth"
-                        inputVariant='outlined'
+                        variant='outlined'
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -176,14 +175,14 @@ const NewPersonForm = ({data, done}: IProps) => {
                     <XDateInput
                         name="idIssueDate"
                         label="ID Issue Date"
-                        inputVariant='outlined'
+                        variant='outlined'
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <XDateInput
                         name="idExpiryDate"
                         label="ID Expiry Date"
-                        inputVariant='outlined'
+                        variant='outlined'
                     />
                 </Grid>
 
@@ -191,7 +190,7 @@ const NewPersonForm = ({data, done}: IProps) => {
                     <XDateInput
                         name="dateOfEmployment"
                         label="Date of Employment"
-                        inputVariant='outlined'
+                        variant='outlined'
                     />
                 </Grid>
 

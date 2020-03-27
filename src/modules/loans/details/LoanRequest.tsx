@@ -34,7 +34,7 @@ export const requestFields = (data: ILoan): IRec[] => {
 const LoanRequest = (props: IProps) => {
     return (
         <XStep icon={SuccessIcon} title='Request Details' rightLabelComponent={''} open={true}>
-            <DetailView data={requestFields(props.data)} columns={2} bold={true}/>
+            <DetailView data={requestFields(props.data)} columns={2}/>
         </XStep>
     );
 }

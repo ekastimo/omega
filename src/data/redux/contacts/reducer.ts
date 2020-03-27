@@ -16,7 +16,8 @@ export const crmConstants = {
     crmAddContact: "crmAddContact",
     crmEditPerson: "crmEditPerson",
 
-    crmEditContactData: "crmEditContactData",
+    crmEditContactOrg: "crmEditContactData",
+    crmEditContactAdmin: "crmEditContactAdmin",
 
     crmAddEmail: "crmAddEmail",
     crmEditEmail: "crmEditEmail",
@@ -102,10 +103,20 @@ export default function reducer(state = initialState, action: any) {
             return {...state, selected}
         }
 
-        case crmConstants.crmEditContactData: {
+        case crmConstants.crmEditContactOrg: {
             const contactData: IContactData = action.payload
             if (state.selected) {
                 const selected: IContact = {...state.selected, ...contactData}
+                return {...state, selected}
+            }
+            return state
+        }
+
+        case crmConstants.crmEditContactAdmin: {
+            const contactData: IContactData = action.payload
+            if (state.selected) {
+                const company = {...state.selected.company, ...contactData}
+                const selected: IContact = {...state.selected, company}
                 return {...state, selected}
             }
             return state
@@ -293,7 +304,6 @@ export default function reducer(state = initialState, action: any) {
             }
             return state
         }
-
 
 
         case crmConstants.crmAddUrl: {

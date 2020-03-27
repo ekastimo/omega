@@ -14,12 +14,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {IState} from "../../../data/types";
 import {columns} from "./config";
 import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
-import {intRange} from "../../../utils/numberHelpers";
-import {fakeLoan} from "../types";
-import RecentList from "./RecentList";
+import RecentLoansList from "./RecentLoansList";
 import Filter from "./Filter";
-import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
+import {search} from "../../../utils/ajax";
+import {ILoanFilter} from "../types";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -40,36 +39,28 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const headCells: XHeadCell[] = [...columns];
 
-const FullList = () => {
+const LoansList = () => {
     const dispatch = useDispatch();
+    const classes = useStyles();
     const {data}: ILoanState = useSelector((state: IState) => state.loans)
     const [loading, setLoading] = useState(false);
-    const [filter, setFilter] = useState<IContactsFilter>({});
-    const classes = useStyles();
-
-    // useEffect(() => {
-    //     setLoading(true)
-    //     search(remoteRoutes.loans,filter,resp=>{
-    //         dispatch({
-    //             type: loanConstants.loanFetchAll,
-    //             payload: [...resp],
-    //         })
-    //     },undefined,() => {
-    //         setLoading(false)
-    //     })
-    // }, [filter, dispatch])
+    const [filter, setFilter] = useState<ILoanFilter>({
+        showAssigned: true,
+        showNew: false
+    });
 
     useEffect(() => {
         setLoading(true)
-        setTimeout(()=>{
-            const data = intRange(1,15).map(fakeLoan)
+        search(remoteRoutes.loans, filter, resp => {
             dispatch({
                 type: loanConstants.loanFetchAll,
-                payload: [...data],
+                payload: [...resp],
             })
+        }, undefined, () => {
             setLoading(false)
-        },500)
-    }, [ dispatch])
+        })
+    }, [filter, dispatch])
+
 
     function handleFilter(value: any) {
         setFilter({...filter, ...value})
@@ -79,7 +70,7 @@ const FullList = () => {
         <Layout>
             <Grid container spacing={2}>
                 <Grid item xs={9}>
-                    <RecentList/>
+                    <RecentLoansList/>
                     <Box p={1} className={classes.root}>
                         <Box pb={2}>
                             <Grid container>
@@ -102,7 +93,7 @@ const FullList = () => {
                         }
                     </Box>
                 </Grid>
-                <Grid item xs={3} >
+                <Grid item xs={3}>
                     <Box pb={2}>
                         <Typography variant='h5'>&nbsp;</Typography>
                     </Box>
@@ -117,4 +108,4 @@ const FullList = () => {
     );
 }
 
-export default FullList
+export default LoansList

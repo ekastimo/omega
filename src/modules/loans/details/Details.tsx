@@ -10,7 +10,7 @@ import {loanConstants} from "../../../data/redux/loans/reducer";
 import Layout from "../../../components/layout/Layout";
 import Box from "@material-ui/core/Box";
 import {RouteComponentProps, withRouter} from "react-router";
-import PersonalInformation from "./PersonalInformation";
+import ApplicantDetails from "./ApplicantDetails";
 import Loading from "../../../components/Loading";
 import Grid from "@material-ui/core/Grid";
 import {trimGuid} from "../../../utils/stringHelpers";
@@ -20,9 +20,12 @@ import Divider from "@material-ui/core/Divider";
 import Summary from "./Summary";
 import {fakeContact} from "../../contacts/types";
 import SoreCard from "./ScoreCard";
-import LoanApplication from "./LoanApplication";
+import ApplicationDetails from "./ApplicationDetails";
 import LoanRequest from "./LoanRequest";
 import PreviousLoans from './PreviousLoans';
+import {get} from "../../../utils/ajax";
+import {remoteRoutes} from "../../../data/constants";
+import ErrorMessage from "../../../components/messages/ErrorMessage";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -58,21 +61,28 @@ const Details = (props: RouteComponentProps) => {
 
     useEffect(() => {
         setLoading(true)
-        setTimeout(() => {
-            const data = fakeLoan()
-            data.applicant = fakeContact()
+        const url = `${remoteRoutes.loans}/${loanId}`
+        get(url, resp => {
             dispatch({
                 type: loanConstants.loanFetchOne,
-                payload: data,
+                payload: resp,
             })
+        }, undefined, () => {
             setLoading(false)
-        }, 500)
-    }, [dispatch])
+        })
 
-    if (!data)
+    }, [dispatch, loanId])
+
+    if (loading)
         return (
             <Layout>
                 <Loading/>
+            </Layout>
+        );
+    if (!data)
+        return (
+            <Layout>
+                <ErrorMessage text="Failed to load loan details"/>
             </Layout>
         );
     return (
@@ -85,7 +95,7 @@ const Details = (props: RouteComponentProps) => {
                         </Box>
                     </Paper>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xl={9} xs={8}>
                     <Paper elevation={0} className={classes.paperStyle}>
                         <Box p={1} mb={1}>
                             <Typography
@@ -97,23 +107,20 @@ const Details = (props: RouteComponentProps) => {
                         </Box>
                     </Paper>
                     <Stepper orientation="vertical" className={classes.root}>
-                        <LoanApplication data={data}/>
-                        <PersonalInformation data={data}/>
-                        <LoanRequest data={data}/>
+                        <ApplicationDetails data={data}/>
+                        <ApplicantDetails data={data}/>
+
                         <SoreCard data={data}/>
-                        <PreviousLoans data={data}/>
                     </Stepper>
                 </Grid>
-                <Grid item xs={4}>
-                    <Paper elevation={0} className={classes.paperStyle}>
-                        <Box p={1}>
-                            <Typography variant='h6' style={{fontSize: '1.0rem'}}>Loan summary</Typography>
-                        </Box>
-                        <Divider/>
-                        <Box p={2}>
-                            <Summary data={data}/>
-                        </Box>
-                    </Paper>
+                <Grid item xl={3} xs={4}>
+                    <Box p={1} pl={0.5}>
+                        <Typography variant='h6' style={{fontSize: '1.0rem'}}>Loan summary</Typography>
+                    </Box>
+                    <Divider/>
+                    <Box p={1} pl={0.5}>
+                        <Summary data={data}/>
+                    </Box>
                 </Grid>
             </Grid>
         </Layout>

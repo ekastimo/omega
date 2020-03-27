@@ -5,6 +5,8 @@ import {ILoan} from "../types";
 import DetailView, {IRec} from "../../../components/DetailView";
 import {printDateTime} from "../../../utils/dateHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
+import {hasValue} from "../../../components/inputs/inputHelpers";
+import WarmMessage from "../../../components/messages/WarnMessage";
 
 interface IProps {
     data: ILoan
@@ -37,10 +39,15 @@ export const scoreFields = (data: ILoan): IRec[] => {
 }
 
 
-const SoreCard = (props: IProps) => {
+const SoreCard = ({data}: IProps) => {
     return (
         <XStep icon={SuccessIcon} title='Score Card' rightLabelComponent={''} open={true}>
-            <DetailView data={scoreFields(props.data)} columns={2} bold={true}/>
+            {
+                hasValue(data.score)?
+                    <DetailView data={scoreFields(data)} columns={2} bold={true}/>:
+                    <WarmMessage text='No score data'/>
+            }
+
         </XStep>
     );
 }

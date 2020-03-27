@@ -5,7 +5,7 @@ import Dashboard from "./dashboard/Dashboard";
 import Contacts from "./contacts/list/Contacts";
 import ContactDetails from "./contacts/details/Details";
 import LoanDetails from "./loans/details/Details";
-import Loans from "./loans/list/FullList";
+import Loans from "./loans/list/LoansList";
 import Settings from "./settings/Settings";
 import Layout from "../components/layout/Layout";
 import Users from "./admin/users/Users";

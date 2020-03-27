@@ -30,7 +30,7 @@ export const localRoutes = {
 }
 
 export const isDebug = process.env.NODE_ENV !== 'production'
-export const url = isDebug ? 'http://localhost:6001' :
+export const url = isDebug ? 'http://localhost:9001' :
     'https://jasperapitest.azurewebsites.net'
 
 export const remoteRoutes = {
@@ -40,7 +40,8 @@ export const remoteRoutes = {
     register: url + '/api/auth/register',
     resetPass: url + '/reset',
     contacts: url + '/api/crm/contact',
-    contactsData: url + '/api/crm/contactData',
+    contactsAdminOrg: url + '/api/crm/admin/org',
+    contactsAdminResponsible: url + '/api/crm/admin/responsible',
     contactSearch: url + '/api/crm/contact/search',
     contactById: url + '/api/crm/contact/id',
     contactsPerson: url + '/api/crm/person',

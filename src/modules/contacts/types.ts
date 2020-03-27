@@ -153,6 +153,10 @@ export interface ICompany {
     dateOfIncorporation: Date,
     contactId: string,
     id: string,
+    contactPersonId?: string
+    contactPerson?: any
+    responsibleContactId?: string
+    responsibleContact?: any
 }
 
 export interface ICompanyCreateModel {
@@ -197,15 +201,12 @@ export interface IContactData {
     responsibleContact?: any
 }
 
+
 export interface IContact {
     id: string
     category: ContactCategory
     organizationId?: string
     organization?: any
-    contactPersonId?: string
-    contactPerson?: any
-    responsibleContactId?: string
-    responsibleContact?: any
     person: IPerson
     emails: IEmail[]
     phones: IPhone[]
