@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import Layout from "../../../components/layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import {IContactsFilter} from "../../contacts/types";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';

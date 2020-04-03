@@ -9,6 +9,9 @@ export const appRoles = {
     LoansManager: "LOANS_MANAGER",
 }
 
+export const adminRoles = [appRoles.Super, appRoles.Admin, appRoles.Primary]
+export const clientRoles = [appRoles.ClientAdmin, appRoles.CrmManager, appRoles.LoansManager]
+
 
 export const hasRole = (user: IAuthUser, role: string): boolean => {
     return user.roles.indexOf(role) > -1

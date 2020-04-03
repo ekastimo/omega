@@ -9,12 +9,13 @@ import DataList from "../../../components/DataList";
 import {AddFabButton} from "../../../components/EditIconButton";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
-import {hasValue} from "../../../components/inputs/inputHelpers";
+import {hasValue, toOptions} from "../../../components/inputs/inputHelpers";
 import PersonIcon from "@material-ui/icons/Person";
 import Hidden from "@material-ui/core/Hidden";
 import EditDialog from "../../../components/EditDialog";
 import UserEditor from "./UserEditor";
 import Loading from "../../../components/Loading";
+import Chip from '@material-ui/core/Chip';
 
 const columns: XHeadCell[] = [
     {
@@ -43,8 +44,18 @@ const columns: XHeadCell[] = [
             component: "th", scope: "row"
         }
     }, {
-        name: 'group',
-        label: 'Group'
+        name: 'roles',
+        label: 'Roles',
+        render: (roles: string[]) => roles.map(it => (
+            <Chip
+                color='primary'
+                variant='outlined'
+                key={it}
+                style={{margin: 5, marginLeft: 0, marginTop: 0}}
+                size='small'
+                label={it}
+            />
+        ))
     },
 ]
 
@@ -94,11 +105,11 @@ const Users = () => {
     }
 
     const handleEdit = (dt: any) => {
-        const {id, username, contactId, fullName, groupId, group} = dt
+        const {id, username, contactId, fullName, roles} = dt
         const toEdit = {
             id,
             username,
-            group: {id: groupId, label: group},
+            roles: roles ? toOptions(roles) : [],
             contact: {id: contactId, label: fullName}
         }
         setSelected(toEdit)
@@ -147,7 +158,8 @@ const Users = () => {
             <Hidden mdUp>
                 <AddFabButton onClick={handleNew}/>
             </Hidden>
-            <EditDialog title={selected ? 'Edit User' : 'Create User'} open={dialog} onClose={handleClose}>
+            <EditDialog title={selected ? `Edit ${selected.username}` : 'Create User'} open={dialog}
+                        onClose={handleClose}>
                 <UserEditor data={selected} isNew={!selected} done={handleComplete} onDeleted={handleDeleted}/>
             </EditDialog>
         </Layout>

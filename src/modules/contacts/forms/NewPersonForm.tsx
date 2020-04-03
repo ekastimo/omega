@@ -39,7 +39,7 @@ const schema = yup.object().shape(
         idCategory: reqString,
         idNumber: reqString,
         idExpiryDate: reqDate,
-        idIssueDate: reqDate,
+        //idIssueDate: reqDate,
 
 
         dateOfEmployment: reqDate,

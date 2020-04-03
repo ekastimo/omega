@@ -9,7 +9,8 @@ export interface ILoanFilter {
     referenceNumber?: string
     externalReference?: string
     userId?: string
-    applicant?: string
+    applicantId?: string
+    organizationId?: string
     assignee?: string
     showNew?: boolean
     showAssigned?: boolean

@@ -1,5 +1,4 @@
 import React from 'react';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Layout from "../../components/layout/Layout";
 import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -10,7 +9,7 @@ import Box from "@material-ui/core/Box";
 import Money from '@material-ui/icons/Money';
 import Info from '@material-ui/icons/Info';
 import People from '@material-ui/icons/People';
-import {printMoney,printInteger} from "../../utils/numberHelpers";
+import {printInteger, printMoney} from "../../utils/numberHelpers";
 import UsersByDevice from "./UsersByDevice";
 
 const data = [

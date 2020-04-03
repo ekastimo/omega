@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import {search} from "../../utils/ajax";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
@@ -19,6 +19,7 @@ export interface IProps extends IXRemoteProps {
     fullWidth?: boolean;
     helperText?: React.ReactNode;
     textFieldProps?: TextFieldProps
+
 }
 
 const FakeProgress = () => <div style={{height: 20, width: 20}}>&nbsp;</div>
@@ -32,29 +33,19 @@ const labelParser = (option: any) => {
 
 export function PRemoteSelect(props: IProps) {
     const [loading, setLoading] = React.useState(false);
-    const [options, setOptions] = React.useState<IOption[]>([]);
+    const [options, setOptions] = React.useState<IOption[]>(props.defaultOptions || []);
+    const [query, setQuery] = React.useState<string>('');
 
     function handleInputChange(event: React.ChangeEvent<any>, value: string) {
         if (!event)
             return
-        loadData(value)
+        fetch(value)
     }
 
-    useEffect(() => {
-        const filter = {...props.filter, query: "", limit: 50}
-        setLoading(true)
-        search(props.remote, filter,
-            resp => {
-                const data = resp.map(props.parser)
-                setOptions(data)
-            },
-            undefined,
-            () => {
-                setLoading(false)
-            })
-    }, [props.filter, props.remote, props.parser])
-
-    function loadData(query: string) {
+    const fetch = useCallback((query: string) => {
+        if (hasNoValue(props.remote)) {
+            return
+        }
         const filter = {...props.filter, query, limit: 50}
         setLoading(true)
         search(props.remote, filter,
@@ -66,7 +57,13 @@ export function PRemoteSelect(props: IProps) {
             () => {
                 setLoading(false)
             })
-    }
+    }, [props.filter, props.parser, props.remote]);
+
+    useEffect(() => {
+        if (hasValue(props.remote)) {
+            fetch(query)
+        }
+    }, [fetch, props.remote, query])
 
     function handleChange(
         event: React.ChangeEvent<{}>,
@@ -83,10 +80,14 @@ export function PRemoteSelect(props: IProps) {
 
     const handleMouseEnter = () => {
         if (hasNoValue(options)) {
-            loadData("")
+            fetch("")
         }
     }
-    const {error, helperText, parser, ...autoProps} = {...props}
+    const {error, helperText, parser, defaultOptions, ...autoProps} = {...props}
+
+    const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(event.target.value);
+    };
 
     return (
         <Autocomplete
@@ -110,6 +111,7 @@ export function PRemoteSelect(props: IProps) {
                     margin='normal'
                     fullWidth
                     onBlur={handleTouched}
+                    onChange={props.searchOnline ? handleQueryChange : undefined}
                     error={props.error}
                     helperText={props.helperText}
                     variant={props.variant}

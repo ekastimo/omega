@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Box} from "@material-ui/core";
-import {fakeLoan, ILoan} from "../types";
+import {ILoan, ILoanFilter} from "../types";
 import {ContactCategory, IContact} from "../../contacts/types";
 import {contactPrevHeaderCells, personPrevHeaderCells} from "../list/config";
-import {intRange} from "../../../utils/numberHelpers";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Loading from "../../../components/Loading";
 import XTable from "../../../components/table/XTable";
+import {search} from "../../../utils/ajax";
+import {remoteRoutes} from "../../../data/constants";
 
 interface IProps {
     data: ILoan
@@ -21,15 +22,23 @@ const PreviousLoans = ({data}: IProps) => {
         headCells = personPrevHeaderCells;
     }
     useEffect(() => {
+        const filter: ILoanFilter = {
+            showAssigned: true,
+            showNew: true,
+            applicantId: data.applicantId
+        }
         setLoading(true)
-        setTimeout(() => {
-            const loans = intRange(1, 4).map(fakeLoan)
-            setLoans(loans)
+        search(remoteRoutes.loans, filter, (resp: ILoan[]) => {
+            //remove Active loan
+            const newLoans = resp.filter(it => it.id !== data.id)
+            setLoans(newLoans)
+
+        }, undefined, () => {
             setLoading(false)
-        }, 1000)
-    }, [])
+        })
+    }, [data.applicantId, data.id])
     return (
-        <div >
+        <div>
             {
                 loading ? <Loading/> :
                     <Box p={0}>

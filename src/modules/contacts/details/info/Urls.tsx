@@ -6,7 +6,6 @@ import EditDialog from "../../../../components/EditDialog";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
 import UrlEditor from "../editors/UrlEditor";
 import {trimString} from "../../../../utils/stringHelpers";
 import SectionTitle from "./SectionTitle";

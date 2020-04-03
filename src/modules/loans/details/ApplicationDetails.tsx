@@ -5,7 +5,6 @@ import {ILoan} from "../types";
 import DetailView, {IRec} from "../../../components/DetailView";
 import {printDateTime} from "../../../utils/dateHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
-import {Divider} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 interface IProps {

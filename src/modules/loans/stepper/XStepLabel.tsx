@@ -12,7 +12,6 @@ import {Flex} from "../../../components/widgets";
 import StepContent from "@material-ui/core/StepContent";
 import Step from "@material-ui/core/Step";
 import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

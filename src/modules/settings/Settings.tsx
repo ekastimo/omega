@@ -7,7 +7,6 @@ import {post} from "../../utils/ajax";
 import {fakeContact} from "../contacts/types";
 import Tags from "./tags/Tags";
 import PasswordReset from "./PasswordReset";
-import CenteredDiv from "../../components/CenteredDiv";
 import Divider from "@material-ui/core/Divider";
 
 const Settings = () => {

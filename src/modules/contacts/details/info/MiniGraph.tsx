@@ -1,8 +1,7 @@
 import React from 'react';
 import {Pie} from 'react-chartjs-2';
 import {makeStyles, useTheme} from '@material-ui/styles';
-import {colors, Divider, Theme, Typography} from '@material-ui/core';
-import AssessmentIcon from "@material-ui/icons/AssessmentOutlined";
+import {colors, Theme, Typography} from '@material-ui/core';
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import {IContact} from "../../types";

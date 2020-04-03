@@ -1,22 +1,11 @@
 import React from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import {Theme, Typography} from "@material-ui/core";
 import {IContact} from "../../types";
-import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import uuid from 'uuid/v4'
-import {trimGuid} from "../../../../utils/stringHelpers";
-import LoanLink from "../../../../components/links/LoanLink";
-import {printDateTime} from "../../../../utils/dateHelpers";
-import {printMoney, randomInt} from "../../../../utils/numberHelpers";
-import {ErrorIcon, SuccessIcon} from "../../../../components/xicons";
+import {randomInt} from "../../../../utils/numberHelpers";
 import {useTheme} from "@material-ui/styles";
 import ContactLoansSummary from "../../../loans/list/ContactLoansSummary";
 

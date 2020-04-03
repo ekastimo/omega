@@ -15,7 +15,7 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
     if ((res && res.forbidden) || (res && res.unauthorized)) {
         Toast.error("Authentication Error")
     } else if (res && res.badRequest) {
-        const {message, errors=[]} = res.body
+        const {message, errors = []} = res.body
         let msg = message + '\n'
         for (const err of errors) {
             const error = Object.values(err)[0]
@@ -91,6 +91,7 @@ export const post = (url: string, data: any, callBack: CallbackFunction, errorCa
         .end(handleResponse(callBack, errorCallBack, endCallBack))
 }
 
+
 export const postFile = (url: string, data: any, callBack: CallbackFunction, errorCallBack?: ErrorCallback, endCallBack?: EndCallback) => {
     superagent.post(url)
         .set('Authorization', `Bearer ${getToken()}`)
@@ -117,3 +118,19 @@ export const del = (url: string, callBack: CallbackFunction, errorCallBack?: Err
         .timeout(timeout)
         .end(handleResponse(callBack, errorCallBack, endCallBack))
 }
+
+export const downLoad = (url: string, callBack: CallbackFunction, errorCallBack?: ErrorCallback, endCallBack?: EndCallback) => {
+    superagent.get(url)
+        .set('Authorization', `Bearer ${getToken()}`)
+        .responseType('blob')
+        .end(handleResponse(callBack, errorCallBack, endCallBack))
+}
+
+export const triggerDownLoad = (data: Blob, fileName = 'export.csv') => {
+    const a = document.createElement('a');
+    a.href = window.URL.createObjectURL(data);
+    a.download = fileName;
+    a.click();
+}
+
+

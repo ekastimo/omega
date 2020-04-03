@@ -31,7 +31,7 @@ const XForm = (props: IProps) => {
     }
 
     return <Formik
-        initialValues={props.initialValues}
+        initialValues={props.initialValues || {}}
         onSubmit={props.onSubmit}
         validationSchema={props.schema}
         validateOnBlur
@@ -42,17 +42,19 @@ const XForm = (props: IProps) => {
             <Grid container spacing={0} style={{minWidth: 350}}>
                 {
                     hasValue(errors) &&
-                    <Box p={1} display='flex' justifyContent='center'>
-                        <Alert severity="warning">Validation error(s)</Alert>
-                    </Box>
+                    <Grid item xs={12}>
+                        <Box display='flex' justifyContent='center'>
+                            <Alert severity="warning">Please provide all required fields(s)</Alert>
+                        </Box>
+                    </Grid>
                 }
                 <Grid item xs={12}>
-                    <Box p={1}>
+                    <Box >
                         {props.children}
                     </Box>
                 </Grid>
                 <Grid item xs={12}>
-                    <Box p={1}>
+                    <Box p={1} pt={2}>
                         <Grid container spacing={1} alignContent='flex-end' justify='flex-end'>
                             {
                                 props.onDelete &&

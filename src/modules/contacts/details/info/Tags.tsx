@@ -5,7 +5,6 @@ import Chip from '@material-ui/core/Chip';
 import {AddIconButton} from "../../../../components/EditIconButton";
 import EditDialog from "../../../../components/EditDialog";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
 import TagEditor from "../editors/TagEditor";
 import SectionTitle from "./SectionTitle";
 

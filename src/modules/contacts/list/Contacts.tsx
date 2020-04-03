@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Layout from "../../../components/layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
@@ -56,14 +56,14 @@ const Contacts = () => {
     const [filter, setFilter] = useState<IContactsFilter>({});
     const classes = useStyles();
 
-    useEffect(() => {
+    const fetchData = useCallback((queryData: any) => {
         dispatch({
             type: crmConstants.crmFetchLoading,
             payload: true,
         })
         search(
             remoteRoutes.contacts,
-            filter,
+            queryData,
             (resp) => {
                 dispatch({
                     type: crmConstants.crmFetchAll,
@@ -77,8 +77,17 @@ const Contacts = () => {
                     payload: false,
                 })
             })
-    }, [filter, dispatch])
+    }, [dispatch])
 
+    useEffect(() => {
+        fetchData(filter)
+    }, [fetchData, filter])
+
+
+    function handleUploadComplete() {
+        fetchData(filter)
+        setUploadDialog(false)
+    }
 
     function handleFilter(value: any) {
         setFilter({...filter, ...value})
@@ -92,11 +101,11 @@ const Contacts = () => {
         setCreateCompanyDialog(true)
     }
 
-    function handleUpload(){
+    function handleUpload() {
         setUploadDialog(true)
     }
 
-    function closeUploadDialog(){
+    function closeUploadDialog() {
         setUploadDialog(false)
     }
 
@@ -128,7 +137,7 @@ const Contacts = () => {
                                             Person&nbsp;&nbsp;
                                         </Button>
                                         {
-                                            isPrimaryUser(user)&&
+                                            isPrimaryUser(user) &&
                                             <Button
                                                 variant="outlined"
                                                 color="primary"
@@ -166,7 +175,7 @@ const Contacts = () => {
                         }
                     </Box>
                 </Grid>
-                <Grid item xs={3} >
+                <Grid item xs={3}>
                     <Box pb={2}>
                         <Typography variant='h5'>&nbsp;</Typography>
                     </Box>
@@ -183,7 +192,7 @@ const Contacts = () => {
             <EditDialog title="New Company" open={createCompanyDialog} onClose={closeCreateDialog} maxWidth="sm">
                 <NewCompanyForm data={{}} done={closeCreateDialog}/>
             </EditDialog>
-            <ContactUpload show={uploadDialog} onClose={closeUploadDialog}/>
+            <ContactUpload show={uploadDialog} onClose={closeUploadDialog} onDone={handleUploadComplete}/>
         </Layout>
     );
 }

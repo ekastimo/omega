@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import XForm from "../../../components/forms/XForm";
 import XTextInput from "../../../components/inputs/XTextInput";
 import XDateInput from "../../../components/inputs/XDateInput";
-import {comboParser, IOption, toOptions} from "../../../components/inputs/inputHelpers";
+import {comboParser, toOptions} from "../../../components/inputs/inputHelpers";
 
 import {remoteRoutes} from "../../../data/constants";
 import {useDispatch} from 'react-redux'
@@ -102,6 +102,7 @@ const NewCompanyForm = ({data, done}: IProps) => {
                         label="Contact Person"
                         remote={remoteRoutes.contactsPerson}
                         parser={comboParser}
+                        variant='outlined'
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -110,6 +111,7 @@ const NewCompanyForm = ({data, done}: IProps) => {
                         label="Responsible Contact"
                         remote={remoteRoutes.contactsPerson}
                         parser={comboParser}
+                        variant='outlined'
                     />
                 </Grid>
                 <Grid item xs={6}>

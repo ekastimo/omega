@@ -23,7 +23,7 @@ const Filter = ({onFilter, loading}: IProps) => {
         statuses: [],
         subStatuses: [],
         userId: '',
-        applicant: '',
+        applicantId: '',
         assignee: ''
     })
 
@@ -104,7 +104,7 @@ const Filter = ({onFilter, loading}: IProps) => {
             <Grid item xs={12}>
                 <TextField
                     name="applicant"
-                    value={data['applicant']}
+                    value={data['applicantId']}
                     onChange={handleChange}
                     label="Applicant"
                     type="text"

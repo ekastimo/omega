@@ -5,7 +5,7 @@ import {getRouteParam} from "../../../utils/routHelpers";
 import {useDispatch, useSelector} from "react-redux";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import {IState} from "../../../data/types";
-import {fakeLoan, ILoan} from "../types";
+import {ILoan} from "../types";
 import {loanConstants} from "../../../data/redux/loans/reducer";
 import Layout from "../../../components/layout/Layout";
 import Box from "@material-ui/core/Box";
@@ -18,11 +18,8 @@ import {renderStatus, renderSubStatus} from "../list/config";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import Summary from "./Summary";
-import {fakeContact} from "../../contacts/types";
 import SoreCard from "./ScoreCard";
 import ApplicationDetails from "./ApplicationDetails";
-import LoanRequest from "./LoanRequest";
-import PreviousLoans from './PreviousLoans';
 import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import ErrorMessage from "../../../components/messages/ErrorMessage";
@@ -109,7 +106,6 @@ const Details = (props: RouteComponentProps) => {
                     <Stepper orientation="vertical" className={classes.root}>
                         <ApplicationDetails data={data}/>
                         <ApplicantDetails data={data}/>
-
                         <SoreCard data={data}/>
                     </Stepper>
                 </Grid>

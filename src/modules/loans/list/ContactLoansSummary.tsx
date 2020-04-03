@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
-import {intRange} from "../../../utils/numberHelpers";
-import {fakeLoan, ILoan} from "../types";
+import {ILoan, ILoanFilter} from "../types";
 import Box from "@material-ui/core/Box";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
-import {columns, contactLoanSumHeaderCells, personLoansHeadCells, personLoansSumHeadCells} from "./config";
+import {contactLoanSumHeaderCells, personLoansSumHeadCells} from "./config";
 import {ContactCategory, IContact} from "../../contacts/types";
 import Loading from "../../../components/Loading";
+import {search} from "../../../utils/ajax";
+import {remoteRoutes} from "../../../data/constants";
 
 interface IProps {
     contact: IContact
@@ -15,21 +15,28 @@ interface IProps {
 
 let headCells: XHeadCell[] = [...contactLoanSumHeaderCells];
 const ContactLoansSummary = ({contact}: IProps) => {
-    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<ILoan[]>([]);
-
-    if (contact.category === ContactCategory.Person) {
+    const isPerson = contact.category === ContactCategory.Person;
+    if (isPerson) {
         headCells = personLoansSumHeadCells;
     }
     useEffect(() => {
+        const isPerson = contact.category === ContactCategory.Person;
+        const filter: ILoanFilter = {
+            showAssigned: true,
+            showNew: true,
+            applicantId: isPerson ? contact.id : undefined,
+            organizationId: isPerson ? undefined : contact.id
+        }
         setLoading(true)
-        setTimeout(() => {
-            const data = intRange(1, 4).map(fakeLoan)
-            setData(data)
+        search(remoteRoutes.loans, filter, (resp: ILoan[]) => {
+            setData(resp)
+        }, undefined, () => {
             setLoading(false)
-        }, 1000)
-    }, [dispatch])
+        })
+    }, [contact.category, contact.id])
     return (
         <Box width='100%'>
             {

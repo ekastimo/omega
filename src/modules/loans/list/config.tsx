@@ -154,7 +154,7 @@ export const contactLoanSumHeaderCells: XHeadCell[] = [
     {
         name: 'applicantId',
         label: 'Applicant',
-        render: (value, rec) => <ContactLink id={value} name={getInitials(rec.applicant.name)}/>,
+        render: (value, rec) => <ContactLink id={value} title={rec.applicant.name} name={getInitials(rec.applicant.name)}/>,
     },
     {
         name: 'amount', label: 'Amount', render: value => printMoney(value)
