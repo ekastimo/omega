@@ -160,7 +160,7 @@ const Users = () => {
             </Hidden>
             <EditDialog title={selected ? `Edit ${selected.username}` : 'Create User'} open={dialog}
                         onClose={handleClose}>
-                <UserEditor data={selected} isNew={!selected} done={handleComplete} onDeleted={handleDeleted}/>
+                <UserEditor data={selected} isNew={!selected} done={handleComplete} onDeleted={handleDeleted} onCancel={handleClose}/>
             </EditDialog>
         </Layout>
     );

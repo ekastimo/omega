@@ -14,8 +14,6 @@ interface IProps {
     data: IContact
 }
 
-
-
 const Addresses = (props: IProps) => {
     const [selected, setSelected] = useState<IAddress | null>(null)
     const [dialog, setDialog] = useState(false)

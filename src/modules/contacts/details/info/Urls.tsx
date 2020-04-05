@@ -60,7 +60,7 @@ const Urls = (props: IProps) => {
                     }>
                         <Box pb={1}>
                             <a href={it.value} target='_blank' rel="noopener noreferrer" style={{color:linkColor}}>
-                                <Typography variant='body1' noWrap display='inline'>{trimString(it.value,23)}</Typography>
+                                <Typography variant='body1' noWrap display='inline'>{trimString(it.value,20)}</Typography>
                             </a>
                             <Typography variant='caption' display='inline'>&nbsp;({it.category})&nbsp;&nbsp;</Typography>
                         </Box>

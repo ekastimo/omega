@@ -35,7 +35,7 @@ export const idFields = (data: IContact): IRec[] => {
                 value: printMoney(person.monthlyNetSalary)
             },
             {
-                label: 'Employment date',
+                label: 'Emp. date',
                 value: printDate(person.dateOfEmployment)
             }
         ]
