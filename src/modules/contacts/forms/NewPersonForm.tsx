@@ -35,24 +35,38 @@ const schema = yup.object().shape(
         email: reqEmail,
         phone: reqString,
 
-
         idCategory: reqString,
         idNumber: reqString,
         idExpiryDate: reqDate,
         //idIssueDate: reqDate,
-
 
         dateOfEmployment: reqDate,
         monthlyNetSalary: reqNumber,
     }
 )
 
+const initialValues = {
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dateOfBirth: null,
+
+    email: "",
+    phone: "",
+
+    idCategory: "",
+    idNumber: "",
+    idExpiryDate: null,
+    //idIssueDate: reqDate,
+
+    dateOfEmployment: null,
+    monthlyNetSalary: "",
+}
 const NewPersonForm = ({data, done}: IProps) => {
     const dispatch = useDispatch();
 
     function handleSubmit(values: any, actions: FormikHelpers<any>) {
         const model: IPersonCreateModel = {
-
             firstName: values.firstName,
             middleName: values.middleName,
             lastName: values.lastName,
@@ -84,7 +98,6 @@ const NewPersonForm = ({data, done}: IProps) => {
             undefined,
             () => {
                 actions.setSubmitting(false);
-
             }
         )
     }
@@ -93,7 +106,7 @@ const NewPersonForm = ({data, done}: IProps) => {
         <XForm
             onSubmit={handleSubmit}
             schema={schema}
-            initialValues={data}
+            initialValues={{...initialValues, ...data}}
             onCancel={done}
         >
             <Grid spacing={1} container>

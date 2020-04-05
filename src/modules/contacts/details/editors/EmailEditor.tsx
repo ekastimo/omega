@@ -50,6 +50,7 @@ const EmailEditor = ({data, isNew, contactId, done}: IProps) => {
 
     return (
         <XForm
+            debug
             onSubmit={handleSubmit}
             schema={schema}
             initialValues={data}

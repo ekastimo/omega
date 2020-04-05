@@ -57,6 +57,10 @@ const Details = (props: RouteComponentProps) => {
     const data: ILoan | undefined = useSelector((state: IState) => state.loans.selected)
 
     useEffect(() => {
+        dispatch({
+            type: loanConstants.loanFetchOne,
+            payload: undefined,
+        })
         setLoading(true)
         const url = `${remoteRoutes.loans}/${loanId}`
         get(url, resp => {

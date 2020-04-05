@@ -86,7 +86,7 @@ const AdminViewEditor = ({data, done, contactId, contactType}: IProps) => {
                             <Grid item xs={12}>
                                 <XRemoteSelect
                                     name="responsibleContact"
-                                    label="Responsible Contact"
+                                    label="Account Manager"
                                     remote={remoteRoutes.contactsPerson}
                                     parser={comboParser}
                                     variant='outlined'

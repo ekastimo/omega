@@ -45,7 +45,7 @@ export const displayFields = (data: IContact): IRec[] => {
             /> : <Typography>-NA-</Typography>
         },
         {
-            label: 'Responsible Contact',
+            label: 'Account Manager',
             value: responsibleContact ? <ContactLink
                 id={responsibleContact.id}
                 name={trimString(responsibleContact.name, 25)}

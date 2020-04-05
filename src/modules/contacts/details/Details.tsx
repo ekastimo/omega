@@ -77,15 +77,17 @@ const Details = (props: IProps) => {
     const classes = useStyles()
     const dispatch = useDispatch();
     const data: IContact | undefined = useSelector((state: any) => state.crm.selected)
-
     const [loading, setLoading] = useState<boolean>(true)
     const [value, setValue] = React.useState('one');
-
     const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setValue(newValue);
     };
     useEffect(() => {
         setLoading(true)
+        dispatch({
+            type: crmConstants.crmFetchOne,
+            payload: undefined,
+        })
         get(
             `${remoteRoutes.contacts}/${contactId}`,
             resp => dispatch({
@@ -95,43 +97,45 @@ const Details = (props: IProps) => {
             undefined,
             () => setLoading(false))
     }, [dispatch, contactId])
-    const hasError = !loading && !data
+
+    if (loading)
+        return <Layout> <Loading/></Layout>
     return (
         <Layout>
-            {loading && <Loading/>}
-            {hasError && <Error text='Failed load contact'/>}
             {
-                data &&
-                <div className={classes.root}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} style={{paddingBottom: 0}}>
-                            <Profile data={data}/>
-                            <Divider className={classes.divider}/>
+                data
+                    ? <div className={classes.root}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} style={{paddingBottom: 0}}>
+                                <Profile data={data}/>
+                                <Divider className={classes.divider}/>
+                            </Grid>
+                            <Grid item xs={12} style={{paddingTop: 0}}>
+                                <AppBar position="static" color="inherit" elevation={0}
+                                        style={{padding: 0, height: 35, minHeight: 0}}>
+                                    <Tabs value={value} onChange={handleChange} style={{height: 35, minHeight: 0}}
+                                          indicatorColor='primary'>
+                                        <Tab
+                                            style={{padding: 0, height: 35, minHeight: 0}}
+                                            value="one"
+                                            label="Summary"
+                                            {...a11yProps('one')}
+                                        />
+                                        <Tab value="two" label="Loans"
+                                             style={{padding: 0, height: 35, minHeight: 0}} {...a11yProps('two')} />
+                                    </Tabs>
+                                </AppBar>
+                                <Divider/>
+                                <TabPanel value={value} index="one">
+                                    <Info data={data}/>
+                                </TabPanel>
+                                <TabPanel value={value} index="two">
+                                    <ContactLoans contact={data}/>
+                                </TabPanel>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12} style={{paddingTop: 0}}>
-                            <AppBar position="static" color="inherit" elevation={0}
-                                    style={{padding: 0, height: 35, minHeight: 0}}>
-                                <Tabs value={value} onChange={handleChange} style={{height: 35, minHeight: 0}} indicatorColor='primary'>
-                                    <Tab
-                                        style={{padding: 0, height: 35, minHeight: 0}}
-                                        value="one"
-                                        label="Summary"
-                                        {...a11yProps('one')}
-                                    />
-                                    <Tab value="two" label="Loans"
-                                         style={{padding: 0, height: 35, minHeight: 0}} {...a11yProps('two')} />
-                                </Tabs>
-                            </AppBar>
-                            <Divider/>
-                            <TabPanel value={value} index="one">
-                                <Info data={data}/>
-                            </TabPanel>
-                            <TabPanel value={value} index="two">
-                                <ContactLoans contact={data}/>
-                            </TabPanel>
-                        </Grid>
-                    </Grid>
-                </div>
+                    </div>
+                    : <Error text='Failed load contact'/>
             }
         </Layout>
     );
