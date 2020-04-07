@@ -131,12 +131,11 @@ const removeColumns = (cols: XHeadCell[], filter: string[]) => {
     }).map(({cellProps, ...rest}) => ({...rest}))
 }
 
-export const recentLoansHeadCells: XHeadCell[] = [...removeColumns(columns,['assigneeId'])];
+export const recentLoansHeadCells: XHeadCell[] = [...removeColumns(columns, ['assigneeId'])];
 
 
-
-export const companyLoansHeadCells: XHeadCell[] = [...removeColumns(columns,['assigneeId'])];
-export const personLoansHeadCells: XHeadCell[] = [...removeColumns(columns,['assigneeId','applicantId'])];
+export const companyLoansHeadCells: XHeadCell[] = [...removeColumns(columns, ['assigneeId'])];
+export const personLoansHeadCells: XHeadCell[] = [...removeColumns(columns, ['assigneeId', 'applicantId'])];
 
 export const contactLoanSumHeaderCells: XHeadCell[] = [
     {
@@ -157,8 +156,11 @@ export const contactLoanSumHeaderCells: XHeadCell[] = [
     {
         name: 'applicantId',
         label: 'Applicant',
-        render: (value, rec) => <ContactLink id={value} title={rec.applicant.name}
-                                             name={getInitials(rec.applicant.name)}/>,
+        render: (value, rec) => <ContactLink
+            id={value}
+            title={rec.applicant.name}
+            name={getInitials(rec.applicant.name)}
+        />,
     },
     {
         name: 'amount', label: 'Amount', render: value => printMoney(value)
