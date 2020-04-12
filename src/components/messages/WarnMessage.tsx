@@ -7,11 +7,11 @@ interface IProps {
     text: string
 }
 
-const WarmMessage = (props: IProps) => {
+const WarnMessage = (props: IProps) => {
     return (
-        <Box display="flex" p={4} justifyContent="center">
+        <Box display="flex" p={2} justifyContent="center">
             <Paper style={{backgroundColor: colors.orange[50]}} elevation={0}>
-                <Box p={3}>
+                <Box p={1}>
                     <Typography>{props.text}&nbsp;!</Typography>
                 </Box>
             </Paper>
@@ -19,5 +19,4 @@ const WarmMessage = (props: IProps) => {
     );
 }
 
-
-export default WarmMessage;
+export default WarnMessage;

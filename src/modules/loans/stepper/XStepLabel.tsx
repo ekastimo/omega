@@ -46,7 +46,8 @@ export interface IStepProps {
     title: string
     open?: boolean
     children?: React.ReactNode
-    rightLabelComponent?: React.ReactNode
+    rightLabelComponent?: React.ReactNode,
+    hideContentPaper?: boolean
 }
 
 export const XStep = (props: IStepProps) => {
@@ -58,7 +59,7 @@ export const XStep = (props: IStepProps) => {
     };
     return <Step active={expanded} classes={{
         root: classes.stepRoot
-    }} orientation="vertical">
+    }}>
         <StepLabel StepIconComponent={props.icon}>
             <Paper className={classes.stepPaper} elevation={0}>
                 <Grid container spacing={0} className={classes.stepLabel}>
@@ -91,11 +92,17 @@ export const XStep = (props: IStepProps) => {
             </Paper>
         </StepLabel>
         <StepContent className={classes.stepContent}>
-            <Paper elevation={0} style={{borderRadius: 0, marginTop: 8}}>
-                <Box p={2}>
-                    {props.children}
-                </Box>
-            </Paper>
+            {
+                props.hideContentPaper ?
+                    <Box pt={1}>
+                        {props.children}
+                    </Box> :
+                    <Paper elevation={0} style={{borderRadius: 0, marginTop: 8}}>
+                        <Box p={2}>
+                            {props.children}
+                        </Box>
+                    </Paper>
+            }
         </StepContent>
     </Step>
 }

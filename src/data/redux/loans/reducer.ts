@@ -1,10 +1,11 @@
-import {ILoan} from "../../../modules/loans/types";
+import {ILoan, IPayout} from "../../../modules/loans/types";
 
 export const loanConstants = {
     loanFetchAll: "loanFetchAll",
     loanFetchRecent: "loanFetchRecent",
     loanFetchLoading: "loanFetchLoading",
     loanFetchOne: "loanFetchOne",
+    loanTriggerPayment: "loanTriggerPayment",
 }
 
 export interface ILoanState {
@@ -37,8 +38,21 @@ export default function reducer(state = initialState, action: any) {
             return {...state, selected}
         }
 
+        case loanConstants.loanTriggerPayment: {
+            const payout: IPayout = action.payload
+            return {...state, selected: {...state.selected, payout}}
+        }
+
         default: {
             return state
         }
+    }
+}
+
+
+export function loanActionPayout(payload: IPayout) {
+    return {
+        type: loanConstants.loanTriggerPayment,
+        payload
     }
 }

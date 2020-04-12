@@ -11,3 +11,7 @@ body, #root, .fill {
     min-height: 35px;
 }
 
+.MuiStepConnector-lineVertical{
+    min-height: 2px !important;
+}
+

@@ -139,13 +139,10 @@ export const personLoansHeadCells: XHeadCell[] = [...removeColumns(columns, ['as
 
 export const contactLoanSumHeaderCells: XHeadCell[] = [
     {
-        name: 'id', label: 'ID', render: value => <LoanLink id={value} name={trimGuid(value)}/>,
-        cellProps: {style: {width: 70}}
+        name: 'applicationDate',
+        label: 'Date',
+        render: (value, rec) => <LoanLink id={rec.id} name={printDateTime(value)}/>
     },
-    {
-        name: 'applicationDate', label: 'Date', render: printDate
-    },
-
     {
         name: 'status', label: 'Status',
         render: renderStatus
@@ -192,9 +189,7 @@ export const contactPrevHeaderCells: XHeadCell[] = [
     }
 ];
 
-export const personPrevHeaderCells: XHeadCell[] = [...contactPrevHeaderCells.filter(it => {
-    return it.name !== 'applicantId'
-})];
+
 
 
 

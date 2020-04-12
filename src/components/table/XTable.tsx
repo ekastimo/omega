@@ -14,6 +14,7 @@ import XTableHead, {XHeadCell} from "./XTableHead";
 import Loading from "../Loading";
 import {parseXpath} from "../../utils/jsonHelpers";
 import Alert from '@material-ui/lab/Alert';
+import {Box} from "@material-ui/core";
 
 interface XTableProps {
     initialSortBy?: string
@@ -131,59 +132,61 @@ export default function XTable(props: XTableProps) {
                                             <Loading/>
                                         </TableCell>
                                     </TableRow>
-                                </TableBody>:
+                                </TableBody> :
                                 <TableBody>
                                     {
-                                        data.length>0?
-                                        stableSort(data, getSorting(order, orderBy))
-                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        .map((row: any, index: number) => {
-                                            const isItemSelected = isSelected(row.id);
-                                            const labelId = `enhanced-table-checkbox-${index}`;
-                                            return (
-                                                <TableRow
-                                                    hover
-                                                    onClick={event => handleClick(event, row.id)}
-                                                    role="checkbox"
-                                                    aria-checked={isItemSelected}
-                                                    tabIndex={-1}
-                                                    key={row.id}
-                                                    selected={isItemSelected}
-                                                    style={{backgroundColor: isEven(index) ? 'white' : grey[50]}}
-                                                >
-                                                    {
-                                                        useCheckbox &&
-                                                        <TableCell padding="checkbox" size={bodySize}>
-                                                            <Checkbox
-                                                                checked={isItemSelected}
-                                                                inputProps={{'aria-labelledby': labelId}}
-                                                            />
-                                                        </TableCell>
-                                                    }
-                                                    {
-                                                        headCells.map(it => (
-                                                            <TableCell
-                                                                size={bodySize}
-                                                                key={it.name}
-                                                                align={it.numeric ? 'right' : 'left'}
-                                                                style={{whiteSpace: 'nowrap'}}
-                                                                {...it.cellProps}>
-                                                                {it.render ? it.render(parseXpath(row,it.name), row) : parseXpath(row,it.name)}
-                                                            </TableCell>
-                                                        ))
-                                                    }
-                                                </TableRow>
-                                            );
-                                        }):
-                                            <TableRow style={{height: 49 * 2}}>
+                                        data.length > 0 ?
+                                            stableSort(data, getSorting(order, orderBy))
+                                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                .map((row: any, index: number) => {
+                                                    const isItemSelected = isSelected(row.id);
+                                                    const labelId = `enhanced-table-checkbox-${index}`;
+                                                    return (
+                                                        <TableRow
+                                                            hover
+                                                            onClick={event => handleClick(event, row.id)}
+                                                            role="checkbox"
+                                                            aria-checked={isItemSelected}
+                                                            tabIndex={-1}
+                                                            key={row.id}
+                                                            selected={isItemSelected}
+                                                            style={{backgroundColor: isEven(index) ? 'white' : grey[50]}}
+                                                        >
+                                                            {
+                                                                useCheckbox &&
+                                                                <TableCell padding="checkbox" size={bodySize}>
+                                                                    <Checkbox
+                                                                        checked={isItemSelected}
+                                                                        inputProps={{'aria-labelledby': labelId}}
+                                                                    />
+                                                                </TableCell>
+                                                            }
+                                                            {
+                                                                headCells.map(it => (
+                                                                    <TableCell
+                                                                        size={bodySize}
+                                                                        key={it.name}
+                                                                        align={it.numeric ? 'right' : 'left'}
+                                                                        style={{whiteSpace: 'nowrap'}}
+                                                                        {...it.cellProps}>
+                                                                        {it.render ? it.render(parseXpath(row, it.name), row) : parseXpath(row, it.name)}
+                                                                    </TableCell>
+                                                                ))
+                                                            }
+                                                        </TableRow>
+                                                    );
+                                                }) :
+                                            <TableRow style={{height: 49, border: 'none'}}>
                                                 <TableCell colSpan={headCells.length}>
-                                                    <Alert severity="warning">No records to display</Alert>
+                                                    <Box display='flex' justifyContent='center'>
+                                                        <Alert severity="info">No records to display</Alert>
+                                                    </Box>
                                                 </TableCell>
                                             </TableRow>
                                     }
                                     {emptyRows > 0 && (
                                         <TableRow style={{height: 49 * emptyRows}}>
-                                            <TableCell colSpan={headCells.length}/>
+                                            <TableCell colSpan={headCells.length} style={{border: 'none'}}/>
                                         </TableRow>
                                     )}
                                 </TableBody>
@@ -193,7 +196,7 @@ export default function XTable(props: XTableProps) {
                 </div>
                 {
                     usePagination && <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
+                        rowsPerPageOptions={[3, 5, 10, 25]}
                         component="div"
                         count={data.length}
                         rowsPerPage={rowsPerPage}

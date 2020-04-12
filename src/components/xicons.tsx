@@ -12,9 +12,9 @@ export function DateIcon({completed, active,error, ...props}: any) {
     );
 }
 
-export function SuccessIcon({completed, active,error, ...props}: any) {
+export function SuccessIcon({completed, active,error,icon, ...props}: any) {
     return (
-        <CheckCircleIcon {...props} style={{color: successColor}} />
+        <CheckCircleIcon {...props}  style={{color: successColor}} />
     );
 }
 

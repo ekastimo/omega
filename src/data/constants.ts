@@ -66,6 +66,7 @@ export const remoteRoutes = {
 
 
     loans: url + '/api/loans/loan',
+    loansTriggerPayment: url + '/api/loans/process/payout',
 
 }
 

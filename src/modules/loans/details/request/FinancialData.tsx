@@ -1,12 +1,12 @@
 import React from 'react';
-import {SuccessIcon} from "../../../components/xicons";
-import {XStep} from "../stepper/XStepLabel";
-import {ILoan} from "../types";
-import DetailView, {IRec} from "../../../components/DetailView";
-import ContactLink from "../../../components/links/ContactLink";
-import {getAddress, getEmail, getPhone, IContact, printAddress, renderName} from "../../contacts/types";
-import {printDate} from "../../../utils/dateHelpers";
-import EmailLink from "../../../components/links/EmalLink";
+import {SuccessIcon} from "../../../../components/xicons";
+import {XStep} from "../../stepper/XStepLabel";
+import {ILoan} from "../../types";
+import DetailView, {IRec} from "../../../../components/DetailView";
+import ContactLink from "../../../../components/links/ContactLink";
+import {getAddress, getEmail, getPhone, IContact, printAddress, renderName} from "../../../contacts/types";
+import {printDate} from "../../../../utils/dateHelpers";
+import EmailLink from "../../../../components/links/EmalLink";
 
 interface IProps {
     data: ILoan

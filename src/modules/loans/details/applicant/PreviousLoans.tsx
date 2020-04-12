@@ -1,26 +1,42 @@
 import React, {useEffect, useState} from 'react';
 import {Box} from "@material-ui/core";
-import {ILoan, ILoanFilter} from "../types";
-import {ContactCategory, IContact} from "../../contacts/types";
-import {contactPrevHeaderCells, personPrevHeaderCells} from "../list/config";
-import {XHeadCell} from "../../../components/table/XTableHead";
-import Loading from "../../../components/Loading";
-import XTable from "../../../components/table/XTable";
-import {search} from "../../../utils/ajax";
-import {remoteRoutes} from "../../../data/constants";
+import {ILoan, ILoanFilter} from "../../types";
+import {renderStatus, renderSubStatus} from "../../list/config";
+import {XHeadCell} from "../../../../components/table/XTableHead";
+import Loading from "../../../../components/Loading";
+import XTable from "../../../../components/table/XTable";
+import {search} from "../../../../utils/ajax";
+import {remoteRoutes} from "../../../../data/constants";
+import LoanLink from "../../../../components/links/LoanLink";
+import {printDateTime} from "../../../../utils/dateHelpers";
+import {printMoney} from "../../../../utils/numberHelpers";
 
 interface IProps {
     data: ILoan
 }
 
-let headCells: XHeadCell[] = [...contactPrevHeaderCells];
+export const headCells: XHeadCell[] = [
+    {
+        name: 'applicationDate',
+        label: 'Date',
+        render: (value, rec) => <LoanLink id={rec.id} name={printDateTime(value)}/>
+    },
+    {
+        name: 'status', label: 'Status',
+        render: renderStatus
+    },
+    {
+        name: 'subStatus', label: 'Sub-Status', render: renderSubStatus
+    },
+    {
+        name: 'amount', label: 'Amount', render: value => printMoney(value)
+    }
+];
+
+
 const PreviousLoans = ({data}: IProps) => {
-    const contact: IContact = data.applicant
     const [loading, setLoading] = useState(false);
     const [loans, setLoans] = useState<ILoan[]>([]);
-    if (contact.category === ContactCategory.Person) {
-        headCells = personPrevHeaderCells;
-    }
     useEffect(() => {
         const filter: ILoanFilter = {
             showAssigned: true,
@@ -45,7 +61,7 @@ const PreviousLoans = ({data}: IProps) => {
                         <XTable
                             headCells={headCells}
                             data={loans}
-                            initialRowsPerPage={3}
+                            initialRowsPerPage={loans.length > 3 ? 3 : 1}
                             usePagination={false}
                             headerSize='small'
                             bodySize='small'

@@ -1,11 +1,12 @@
 import React from 'react';
-import {SuccessIcon} from "../../../components/xicons";
-import {XStep} from "../stepper/XStepLabel";
-import {ILoan} from "../types";
-import DetailView, {IRec} from "../../../components/DetailView";
-import {printDateTime} from "../../../utils/dateHelpers";
-import {printMoney} from "../../../utils/numberHelpers";
+import {SuccessIcon} from "../../../../components/xicons";
+import {XStep} from "../../stepper/XStepLabel";
+import {ILoan} from "../../types";
+import DetailView, {IRec} from "../../../../components/DetailView";
+import {printDateTime} from "../../../../utils/dateHelpers";
+import {printMoney} from "../../../../utils/numberHelpers";
 import Grid from "@material-ui/core/Grid";
+import XRightLabel from "../../stepper/XRightLabel";
 
 interface IProps {
     data: ILoan
@@ -14,10 +15,6 @@ interface IProps {
 export const applicationFields = (data: ILoan): IRec[] => {
 
     return [
-        {
-            label: 'Application Date',
-            value: printDateTime(data.applicationDate)
-        },
         {
             label: 'Loan Amount',
             value: printMoney(data.amount)
@@ -39,31 +36,34 @@ export const requestFields = (data: ILoan): IRec[] => {
         {
             label: 'Category',
             value: request.category.toLocaleUpperCase()
-        },
-        {
-            label: 'Date',
-            value: printDateTime(request.entryDate)
+        }, {
+            label: 'Network',
+            value: data.request.metaData.network
         },
         {
             label: 'Phone',
             value: request.userId
-        },
-        {
-            label: 'Network',
-            value: data.request.metaData.network
         }
     ]
 }
 
 const ApplicationDetails = (props: IProps) => {
     return (
-        <XStep icon={SuccessIcon} title='Request details' rightLabelComponent={''} open={true}>
+        <XStep icon={SuccessIcon}
+               title='Request details'
+               rightLabelComponent={
+                   <XRightLabel
+                       text='Received on'
+                       date={props.data.applicationDate}
+                   />
+               }
+               open={true}>
             <Grid container spacing={1}>
                 <Grid item xs={6}>
-                    <DetailView data={applicationFields(props.data)}/>
+                    <DetailView data={requestFields(props.data)}/>
                 </Grid>
                 <Grid item xs={6}>
-                    <DetailView data={requestFields(props.data)}/>
+                    <DetailView data={applicationFields(props.data)}/>
                 </Grid>
             </Grid>
         </XStep>

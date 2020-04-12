@@ -204,6 +204,7 @@ export interface IContactData {
 
 export interface IContact {
     id: string
+    createdAt: Date
     category: ContactCategory
     organizationId?: string
     organization?: any
@@ -270,6 +271,7 @@ export const fakeContact = (): IContact | null => {
         urls: [],
         id: uuid(),
         category: ContactCategory.Person,
+        createdAt: faker.date.past(),
         person: {
             id: uuid(),
             firstName: firstName,

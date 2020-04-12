@@ -7,8 +7,8 @@ import ContactLink from "../../../components/links/ContactLink";
 import {renderName} from "../../contacts/types";
 import Box from '@material-ui/core/Box';
 import {Typography} from "@material-ui/core";
-import {applicantFields} from "./ApplicantDetails";
-import {requestFields} from "./LoanRequest";
+import {applicantFields} from "./applicant/ApplicantDetails";
+import {requestFields} from "./request/LoanRequest";
 
 
 export const appDetailsFields = (data: ILoan): IRec[] => {

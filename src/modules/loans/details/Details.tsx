@@ -10,7 +10,7 @@ import {loanConstants} from "../../../data/redux/loans/reducer";
 import Layout from "../../../components/layout/Layout";
 import Box from "@material-ui/core/Box";
 import {RouteComponentProps, withRouter} from "react-router";
-import ApplicantDetails from "./ApplicantDetails";
+import ApplicantDetails from "./applicant/ApplicantDetails";
 import Loading from "../../../components/Loading";
 import Grid from "@material-ui/core/Grid";
 import {trimGuid} from "../../../utils/stringHelpers";
@@ -18,11 +18,12 @@ import {renderStatus, renderSubStatus} from "../list/config";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import Summary from "./Summary";
-import SoreCard from "./ScoreCard";
-import ApplicationDetails from "./ApplicationDetails";
+import SoreCard from "./applicant/ScoreCard";
+import ApplicationDetails from "./request/ApplicationDetails";
 import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import ErrorMessage from "../../../components/messages/ErrorMessage";
+import Payments from "./payments/Payments";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -92,26 +93,27 @@ const Details = (props: RouteComponentProps) => {
                 <Grid item xs={12}>
                     <Paper elevation={0} className={classes.paperStyle}>
                         <Box p={2}>
-                            <Typography variant='h5'>Loan Details: {trimGuid(data.id)}</Typography>
-                        </Box>
-                    </Paper>
-                </Grid>
-                <Grid item xl={9} xs={8}>
-                    <Paper elevation={0} className={classes.paperStyle}>
-                        <Box p={1} mb={1}>
-                            <Typography
-                                variant='h6' style={{fontSize: '1.0rem'}}>
-                                Status:&nbsp;
+                            <Typography variant='h5'>
+                                Loan #{trimGuid(data.id)}
+                                &nbsp;&nbsp;
                                 {renderStatus(data.status)}&nbsp;
                                 {renderSubStatus(data.subStatus)}
                             </Typography>
                         </Box>
                     </Paper>
-                    <Stepper orientation="vertical" className={classes.root}>
-                        <ApplicationDetails data={data}/>
-                        <ApplicantDetails data={data}/>
-                        <SoreCard data={data}/>
-                    </Stepper>
+                </Grid>
+                <Grid item xl={9} xs={8}>
+                    <Box p={1} >
+                        <Typography variant='h6' style={{fontSize: '1.0rem'}}>Details</Typography>
+                    </Box>
+                    <Divider/>
+                    <Box pt={1}>
+                        <Stepper orientation="vertical" className={classes.root}>
+                            <ApplicationDetails data={data}/>
+                            <ApplicantDetails data={data}/>
+                            <Payments data={data}/>
+                        </Stepper>
+                    </Box>
                 </Grid>
                 <Grid item xl={3} xs={4}>
                     <Box p={1} pl={0.5}>
