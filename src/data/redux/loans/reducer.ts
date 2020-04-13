@@ -1,4 +1,4 @@
-import {ILoan, IPayout} from "../../../modules/loans/types";
+import {ILoan, IPayout, IRecoverResponse} from "../../../modules/loans/types";
 
 export const loanConstants = {
     loanFetchAll: "loanFetchAll",
@@ -6,6 +6,7 @@ export const loanConstants = {
     loanFetchLoading: "loanFetchLoading",
     loanFetchOne: "loanFetchOne",
     loanTriggerPayment: "loanTriggerPayment",
+    loanTriggerRecover: "loanTriggerRecover",
 }
 
 export interface ILoanState {
@@ -43,6 +44,11 @@ export default function reducer(state = initialState, action: any) {
             return {...state, selected: {...state.selected, payout}}
         }
 
+        case loanConstants.loanTriggerRecover: {
+            const data: IRecoverResponse = action.payload
+            return {...state, selected: {...state.selected, ...data}}
+        }
+
         default: {
             return state
         }
@@ -53,6 +59,13 @@ export default function reducer(state = initialState, action: any) {
 export function loanActionPayout(payload: IPayout) {
     return {
         type: loanConstants.loanTriggerPayment,
+        payload
+    }
+}
+
+export function loanActionRecover(payload: IRecoverResponse) {
+    return {
+        type: loanConstants.loanTriggerRecover,
         payload
     }
 }

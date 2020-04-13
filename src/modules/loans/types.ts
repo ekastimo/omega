@@ -152,6 +152,7 @@ export interface IDownPayment {
 
 export interface IRecovery {
     officerId: string;
+    officer: any;
     transactionId: string;
     transactionDate: Date;
     remarks: string;
@@ -177,6 +178,11 @@ export interface IPayout {
     loanId: string;
     id: string;
     createdAt: Date;
+}
+
+export interface IRecoverResponse {
+    recovery: IRecovery
+    repaymentPlan: IDownPayment[]
 }
 
 export interface ILoanDocument {
