@@ -45,8 +45,8 @@ export default function reducer(state = initialState, action: any) {
         }
 
         case loanConstants.loanTriggerRecover: {
-            const data: IRecoverResponse = action.payload
-            return {...state, selected: {...state.selected, ...data}}
+            const selected: ILoan = action.payload
+            return {...state, selected}
         }
 
         default: {

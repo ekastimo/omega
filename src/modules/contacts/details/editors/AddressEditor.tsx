@@ -27,8 +27,7 @@ const schema = yup.object().shape(
         category: reqString.oneOf(addressCategories),
         country: reqString,
         district: reqString,
-        county: reqString,
-        subCounty: reqString,
+        freeForm: reqString
     }
 )
 
@@ -38,7 +37,7 @@ const AddressEditor = ({data, isNew, contactId, done}: IProps) => {
     function handleSubmit(values: any, actions: FormikHelpers<any>) {
         const submission: ISubmission = {
             url: remoteRoutes.contactsAddress,
-            values:{...values,contactId}, actions, isNew,
+            values: {...values, contactId}, actions, isNew,
             onAjaxComplete: (data: any) => {
                 dispatch({
                     type: isNew ? crmConstants.crmAddAddress : crmConstants.crmEditAddress,
@@ -68,8 +67,8 @@ const AddressEditor = ({data, isNew, contactId, done}: IProps) => {
                 </Grid>
                 <Grid item xs={12}>
                     <XTextInput
-                        name="country"
-                        label="Country"
+                        name="freeForm"
+                        label="Free form"
                         type="text"
                         variant='outlined'
                     />
@@ -84,24 +83,8 @@ const AddressEditor = ({data, isNew, contactId, done}: IProps) => {
                 </Grid>
                 <Grid item xs={12}>
                     <XTextInput
-                        name="county"
-                        label="County"
-                        type="text"
-                        variant='outlined'
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <XTextInput
-                        name="subCounty"
-                        label="Sub County"
-                        type="text"
-                        variant='outlined'
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <XTextInput
-                        name="village"
-                        label="Village"
+                        name="country"
+                        label="Country"
                         type="text"
                         variant='outlined'
                     />

@@ -21,6 +21,9 @@ export const localRoutes = {
     loans: '/loans',
     loansDetails: '/loans/:loanId',
 
+    invoices: '/invoices',
+    invoicesDetails: '/invoices/:invoiceId',
+
     users: '/admin/users',
     usersGroups: '/admin/user-groups',
     tags: '/admin/tags',
@@ -64,7 +67,10 @@ export const remoteRoutes = {
     contactsCompany: url + '/api/crm/company',
     contactsAvatar: url + '/api/crm/contact/avatar',
 
-
+    invoices: url + '/api/inv/invoice',
+    invoicesGenerate: url + '/api/inv/process/generate',
+    invoicesPay: url + '/api/inv/process/pay',
+    invoicesView: url + '/api/inv/process/invoice',
     loans: url + '/api/loans/loan',
     loansTriggerPayment: url + '/api/loans/process/payout',
     loansTriggerRecover: url + '/api/loans/process/recover',

@@ -6,6 +6,10 @@ import Contacts from "./contacts/list/Contacts";
 import ContactDetails from "./contacts/details/Details";
 import LoanDetails from "./loans/details/Details";
 import Loans from "./loans/list/LoansList";
+
+import InvoiceDetails from "./loans/invoices/InvoiceDetails";
+import InvoiceList from "./loans/invoices/InvoiceList";
+
 import Settings from "./settings/Settings";
 import Layout from "../components/layout/Layout";
 import Users from "./admin/users/Users";
@@ -19,6 +23,8 @@ const ContentSwitch = () => {
         <Route path={localRoutes.contacts} component={Contacts}/>
         <Route path={localRoutes.loansDetails} component={LoanDetails}/>
         <Route path={localRoutes.loans} component={Loans}/>
+        <Route path={localRoutes.invoicesDetails} component={InvoiceDetails}/>
+        <Route path={localRoutes.invoices} component={InvoiceList}/>
         <Route path={localRoutes.users} component={Users}/>
         <Route path={localRoutes.settings} component={Settings}/>
         <Route component={NoMatch}/>

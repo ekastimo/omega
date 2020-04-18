@@ -1,3 +1,5 @@
+import {IInvoice} from "./invoices/types";
+
 export enum LoanDocumentCategory {
     Contract = 'Contract',
     Paycheck = 'Paycheck',
@@ -103,12 +105,13 @@ export interface ILoan {
     agentId: string
     agent: any
 
+    closedById: string
+    closedBy: any
+
     payout: IPayout
-    recovery: IRecovery
     repaymentPlan: IDownPayment[]
     documents: ILoanDocument[]
 }
-
 
 export interface ILoanScore {
     id: string
@@ -148,6 +151,7 @@ export interface IDownPayment {
     loanId: string;
     id: string;
     createdAt: Date;
+    invoice: IInvoice
 }
 
 export interface IRecovery {
@@ -193,4 +197,7 @@ export interface ILoanDocument {
     verifier?: any
     dateVerified?: Date
 }
+
+
+
 

@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import WarnMessage from "../../../../components/messages/WarnMessage";
-import {ILoan, IRecovery, PayoutStatus} from "../../types";
+import {ILoan, IRecovery, LoanStatus, PayoutStatus} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDateTime} from "../../../../utils/dateHelpers";
 import ContactLink from "../../../../components/links/ContactLink";
 import {Box, Typography} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import {hasNoValue} from "../../../../components/inputs/inputHelpers";
 import {Alert} from "@material-ui/lab";
 import Button from "@material-ui/core/Button";
 import DownPayments from "./DownPayments";
@@ -45,7 +44,7 @@ const Recovery = ({data}: IProps) => {
     const dispatch = useDispatch()
     const payout = data.payout
     const repaymentPlan = data.repaymentPlan
-    const recovery = data.recovery
+
 
     const isNotPayedOut = payout.status !== PayoutStatus.Success
     if (isNotPayedOut)
@@ -79,20 +78,16 @@ const Recovery = ({data}: IProps) => {
                     <Typography variant='h6' style={{fontSize: '0.85rem'}}>Recovery</Typography>
                 </Box>
                 {
-                    hasNoValue(recovery) ?
+                    data.status!==LoanStatus.Closed ?
                         <Box>
-                            <Alert severity='warning'>Not yet recovered</Alert>
+                            <Alert severity='warning'>Not yet closed</Alert>
                             <Box display='flex' justifyContent='flex-end' pt={2}>
-                                <Button variant='outlined' onClick={handleRecover}>Trigger</Button>
+                                <Button variant='outlined' onClick={handleRecover}>Close Loan</Button>
                             </Box>
                         </Box>
                         :
                         <Box>
-
-                            <Alert severity='success'>Recovered</Alert>
-                            <DetailView
-                                data={recoverFields(recovery)}
-                            />
+                            <Alert severity='success'>Closed</Alert>
                         </Box>
 
                 }

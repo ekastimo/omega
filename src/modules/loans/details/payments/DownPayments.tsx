@@ -5,7 +5,8 @@ import {errorColor, successColor, warningColor} from "../../../../theme/custom-c
 import {printMoney} from "../../../../utils/numberHelpers";
 import {Typography} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
-
+import {hasValue} from "../../../../components/inputs/inputHelpers";
+import InvoiceLink from "../../../../components/links/InvoiceLink";
 
 interface IProps {
     data: IDownPayment[]
@@ -17,7 +18,7 @@ export default function DownPayments({data}: IProps) {
             <Box pb={1}>
                 <Typography variant='h6' style={{fontSize: '0.85rem'}}>Down payments</Typography>
             </Box>
-            <Box >
+            <Box>
                 {
                     data.map(it => {
                         let color: any = warningColor;
@@ -39,6 +40,16 @@ export default function DownPayments({data}: IProps) {
                                 </label>
                                 &nbsp;{printDate(it.paymentDate)}
                             </Typography>
+                            {
+                                hasValue(it.invoice) &&
+                                <Typography variant='body1' component='div'>
+                                    Invoice&nbsp;#
+                                    <InvoiceLink
+                                        id={it.invoice.id}
+                                        name={`${it.invoice.invoiceNumber}`.padStart(4, '0')}
+                                    />
+                                </Typography>
+                            }
                         </Box>
                     })
                 }
