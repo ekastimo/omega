@@ -1,5 +1,5 @@
 export interface IInvoice {
-    status: string;
+    status: InvoiceStatus;
     comments: string;
     invoiceData: string;
     invoiceNumber: number;
@@ -9,4 +9,9 @@ export interface IInvoice {
     individual: any;
     id: string;
     createdAt: Date;
+}
+
+
+export enum InvoiceStatus {
+    Generated = 'Generated', Posted = 'Posted', Paid = 'Paid'
 }

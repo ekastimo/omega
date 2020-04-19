@@ -1,166 +1,125 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Layout from "../../../components/layout/Layout";
-import {XHeadCell} from "../../../components/table/XTableHead";
-import {Avatar} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Header from "../../contacts/Header";
-import DataList from "../../../components/DataList";
-import {AddFabButton} from "../../../components/EditIconButton";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
-import {hasValue, toOptions} from "../../../components/inputs/inputHelpers";
-import PersonIcon from "@material-ui/icons/Person";
-import Hidden from "@material-ui/core/Hidden";
 import EditDialog from "../../../components/EditDialog";
 import InvoiceEditor from "./InvoiceEditor";
 import Loading from "../../../components/Loading";
-import Chip from '@material-ui/core/Chip';
-
-const columns: XHeadCell[] = [
-    {
-        name: 'avatar',
-        label: 'Avatar',
-        render: (data) => {
-            const hasAvatar = hasValue(data)
-            return hasAvatar ?
-                <Avatar
-                    alt="Avatar"
-                    src={data}
-                /> : <Avatar><PersonIcon/></Avatar>
-        },
-        cellProps: {
-            width: 50
-        }
-    },
-    {
-        name: 'username',
-        label: 'Username'
-    },
-    {
-        name: 'fullName',
-        label: 'Full Name',
-        cellProps: {
-            component: "th", scope: "row"
-        }
-    }, {
-        name: 'roles',
-        label: 'Roles',
-        render: (roles: string[]) => roles.map(it => (
-            <Chip
-                color='primary'
-                variant='outlined'
-                key={it}
-                style={{margin: 5, marginLeft: 0, marginTop: 0}}
-                size='small'
-                label={it}
-            />
-        ))
-    },
-]
-
-interface IMobileRow {
-    avatar: any
-    primary: any
-    secondary: any
-}
-
-const toMobile = (data: any): IMobileRow => {
-    const hasAvatar = hasValue(data.avatar)
-    return {
-        avatar: hasAvatar ?
-            <Avatar
-                alt="Avatar"
-                src={data.person.avatar}
-            /> : <Avatar><PersonIcon/></Avatar>,
-        primary: data.fullName,
-        secondary: <>
-            <Typography variant='caption' color='textSecondary' display='block'>{data.email}</Typography>
-            <Typography variant='caption' color='textSecondary'>{data.username}</Typography>
-        </>,
-    }
-}
-
+import {columns} from "./config";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import {isPrimaryUser} from "../../../data/appRoles";
+import XTable from "../../../components/table/XTable";
+import Paper from "@material-ui/core/Paper";
+import {useSelector} from "react-redux";
+import {IState} from "../../../data/types";
+import Filter from "./Filter";
 
 const InvoiceList = () => {
+    const user = useSelector((state: IState) => state.core.user)
     const [filter, setFilter] = useState<any>({})
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<any[]>([])
     const [selected, setSelected] = useState<any | null>(null)
     const [dialog, setDialog] = useState<boolean>(false)
-    useEffect(() => {
+
+    const fetchData = useCallback((f: any) => {
         setLoading(true)
-        search(remoteRoutes.invoices, filter, resp => {
+        search(remoteRoutes.invoices, f, resp => {
             setData(resp)
         }, undefined, () => setLoading(false))
-    }, [filter])
+    }, [])
 
-    function handleFilter(query: string) {
-        setFilter({query})
+    useEffect(() => {
+        fetchData(filter)
+    }, [fetchData, filter])
+
+    function handleFilter(f: any = {}) {
+        setFilter({...filter, ...f})
     }
 
-    function handleNew() {
+    function handleGenerate() {
         setSelected(null)
         setDialog(true)
     }
 
-    const handleEdit = (dt: any) => {
-        const {id, username, contactId, fullName, roles} = dt
-        const toEdit = {
-            id,
-            username,
-            roles: roles ? toOptions(roles) : [],
-            contact: {id: contactId, label: fullName}
-        }
-        setSelected(toEdit)
-        setDialog(true)
-    }
-
-    const handleComplete = (dt: any) => {
-        if (selected) {
-            const newData = data.map((it: any) => {
-                if (it.id === dt.id)
-                    return dt
-                else return it
-            })
-            setData(newData)
-        } else {
-            const newData = [...data, dt]
-            setData(newData)
-        }
+    const handleComplete = () => {
+        fetchData(filter)
         handleClose()
     }
+
     const handleClose = () => {
         setSelected(null)
         setDialog(false)
     }
 
-    function handleDeleted(dt: any) {
-        const newData = data.filter((it: any) => it.id !== dt.id)
-        setData(newData)
-    }
-
     return (
         <Layout>
-            <Box p={1}>
-                <Header title='Invoices' onAddNew={handleNew} onChange={handleFilter}/>
-                {
-                    loading ?
-                        <Loading/> :
-                        <DataList
-                            data={data}
-                            toMobileRow={toMobile}
-                            columns={columns}
-                            onEditClick={handleEdit}
-                        />
-                }
-            </Box>
-            <Hidden mdUp>
-                <AddFabButton onClick={handleNew}/>
-            </Hidden>
-            <EditDialog title={selected ? `Edit ${selected.username}` : 'Create Invoice'} open={dialog}
-                        onClose={handleClose}>
-                <InvoiceEditor data={selected} isNew={!selected} done={handleComplete} onDeleted={handleDeleted} onCancel={handleClose}/>
+            <Grid container spacing={3}>
+                <Grid item xs={9}>
+                    <Box pb={2}>
+                        <Grid container>
+                            <Grid item sm={6}>
+                                <Typography variant='h5'>Invoices</Typography>
+                            </Grid>
+                            <Grid item sm={6}>
+                                <Box display='flex' flexDirection="row-reverse">
+                                    {
+                                        isPrimaryUser(user) &&
+                                        <Button
+                                            size='medium'
+                                            variant="outlined"
+                                            color="primary"
+                                            startIcon={<AddIcon/>}
+                                            onClick={handleGenerate}
+                                        >
+                                            Generate Invoice&nbsp;&nbsp;
+                                        </Button>
+                                    }
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                    {
+                        loading ? <Loading/> :
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <XTable
+                                        initialOrder="desc"
+                                        initialSortBy='invoiceNumber'
+                                        headCells={columns}
+                                        data={data}
+                                        initialRowsPerPage={10}
+                                    />
+                                </Grid>
+                            </Grid>
+                    }
+                </Grid>
+                <Grid item xs={3}>
+                    <Box pb={2.5}>
+                        <Typography variant='h5'>&nbsp;</Typography>
+                    </Box>
+                    <Box>
+                        <Paper elevation={0}>
+                            <Box p={2}>
+                                <Filter onFilter={handleFilter} loading={loading}/>
+                            </Box>
+                        </Paper>
+                    </Box>
+                </Grid>
+            </Grid>
+
+            <EditDialog
+                disableBackdropClick
+                title='Create Invoice'
+                open={dialog}
+                onClose={handleClose}>
+                <InvoiceEditor
+                    onComplete={handleComplete}
+                    onCancel={handleClose}/>
             </EditDialog>
         </Layout>
     );

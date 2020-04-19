@@ -1,26 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Typography from '@material-ui/core/Typography';
-import {getRouteParam} from "../../../utils/routHelpers";
-import {useDispatch} from "react-redux";
-import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import {loanConstants} from "../../../data/redux/loans/reducer";
+import {useSelector} from "react-redux";
+import {createStyles, makeStyles} from "@material-ui/core";
 import Layout from "../../../components/layout/Layout";
 import Box from "@material-ui/core/Box";
-import {RouteComponentProps, withRouter} from "react-router";
+import {useParams} from "react-router";
 import Loading from "../../../components/Loading";
 import Grid from "@material-ui/core/Grid";
 import {trimGuid} from "../../../utils/stringHelpers";
-import Paper from "@material-ui/core/Paper";
-
-
-import {get} from "../../../utils/ajax";
+import {downLoad, get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import ErrorMessage from "../../../components/messages/ErrorMessage";
 import {IInvoice} from "./types";
-import CodeView from "../../../components/CodeView";
+import {isPrimaryUser} from "../../../data/appRoles";
+import Button from "@material-ui/core/Button";
+import AddIcon from "@material-ui/icons/Add";
+import PrintIcon from "@material-ui/icons/Print";
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import {IState} from "../../../data/types";
+import {renderInvoiceStatus} from "./config";
+import EditDialog from "../../../components/EditDialog";
+import InvoiceRecover from "./InvoiceRecover";
 
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
             width: '100%',
@@ -29,23 +32,40 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         paperStyle: {
             borderRadius: 0
+        },
+        frameHolder: {
+            width: '100%',
+            height: '100%',
+            minHeight: 700
+        },
+        iframe: {
+            width: '100%',
+            height: '100%',
+            border: 'none',
+            overflow: 'hidden'
         }
-
     }),
 );
 
-const InvoiceDetails = (props: RouteComponentProps) => {
+const InvoiceDetails = () => {
+    const user = useSelector((state: IState) => state.core.user)
     const [loading, setLoading] = useState(false);
-    const invoiceId = getRouteParam(props, 'invoiceId')
+    const [frameSrc, setFrameSrc] = useState<string | null>(null);
+    const {invoiceId} = useParams<any>();
+    const [dialog, setDialog] = useState<boolean>(false)
+    const frame = useRef<HTMLIFrameElement>(null);
     const classes = useStyles()
-    const dispatch = useDispatch();
-    const [data,setData]=useState<IInvoice|null>(null)
+    const [data, setData] = useState<IInvoice | null>(null)
 
     useEffect(() => {
-        dispatch({
-            type: loanConstants.loanFetchOne,
-            payload: undefined,
+        const invoiceUrl = `${remoteRoutes.invoicesView}/${invoiceId}`;
+        downLoad(invoiceUrl, blobData => {
+            const url = URL.createObjectURL(blobData)
+            setFrameSrc(url)
         })
+    }, [invoiceId])
+
+    const loadData = useCallback(() => {
         setLoading(true)
         const url = `${remoteRoutes.invoices}/${invoiceId}`
         get(url, resp => {
@@ -53,8 +73,34 @@ const InvoiceDetails = (props: RouteComponentProps) => {
         }, undefined, () => {
             setLoading(false)
         })
+    }, [invoiceId])
 
-    }, [dispatch, invoiceId])
+
+    useEffect(() => {
+        loadData()
+    }, [loadData])
+
+
+    function handlePrintInvoice() {
+        if (frame.current != null) {
+            frame.current.contentWindow?.print()
+        }
+    }
+
+    function handleClearInvoice() {
+        setDialog(true)
+    }
+
+    const handleComplete = (dt: IInvoice) => {
+        handleClose()
+        loadData()
+
+    }
+
+    const handleClose = () => {
+        setDialog(false)
+    }
+
 
     if (loading)
         return (
@@ -62,32 +108,78 @@ const InvoiceDetails = (props: RouteComponentProps) => {
                 <Loading/>
             </Layout>
         );
-    if (data===null)
+    if (data === null)
         return (
             <Layout>
-                <ErrorMessage text="Failed to load loan details"/>
+                <ErrorMessage text="Failed to load invoice details"/>
             </Layout>
         );
+
     return (
         <Layout>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Paper elevation={0} className={classes.paperStyle}>
-                        <Box p={2}>
-                            <Typography variant='h5'>
-                                Loan #{trimGuid(data.id)}
-                                &nbsp;&nbsp;
-                                {data.status}
-                            </Typography>
-                        </Box>
-                    </Paper>
+                <Grid item sm={6}>
+                    <Typography variant='h5'>
+                        Invoice Details #{trimGuid(data.id)}
+                        &nbsp;&nbsp;
+                        {renderInvoiceStatus(data.status)}
+                    </Typography>
                 </Grid>
-                <Grid item xl={12}>
-                    <CodeView data={data}/>
+                <Grid item sm={6}>
+                    <Box display='flex' flexDirection="row-reverse" pr={5}>
+                        <Button
+                            size='medium'
+                            variant="outlined"
+                            color="primary"
+                            startIcon={<PrintIcon/>}
+                            onClick={handlePrintInvoice}
+                        >
+                            Print
+                        </Button>
+                        &nbsp;&nbsp;
+                        {
+                            isPrimaryUser(user) &&
+                            <Button
+                                size='medium'
+                                variant="outlined"
+                                color="primary"
+                                startIcon={<AutorenewIcon/>}
+                                onClick={handleClearInvoice}
+                            >
+                                Recover invoice
+                            </Button>
+                        }
+                    </Box>
+                </Grid>
+                <Grid item xs={12}>
+                    <div className={classes.frameHolder}>
+                        {
+                            frameSrc ?
+                                <iframe
+                                    ref={frame}
+                                    title='Invoice'
+                                    src={frameSrc}
+                                    className={classes.iframe}
+                                    scrolling='auto'
+                                /> :
+                                <Typography>Loading invoice</Typography>
+                        }
+                    </div>
                 </Grid>
             </Grid>
+            <EditDialog
+                disableBackdropClick
+                title='Recover invoice'
+                open={dialog}
+                onClose={handleClose}>
+                <InvoiceRecover
+                    onComplete={handleComplete}
+                    onCancel={handleClose}
+                    data={data}
+                />
+            </EditDialog>
         </Layout>
     );
 }
 
-export default withRouter(InvoiceDetails);
+export default InvoiceDetails;

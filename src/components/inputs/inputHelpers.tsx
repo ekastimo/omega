@@ -19,12 +19,12 @@ export const toOptions = (data: string[]): IOption[] => {
 export const comboParser = ({id, name}: any) => ({value: id, label: name})
 
 
-export const hasValue = (text: any) => {
-    return !isEmpty(text)
+export const hasValue = (data: any) => {
+    return !isEmpty(data)
 }
 
-export const hasNoValue = (text: any) => {
-    return isEmpty(text)
+export const hasNoValue = (data: any) => {
+    return isEmpty(data)
 }
 
 export const renderInput = ({inputType, name, label, inputProps, ...rest}: IColumn) => {

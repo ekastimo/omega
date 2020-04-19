@@ -1,127 +1,60 @@
 import React, {useState} from 'react';
-import * as yup from "yup";
-import {reqArray, reqObject, reqString} from "../../../data/validations";
-import {FormikHelpers} from "formik";
-import Grid from "@material-ui/core/Grid";
-import XForm from "../../../components/forms/XForm";
-import XTextInput from "../../../components/inputs/XTextInput";
-
+import {Box} from "@material-ui/core";
+import {post} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
-import {XRemoteSelect} from "../../../components/inputs/XRemoteSelect";
-import {handleSubmission, ISubmission} from "../../../utils/formHelpers";
-import {comboParser, toOptions} from "../../../components/inputs/inputHelpers";
-import {del} from "../../../utils/ajax";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import {Alert} from "@material-ui/lab";
 import Toast from "../../../utils/Toast";
-import {clientRoles} from "../../../data/appRoles";
 
 interface IProps {
-    data: any
-    isNew: boolean
-    done: (dt: any) => any
-    onDeleted: (dt: any) => any
+    onComplete: () => any
     onCancel?: () => any
 }
 
-const schema = yup.object().shape(
-    {
-        password: reqString.min(8),
-        contact: reqObject,
-        roles: reqArray,
-    }
-)
-
-const editSchema = yup.object().shape(
-    {
-        password: yup.string().min(8),
-        roles: reqArray,
-    }
-)
-
-const initialValues = {contact: null, password: '', roles: []}
-
-const InvoiceEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
-
+const InvoiceEditor = (props: IProps) => {
 
     const [loading, setLoading] = useState<boolean>(false)
 
-    function handleSubmit(values: any, actions: FormikHelpers<any>) {
-        const toSave: any = {
-            ...values,
-            contactId: values.contact.value,
-            password: values.password,
-            roles: values.roles?.map((it: any) => it.value)
-        }
-        const submission: ISubmission = {
-            url: remoteRoutes.users,
-            values: toSave, actions, isNew,
-            onAjaxComplete: done
-        }
-        handleSubmission(submission)
-    }
-
-    function handleDelete() {
+    function handleSubmit() {
         setLoading(true)
-        del(
-            remoteRoutes.users,
-            dt => {
-                Toast.success("Operation succeeded")
-                onDeleted(data)
-            },
-            undefined,
-            () => {
-                setLoading(false)
-            })
+        post(remoteRoutes.invoicesGenerate, {}, resp => {
+            Toast.info(resp.message)
+            props.onComplete()
+        }, undefined, () => {
+            setLoading(false)
+        })
     }
-
 
     return (
-        <XForm
-            onSubmit={handleSubmit}
-            schema={isNew ? schema : editSchema}
-            initialValues={data || initialValues}
-            onDelete={isNew ? undefined : handleDelete}
-            loading={loading}
-            onCancel={onCancel}
-        >
-            <Grid spacing={0} container>
+        <Box px={2} pb={2}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    {
-                        isNew &&
-                        <XRemoteSelect
-                            name="contact"
-                            label="Person"
-                            remote={remoteRoutes.contactsPerson}
-                            parser={comboParser}
+                    <Alert severity='warning'>
+                        This will generate invoices for all the loans available in the system.
+                        Run this process only if you know what you sre doing
+                    </Alert>
+                </Grid>
+                <Grid item xs={12}>
+                    <Box display='flex' flexDirection="row-reverse">
+                        <Button
+                            disabled={loading}
+                            onClick={handleSubmit}
                             variant='outlined'
-                            filter={{
-                                excludeUsers: true
-                            }}
-                        />
-                    }
-                </Grid>
-                <Grid item xs={12}>
-                    <XRemoteSelect
-                        name="roles"
-                        label="Roles"
-                        remote=''
-                        defaultOptions={toOptions(clientRoles)}
-                        parser={comboParser}
-                        variant='outlined'
-                        multiple
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <XTextInput
-                        name="password"
-                        label="Password"
-                        type="password"
-                        variant='outlined'
-                    />
+                            color='primary'
+                        >Generate invoice</Button>
+                        &nbsp;&nbsp;
+                        <Button
+                            disabled={loading}
+                            onClick={props.onCancel}
+                            variant='outlined'
+                            color='default'
+                        >Cancel</Button>
+                    </Box>
                 </Grid>
             </Grid>
-        </XForm>
+        </Box>
     );
 }
-
 
 export default InvoiceEditor;
