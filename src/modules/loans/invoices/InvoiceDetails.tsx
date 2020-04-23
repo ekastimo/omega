@@ -11,16 +11,18 @@ import {trimGuid} from "../../../utils/stringHelpers";
 import {downLoad, get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import ErrorMessage from "../../../components/messages/ErrorMessage";
-import {IInvoice} from "./types";
+import {IInvoice, InvoiceStatus} from "./types";
 import {isPrimaryUser} from "../../../data/appRoles";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import PrintIcon from "@material-ui/icons/Print";
 import AutorenewIcon from '@material-ui/icons/Autorenew';
+import EmailIcon from '@material-ui/icons/Email';
 import {IState} from "../../../data/types";
-import {renderInvoiceStatus} from "./config";
+import {dataFields, renderInvoiceStatus} from "./config";
 import EditDialog from "../../../components/EditDialog";
 import InvoiceRecover from "./InvoiceRecover";
+import Toast from "../../../utils/Toast";
+import {DetailViewX} from "../../../components/DetailView";
 
 
 const useStyles = makeStyles(() =>
@@ -75,6 +77,16 @@ const InvoiceDetails = () => {
         })
     }, [invoiceId])
 
+    function handleEmailInvoice() {
+        setLoading(true)
+        const url = `${remoteRoutes.invoicesEmail}/${invoiceId}`
+        get(url, resp => {
+            Toast.success(resp.message)
+        }, undefined, () => {
+            setLoading(false)
+        })
+    }
+
 
     useEffect(() => {
         loadData()
@@ -114,6 +126,8 @@ const InvoiceDetails = () => {
                 <ErrorMessage text="Failed to load invoice details"/>
             </Layout>
         );
+    const isNotPaid = data.status !== InvoiceStatus.Paid
+
 
     return (
         <Layout>
@@ -138,7 +152,7 @@ const InvoiceDetails = () => {
                         </Button>
                         &nbsp;&nbsp;
                         {
-                            isPrimaryUser(user) &&
+                            isPrimaryUser(user) && isNotPaid &&
                             <Button
                                 size='medium'
                                 variant="outlined"
@@ -146,12 +160,32 @@ const InvoiceDetails = () => {
                                 startIcon={<AutorenewIcon/>}
                                 onClick={handleClearInvoice}
                             >
-                                Recover invoice
+                                Recover
+                            </Button>
+                        }
+                        &nbsp;&nbsp;
+                        {
+                            isPrimaryUser(user) && isNotPaid &&
+                            <Button
+                                size='medium'
+                                variant="outlined"
+                                color="primary"
+                                startIcon={<EmailIcon/>}
+                                onClick={handleEmailInvoice}
+                            >
+                                Send Email
                             </Button>
                         }
                     </Box>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item sm={3} lg={4}>
+                    <Box p={3} pt={2}>
+                        <Box width='250px'>
+                            <DetailViewX data={dataFields(data)}/>
+                        </Box>
+                    </Box>
+                </Grid>
+                <Grid item sm={9} lg={8}>
                     <div className={classes.frameHolder}>
                         {
                             frameSrc ?

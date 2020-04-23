@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import Layout from "../../../components/layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
@@ -11,13 +11,14 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import {IState} from "../../../data/types";
-import {columns} from "./config";
+import {columns, companyColumn} from "./config";
 import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
 import RecentLoansList from "./RecentLoansList";
 import Filter from "./Filter";
 import {remoteRoutes} from "../../../data/constants";
 import {search} from "../../../utils/ajax";
 import {ILoanFilter} from "../types";
+import {isPrimaryUser} from "../../../data/appRoles";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -36,17 +37,27 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const headCells: XHeadCell[] = [...columns];
 
 const LoansList = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const {data}: ILoanState = useSelector((state: IState) => state.loans)
+    const user = useSelector((state: IState) => state.core.user)
+    const headCells: XHeadCell[] = useMemo(() => {
+        if (isPrimaryUser(user)) {
+            return columns.map(it => {
+                return it.name === "assigneeId" ? companyColumn : it;
+            })
+        } else {
+            return [...columns]
+        }
+    }, [user]);
     const [loading, setLoading] = useState(false);
     const [filter, setFilter] = useState<ILoanFilter>({
         showAssigned: true,
         showNew: false
     });
+
 
     useEffect(() => {
         setLoading(true)
@@ -64,6 +75,9 @@ const LoansList = () => {
     function handleFilter(value: any) {
         setFilter({...filter, ...value})
     }
+
+
+
 
     return (
         <Layout>

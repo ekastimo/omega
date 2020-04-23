@@ -1,11 +1,14 @@
 import {errorColor, successColor, warningColor} from "../../../theme/custom-colors";
 import Chip from "@material-ui/core/Chip";
 import React from "react";
-import {InvoiceStatus} from "./types";
+import {IInvoice, InvoiceStatus} from "./types";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import InvoiceLink from "../../../components/links/InvoiceLink";
 import ContactLink from "../../../components/links/ContactLink";
-import {printDateTime} from "../../../utils/dateHelpers";
+import {printDate, printDateTime} from "../../../utils/dateHelpers";
+import {ContactCategory, IContact} from "../../contacts/types";
+import {IRec} from "../../../components/DetailView";
+import {printMoney} from "../../../utils/numberHelpers";
 
 export const renderInvoiceStatus = (value: InvoiceStatus) => {
     let color: any = successColor
@@ -63,3 +66,38 @@ export const columns: XHeadCell[] = [
         render: printDateTime
     }
 ]
+
+
+export const dataFields = (data: IInvoice): IRec[] => {
+    return [
+        {
+            label: 'Created at',
+            value: printDate(data.createdAt)
+        },
+        {
+            label: 'Issued to',
+            value: <ContactLink name={data.organization?.name} id={data.organization?.id}/>
+        },
+        {
+            label: 'Issue date',
+            value: printDate(data.issueDate)
+        },
+        {
+            label: 'Issue date',
+            value: printDate(data.dueDate)
+        },
+        {
+            label: 'Invoice No',
+            value: `${data.invoiceNumber}`.padStart(4, "0")
+        }
+        ,
+        {
+            label: 'Amount',
+            value: printMoney(data.amount)
+        },
+        {
+            label: 'Comments',
+            value: data.comments
+        }
+    ]
+}

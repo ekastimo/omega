@@ -3,12 +3,15 @@ export interface IInvoice {
     comments: string;
     invoiceData: string;
     invoiceNumber: number;
+    amount: number;
     organizationId: string;
     organization: any;
     individualId: string;
     individual: any;
     id: string;
     createdAt: Date;
+    issueDate: Date;
+    dueDate: Date;
 }
 
 

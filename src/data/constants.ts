@@ -70,7 +70,9 @@ export const remoteRoutes = {
     invoices: url + '/api/inv/invoice',
     invoicesGenerate: url + '/api/inv/process/generate',
     invoicesPay: url + '/api/inv/process/pay',
-    invoicesView: url + '/api/inv/process/invoice',
+    invoicesView: url + '/api/inv/process/view',
+    invoicesEmail: url + '/api/inv/process/email',
+
     loans: url + '/api/loans/loan',
     loansTriggerPayment: url + '/api/loans/process/payout',
     loansTriggerRecover: url + '/api/loans/process/recover',

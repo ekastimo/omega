@@ -2,7 +2,7 @@ import React from "react";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import ContactLink from "../../../components/links/ContactLink";
 import LoanLink from "../../../components/links/LoanLink";
-import {getInitials, trimGuid} from "../../../utils/stringHelpers";
+import {getInitials, trimGuid, trimString} from "../../../utils/stringHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
 import {printDate, printDateTime} from "../../../utils/dateHelpers";
 import Chip from "@material-ui/core/Chip";
@@ -111,7 +111,15 @@ export const columns: XHeadCell[] = [
         render: (value, rec) => <ContactLink id={value} name={rec.applicant.name}/>,
     },
 
-    {name: 'amount', label: 'Amount', render: value => printMoney(value)},
+    {
+        name: 'amount', label: 'Amount', render: value => printMoney(value),
+        cellProps: {
+            style: {
+                width: 60,
+                padding: 0
+            }
+        }
+    },
     {
         name: 'assigneeId',
         label: 'Assignee',
@@ -124,6 +132,13 @@ export const columns: XHeadCell[] = [
         }
     }
 ];
+
+export const companyColumn:XHeadCell = {
+    name: 'organization.name',
+    label: 'Company',
+    render: (value, rec) => <ContactLink id={rec.organizationId} name={trimString(value)} title={value}/>
+}
+
 
 const removeColumns = (cols: XHeadCell[], filter: string[]) => {
     return columns.filter(it => {
