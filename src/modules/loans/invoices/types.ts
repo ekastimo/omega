@@ -9,6 +9,7 @@ export interface IInvoice {
     individualId: string;
     individual: any;
     id: string;
+    documentId?: string;
     createdAt: Date;
     issueDate: Date;
     dueDate: Date;

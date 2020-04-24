@@ -23,6 +23,8 @@ import EditDialog from "../../../components/EditDialog";
 import InvoiceRecover from "./InvoiceRecover";
 import Toast from "../../../utils/Toast";
 import {DetailViewX} from "../../../components/DetailView";
+import {hasValue} from "../../../components/inputs/inputHelpers";
+import PaySlip from "./PaySlip";
 
 
 const useStyles = makeStyles(() =>
@@ -55,6 +57,7 @@ const InvoiceDetails = () => {
     const [frameSrc, setFrameSrc] = useState<string | null>(null);
     const {invoiceId} = useParams<any>();
     const [dialog, setDialog] = useState<boolean>(false)
+    const [showPayment, setShowPayment] = useState<boolean>(false)
     const frame = useRef<HTMLIFrameElement>(null);
     const classes = useStyles()
     const [data, setData] = useState<IInvoice | null>(null)
@@ -66,6 +69,10 @@ const InvoiceDetails = () => {
             setFrameSrc(url)
         })
     }, [invoiceId])
+
+    function handleViewPayment() {
+        setShowPayment(true)
+    }
 
     const loadData = useCallback(() => {
         setLoading(true)
@@ -127,6 +134,8 @@ const InvoiceDetails = () => {
             </Layout>
         );
     const isNotPaid = data.status !== InvoiceStatus.Paid
+    const isPaid = data.status === InvoiceStatus.Paid
+    const hasPaySlip = hasValue(data.documentId)
 
 
     return (
@@ -175,17 +184,29 @@ const InvoiceDetails = () => {
                             >
                                 Send Email
                             </Button>
+                        }&nbsp;&nbsp;
+                        {
+                            isPrimaryUser(user) && isPaid && hasPaySlip &&
+                            <Button
+                                size='medium'
+                                variant="outlined"
+                                color="primary"
+                                startIcon={<EmailIcon/>}
+                                onClick={handleViewPayment}
+                            >
+                                View Payment
+                            </Button>
                         }
                     </Box>
                 </Grid>
-                <Grid item sm={3} lg={4}>
+                <Grid item sm={3} lg={3}>
                     <Box p={3} pt={2}>
                         <Box width='250px'>
                             <DetailViewX data={dataFields(data)}/>
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item sm={9} lg={8}>
+                <Grid item sm={9} lg={9}>
                     <div className={classes.frameHolder}>
                         {
                             frameSrc ?
@@ -212,6 +233,20 @@ const InvoiceDetails = () => {
                     data={data}
                 />
             </EditDialog>
+            {
+                data?.documentId&&
+                <EditDialog
+                    maxWidth='lg'
+                    title='Pay slip'
+                    open={showPayment}
+                    onClose={() => setShowPayment(false)}>
+                    <PaySlip
+                        documentId={data?.documentId}
+                        onCancel={() => setShowPayment(false)}
+                    />
+                </EditDialog>
+            }
+
         </Layout>
     );
 }

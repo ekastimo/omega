@@ -54,6 +54,10 @@ const InvoiceRecover = (props: IProps) => {
                         color="secondary"
                         fullWidth
                         onChange={handleFileChange}
+                        inputProps={{
+                            accept:"image/jpeg,image/gif,image/png,application/pdf"
+                        }}
+
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -74,7 +78,6 @@ const InvoiceRecover = (props: IProps) => {
                     </Box>
                 </Grid>
             </Grid>
-            <CodeView data={{loading, files, nv: hasNoValue(files)}}/>
         </Box>
     );
 }

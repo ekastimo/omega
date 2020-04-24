@@ -38,3 +38,15 @@ export interface ISearch {
     skip: number,
     query?: string
 }
+
+export interface IXDocument {
+    name: string;
+    contentType: string;
+    originalName: string;
+    description: string;
+    size: string;
+    organizationId: string;
+    id: string;
+    createdAt: Date;
+}
+
