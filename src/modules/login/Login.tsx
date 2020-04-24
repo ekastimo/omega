@@ -11,7 +11,7 @@ import {handleLogin} from "../../data/redux/coreActions";
 
 import * as yup from "yup";
 import {post} from "../../utils/ajax";
-import {remoteRoutes} from "../../data/constants";
+import {isDebug, remoteRoutes} from "../../data/constants";
 import Toast from "../../utils/Toast";
 import XTextInput from "../../components/inputs/XTextInput";
 import {useLoginStyles} from "./loginStyles";
@@ -41,10 +41,16 @@ function Login() {
                     Sign in
                 </Typography>
                 <Formik
-                    initialValues={{
-                        "username": "ekastimo@gmail.com",
-                        "password": "Xpass@123"
-                    }}
+                    initialValues={
+                        isDebug ? {
+                                "username": "ekastimo@gmail.com",
+                                "password": "Xpass@123"
+                            } :
+                            {
+                                "username": "",
+                                "password": ""
+                            }
+                    }
                     validationSchema={schema}
                     onSubmit={onSubmit}
                 >
