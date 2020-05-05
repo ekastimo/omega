@@ -1,5 +1,5 @@
 import * as React from "react";
-import Navigation from "../../components/layout/Layout";
+import Navigation from "../layout/Layout";
 import Grid from '@material-ui/core/Grid';
 import {remoteRoutes} from "../../data/constants";
 import {Button} from "@material-ui/core";

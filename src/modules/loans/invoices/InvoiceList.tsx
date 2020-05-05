@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import Layout from "../../../components/layout/Layout";
+import Layout from "../../layout/Layout";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import {search} from "../../../utils/ajax";

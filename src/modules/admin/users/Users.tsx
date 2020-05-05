@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Layout from "../../../components/layout/Layout";
+import Layout from "../../layout/Layout";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import {Avatar} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";

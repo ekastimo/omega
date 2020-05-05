@@ -2,12 +2,10 @@ import React from 'react';
 import clsx from 'clsx';
 import {createStyles, Theme} from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import {DrawerProps} from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import HomeIcon from '@material-ui/icons/Home';
 import PeopleIcon from '@material-ui/icons/People';
 import DnsRoundedIcon from '@material-ui/icons/DnsRounded';
 import PermMediaOutlinedIcon from '@material-ui/icons/PhotoSizeSelectActual';
@@ -17,7 +15,6 @@ import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponen
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
-import {Omit} from '@material-ui/types';
 import {makeStyles} from "@material-ui/core";
 
 const categories = [

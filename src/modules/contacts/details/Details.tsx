@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {RouteComponentProps, withRouter} from "react-router";
-import Layout from "../../../components/layout/Layout";
+import Layout from "../../layout/Layout";
 import {getRouteParam} from "../../../utils/routHelpers";
 import {IContact} from "../types";
 import Loading from "../../../components/Loading";

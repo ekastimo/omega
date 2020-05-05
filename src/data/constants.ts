@@ -23,13 +23,12 @@ export const localRoutes = {
 
     invoices: '/invoices',
     invoicesDetails: '/invoices/:invoiceId',
-
     users: '/admin/users',
     usersGroups: '/admin/user-groups',
     tags: '/admin/tags',
     settings: '/admin/settings',
-
-    help: '/help'
+    help: '/help',
+    login: '/login'
 }
 
 export const isDebug = process.env.NODE_ENV !== 'production'

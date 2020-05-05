@@ -6,8 +6,8 @@ import {navColor} from "./styles";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import NavList from "./NavList";
-import {isDebug} from "../../data/constants";
-//const isDebug = false
+//import {isDebug} from "../../data/constants";
+const isDebug = false
 const appLogo = isDebug ? lugLogo : azLogo;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const NavMenu = (props: any) => {
+const NavMenu = () => {
     const classes = useStyles();
     return (
         <div style={{backgroundColor: navColor}}>

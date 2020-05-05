@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from "react";
-import Layout from "../../../components/layout/Layout";
+import Layout from "../../layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import XTable from "../../../components/table/XTable";

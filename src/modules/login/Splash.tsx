@@ -6,6 +6,7 @@ import {remoteRoutes} from "../../data/constants";
 import {useDispatch} from "react-redux";
 import {handleLogin, handleLogout, startLoading, stopLoading} from "../../data/redux/coreActions";
 import {get, getToken} from "../../utils/ajax";
+import {Box} from "@material-ui/core";
 
 export default function Splash() {
     const dispatch = useDispatch()
@@ -26,8 +27,10 @@ export default function Splash() {
 
     return <GridWrapper>
         <Grid container spacing={10} justify='center' alignItems="center">
-            <Grid item>
-                <CircularProgress/>
+            <Grid item >
+                <Box pt={5}>
+                    <CircularProgress/>
+                </Box>
             </Grid>
         </Grid>
     </GridWrapper>

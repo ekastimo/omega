@@ -6,6 +6,8 @@ import Login from "./modules/login/Login";
 import Splash from "./modules/login/Splash";
 import {useSelector} from 'react-redux'
 import LoaderDialog from "./components/LoaderDialog";
+import Home from "./modules/home/Home";
+import {localRoutes} from "./data/constants";
 
 const App: React.FC = () => {
     const coreState: any = useSelector((state: any) => state.core)
@@ -20,7 +22,8 @@ const App: React.FC = () => {
                 {user ?
                     <ContentSwitch/> :
                     <Switch>
-                        <Route exact component={Login}/>
+                        <Route path={localRoutes.login} component={Login}/>
+                        <Route component={Home}/>
                     </Switch>
                 }
             </>

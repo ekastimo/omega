@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from "../../components/layout/Layout";
+import Layout from "../layout/Layout";
 import {Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {useSelector} from "react-redux";

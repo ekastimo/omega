@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Typography from '@material-ui/core/Typography';
 import {useSelector} from "react-redux";
 import {createStyles, makeStyles} from "@material-ui/core";
-import Layout from "../../../components/layout/Layout";
+import Layout from "../../layout/Layout";
 import Box from "@material-ui/core/Box";
 import {useParams} from "react-router";
 import Loading from "../../../components/Loading";

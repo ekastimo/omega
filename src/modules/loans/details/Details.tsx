@@ -7,7 +7,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import {IState} from "../../../data/types";
 import {ILoan} from "../types";
 import {loanConstants} from "../../../data/redux/loans/reducer";
-import Layout from "../../../components/layout/Layout";
+import Layout from "../../layout/Layout";
 import Box from "@material-ui/core/Box";
 import {RouteComponentProps, withRouter} from "react-router";
 import ApplicantDetails from "./applicant/ApplicantDetails";
