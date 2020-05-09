@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useDispatch, useSelector} from "react-redux";
-import {IAuthUser, IState} from "../../data/types";
+import {IAuthUser, ILoginResponse, IState} from "../../data/types";
 import {Grid} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {useCalculatorStyles} from "./styles";
@@ -24,6 +24,7 @@ import {remoteRoutes} from "../../data/constants";
 import {coreStartGlobalLoader, coreStopGlobalLoader, handleLogin} from "../../data/redux/coreActions";
 import Toast from "../../utils/Toast";
 import {addLoanSettings} from "../../data/redux/loans/reducer";
+import CodeView from "../../components/CodeView";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,16 +72,16 @@ const ApprovalStep = (props: IProps) => {
     const classes = useStyles();
     const loanSettings = useSelector((state: IState) => state.loans.loanSettings)
     const user: IAuthUser = useSelector((state: any) => state.core.user)
-    const [activeStep, setActiveStep] = useState<number>(steps.APPROVE_PAYOUT)
-    const [loginIn, setLoginIn] = useState<boolean>(false)
-    const [requestingLoan, setRequestingLoan] = useState<boolean>(false)
+
+    const [isComplete, setIsComplete] = useState<boolean>(false)
     const [request, setRequest] = React.useState<ILoanRequest>({
-        phone: '',
-        network: '',
+        phone: '256786000384',
+        password: "Xpass@123",
         amount: props.amount,
         sessionId: "browser",
         shortCode: "-NA-",
-        password: "",
+        network: '-NA-',
+
     });
 
     const loanPayment = computeLoanPayment(request.amount, loanSettings);
@@ -92,10 +93,10 @@ const ApprovalStep = (props: IProps) => {
     };
 
     function handleApprove() {
+        console.log("Approving")
         if (
             hasNoValue(request.phone) ||
-            hasNoValue(request.password) ||
-            hasNoValue(request.amount)
+            hasNoValue(request.password)
         ) {
             Toast.warn("Please enter all required fields")
             return
@@ -108,37 +109,37 @@ const ApprovalStep = (props: IProps) => {
             Toast.warn("Invalid loan amount")
             return
         }
-
-        if (!user) {
-            doLogin(() => {
-
+        doLogin((session: any) => {
+            const {token, user}: ILoginResponse = session
+            console.log("Done Logging in", {token, user})
+            requestLoan(resp => {
+                Toast.success("Loan created successfully")
+                setIsComplete(true)
+                console.log("Response", resp)
             })
-        }
+        })
     }
 
-    function doLogin(done: () => any) {
+    function doLogin(done: (dt: any) => any) {
         const login: any = {
             phone: request.phone,
             password: request.password,
         }
-        if (!user) {
-            setLoginIn(false)
-            //Login
-            post(remoteRoutes.login, login, resp => {
-                dispatch(handleLogin(resp))
-                done()
-            }, () => {
-                Toast.error("Invalid credentials")
-            }, () => {
-                setLoginIn(false)
-            })
-        }
+        dispatch(coreStartGlobalLoader())
+        //Login
+        post(remoteRoutes.loginPhone, login, resp => {
+            dispatch(handleLogin(resp))
+            done(resp)
+        }, () => {
+            Toast.error("Invalid credentials")
+        }, () => {
+            dispatch(coreStopGlobalLoader())
+        })
     }
 
     function requestLoan(done: (resp: any) => any) {
         if (user) {
             dispatch(coreStartGlobalLoader())
-            setRequestingLoan(true)
             //Login
             post(
                 remoteRoutes.loansRequestLoan, request,
@@ -146,11 +147,13 @@ const ApprovalStep = (props: IProps) => {
                     done(resp)
                 },
                 (err: any = {}, res: any) => {
+
                     handleBadRequestError(err, res, resp => {
                         Toast.error(resp.message)
                         if (hasValue(resp.data)) {
                             dispatch(addLoanSettings(resp.data))
                         }
+                        dispatch(coreStopGlobalLoader())
                     })
                 },
                 () => {
@@ -159,6 +162,7 @@ const ApprovalStep = (props: IProps) => {
         }
     }
 
+    console.log(request)
     const inputPaddingX = 3;
     const inputStyle: any = {
         textAlign: 'center',
@@ -170,7 +174,7 @@ const ApprovalStep = (props: IProps) => {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Stepper
-                        activeStep={activeStep}
+                        activeStep={steps.APPROVE_PAYOUT}
                         alternativeLabel orientation='horizontal'
                         className={classes.stepper}
                     >
@@ -182,89 +186,94 @@ const ApprovalStep = (props: IProps) => {
                         </Step>
                     </Stepper>
                 </Grid>
-                <Grid item xs={12}>
-                    <Alert>
-                        {createSuccessMessage(loanPayment, loanSettings)}
-                    </Alert>
-                </Grid>
-                <Grid item xs={12}>
-                    <Box px={inputPaddingX}>
-                        <XMaskedInput
-                            hiddenLabel
-                            className={calcClasses.textField}
-                            variant="outlined"
-                            fullWidth
-                            value={request.amount}
-                            onChange={handleChange}
-                            inputProps={
-                                {
-                                    style: inputStyle
-                                }
-                            }
-                        />
-                    </Box>
-                </Grid>
-
-                <Grid item xs={12}>
-                    <Box px={inputPaddingX}>
-                        <TextField
-                            className={calcClasses.textField}
-                            placeholder="Phone Number"
-                            hiddenLabel
-                            autoComplete="off"
-                            variant='outlined'
-                            name='phone'
-                            fullWidth
-                            value={request.phone}
-                            onChange={handleChange}
-                            inputProps={
-                                {
-                                    style: inputStyle
-                                }
-                            }
-                        />
-                    </Box>
-
-                </Grid>
                 {
-                    hasNoValue(user) &&
-                    <Grid item xs={12}>
-                        <Box px={inputPaddingX}>
-                            <TextField
-                                className={calcClasses.textField}
-                                placeholder="Password"
-                                type="password"
-                                name='password'
-                                fullWidth
-                                autoComplete="off"
-                                variant='outlined'
-                                value={request.password}
-                                onChange={handleChange}
-                                inputProps={
-                                    {
-                                        style: inputStyle
+
+                    isComplete ? <Grid item xs={12}>
+                        <Alert severity='success'>
+                            {createSuccessMessage(loanPayment, loanSettings)}
+                        </Alert>
+                    </Grid> : <>
+                        <Grid item xs={12}>
+                            <Alert severity='info'>
+                                {createSuccessMessage(loanPayment, loanSettings)}
+                            </Alert>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Box px={inputPaddingX}>
+                                <XMaskedInput
+                                    hiddenLabel
+                                    className={calcClasses.textField}
+                                    variant="outlined"
+                                    fullWidth
+                                    value={request.amount}
+                                    onChange={handleChange}
+                                    inputProps={
+                                        {
+                                            style: inputStyle
+                                        }
                                     }
-                                }
-                            />
-                        </Box>
-                    </Grid>
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Box px={inputPaddingX}>
+                                <TextField
+                                    className={calcClasses.textField}
+                                    placeholder="Phone Number"
+                                    hiddenLabel
+                                    autoComplete="off"
+                                    variant='outlined'
+                                    name='phone'
+                                    fullWidth
+                                    value={request.phone}
+                                    onChange={handleChange}
+                                    inputProps={
+                                        {
+                                            style: inputStyle
+                                        }
+                                    }
+                                />
+                            </Box>
+
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Box px={inputPaddingX}>
+                                <TextField
+                                    className={calcClasses.textField}
+                                    placeholder="Password"
+                                    type="password"
+                                    name='password'
+                                    fullWidth
+                                    autoComplete="off"
+                                    variant='outlined'
+                                    value={request.password}
+                                    onChange={handleChange}
+                                    inputProps={
+                                        {
+                                            style: inputStyle
+                                        }
+                                    }
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Box width="100%" py={2} display='flex' justifyContent='center'>
+                                <Fab
+                                    variant="extended"
+                                    color="primary"
+                                    aria-label="add"
+                                    className={calcClasses.button}
+                                    onClick={handleApprove}
+                                >
+                                    <AccountBalanceWalletIcon
+                                        className={calcClasses.extendedIcon}
+                                    />
+                                    Approve&nbsp;&nbsp;
+                                </Fab>
+                            </Box>
+                        </Grid>
+                    </>
                 }
-                <Grid item xs={12}>
-                    <Box width="100%" py={2} display='flex' justifyContent='center'>
-                        <Fab
-                            variant="extended"
-                            color="primary"
-                            aria-label="add"
-                            className={calcClasses.button}
-                            onClick={handleApprove}
-                        >
-                            <AccountBalanceWalletIcon
-                                className={calcClasses.extendedIcon}
-                            />
-                            Approve&nbsp;&nbsp;
-                        </Fab>
-                    </Box>
-                </Grid>
             </Grid>
         </div>
     );

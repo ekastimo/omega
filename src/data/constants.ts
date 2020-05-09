@@ -38,6 +38,7 @@ export const url = isDebug ? 'http://localhost:9001' :
 export const remoteRoutes = {
     authServer: url,
     login: url + '/api/auth/login',
+    loginPhone: url + '/api/auth/phone-login',
 
     profile: url + '/api/auth/profile',
     register: url + '/api/auth/register',
