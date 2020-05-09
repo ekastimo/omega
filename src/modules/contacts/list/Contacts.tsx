@@ -51,7 +51,7 @@ const Contacts = () => {
     const [createCompanyDialog, setCreateCompanyDialog] = useState(false);
     const [uploadDialog, setUploadDialog] = useState(false);
     const {data, loading}: ICrmState = useSelector((state: IState) => state.crm)
-    const user = useSelector((state: IState) => state.core.user)
+    const user = useSelector((state: any) => state.core.user)
 
     const [filter, setFilter] = useState<IContactsFilter>({});
     const classes = useStyles();

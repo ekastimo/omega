@@ -57,10 +57,10 @@ export const BarView = (props: any) => {
             <AccountCircle className={props.textClass}/>
             &nbsp;
             <HiddenJs xsDown>
-                <Typography className={props.textClass}>{profile.fullName}</Typography>
+                <Typography className={props.textClass}>{profile?.fullName}</Typography>
             </HiddenJs>
             <HiddenJs smUp>
-                <Typography className={props.textClass}>{getInitials(profile.fullName)}</Typography>
+                <Typography className={props.textClass}>{getInitials(profile?.fullName)}</Typography>
             </HiddenJs>
         </IconButton>
         <Menu
@@ -89,13 +89,13 @@ export const BarView = (props: any) => {
                             <PersonIcon/>
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText primary={profile.fullName}/>
+                    <ListItemText primary={profile?.fullName}/>
                 </ListItem>
                 <ListItem button>
                     <ListItemIcon>
                         <MailIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={profile.email}/>
+                    <ListItemText primary={profile?.email}/>
                 </ListItem>
             </List>
         </Dialog>

@@ -25,7 +25,7 @@ const PdfViewer = ({data}: IProps) => {
     const classes = useStyles()
     return (
         <div className={classes.root}>
-            <iframe src={data} className={classes.iframe} scrolling='no'/>
+            <iframe src={data} className={classes.iframe} scrolling='no' title='PdfViewer'/>
         </div>
     );
 }

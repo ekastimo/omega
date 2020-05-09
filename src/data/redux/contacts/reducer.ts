@@ -1,7 +1,10 @@
 import {
     IAddress,
     IBankAccount,
-    IContact, IContactData, IContactTag, IContactUrl,
+    IContact,
+    IContactData,
+    IContactTag,
+    IContactUrl,
     IEmail,
     IIdentification,
     IPerson,

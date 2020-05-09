@@ -1,11 +1,12 @@
 import {AUTH_TOKEN_KEY, AUTH_USER_KEY} from "../constants";
-import {ILoginResponse} from "../types";
+import {ICoreState, ILoginResponse} from "../types";
 
-const initialState: any = {
+const initialState: ICoreState = {
     splash: true,
     user: null,
     isLoadingUser: true,
-    globalLoader: false
+    globalLoader: false,
+    token:null
 }
 
 export const coreConstants = {
@@ -26,8 +27,6 @@ export default function reducer(state = initialState, action: any) {
         case coreConstants.coreStopGlobalLoader: {
             return {...state, globalLoader: false}
         }
-
-
         case coreConstants.coreLogin: {
             const {token, user}: ILoginResponse = action.payload
             localStorage.setItem(AUTH_TOKEN_KEY, token)

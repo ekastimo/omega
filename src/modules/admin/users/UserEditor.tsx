@@ -12,9 +12,9 @@ import {handleSubmission, ISubmission} from "../../../utils/formHelpers";
 import {comboParser, toOptions} from "../../../components/inputs/inputHelpers";
 import {del} from "../../../utils/ajax";
 import Toast from "../../../utils/Toast";
-import {clientAssignRoles, clientRoles, isPrimaryUser, primaryAssignRoles, primaryRoles} from "../../../data/appRoles";
+import {clientAssignRoles, isPrimaryUser, primaryAssignRoles} from "../../../data/appRoles";
 import {useSelector} from "react-redux";
-import {IAuthUser, IState} from "../../../data/types";
+import {IAuthUser} from "../../../data/types";
 
 interface IProps {
     data: any
@@ -42,7 +42,7 @@ const editSchema = yup.object().shape(
 const initialValues = {contact: null, password: '', roles: []}
 
 const UserEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
-    const user: IAuthUser = useSelector((state: IState) => state.core.user)
+    const user: IAuthUser = useSelector((state: any) => state.core.user)
     const [loading, setLoading] = useState<boolean>(false)
 
     function handleSubmit(values: any, actions: FormikHelpers<any>) {
@@ -64,7 +64,7 @@ const UserEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
         setLoading(true)
         del(
             remoteRoutes.users,
-            dt => {
+            () => {
                 Toast.success("Operation succeeded")
                 onDeleted(data)
             },

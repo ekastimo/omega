@@ -38,6 +38,7 @@ export const url = isDebug ? 'http://localhost:9001' :
 export const remoteRoutes = {
     authServer: url,
     login: url + '/api/auth/login',
+
     profile: url + '/api/auth/profile',
     register: url + '/api/auth/register',
     resetPass: url + '/reset',
@@ -75,7 +76,7 @@ export const remoteRoutes = {
     loans: url + '/api/loans/loan',
     loansTriggerPayment: url + '/api/loans/process/payout',
     loansTriggerRecover: url + '/api/loans/process/recover',
-
+    loansRequestLoan: url + '/api/loans/ussd',
 
     documents: url + '/api/docs',
     documentsView: url + '/api/docs/view',

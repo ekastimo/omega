@@ -6,7 +6,6 @@ import {XHeadCell} from "../../../components/table/XTableHead";
 import InvoiceLink from "../../../components/links/InvoiceLink";
 import ContactLink from "../../../components/links/ContactLink";
 import {printDate, printDateTime} from "../../../utils/dateHelpers";
-import {ContactCategory, IContact} from "../../contacts/types";
 import {IRec} from "../../../components/DetailView";
 import {printMoney} from "../../../utils/numberHelpers";
 

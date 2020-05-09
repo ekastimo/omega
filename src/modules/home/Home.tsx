@@ -1,28 +1,31 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
 import image from "../../assets/bg2.jpg";
+import logo from "../../assets/Azima-Icon-1.png";
 import Box from "@material-ui/core/Box";
 import LoanCalculator from "./LoanCalculator";
 import {useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {IState} from "../../data/types";
 import {localRoutes} from "../../data/constants";
+import {isBackOfficeUser} from "../../data/appRoles";
+import ApprovalStep from "./ApprovalStep";
 
 function Copyright() {
     return (
         <Typography variant="body2" color="inherit" align="center">
             {'Copyright © '}
             <Link color="inherit" href="#">
-                Azima Uganda Ltd
+                Azima Credit Technologies Ltd
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -38,38 +41,18 @@ const useStyles = makeStyles((theme) => ({
         color: 'white'
     },
     heroContent: {
-        paddingTop: 200,
+        paddingTop: 100,
         color: 'white',
         fontVariant: '',
         overflowWrap: 'break-word',
         wordWrap: 'break-word',
         font: 'italic bold 12px/30px Georgia, serif',
     },
-    loanCalculator: {
-        height: 400,
-        minWidth: 350,
-        backgroundColor: theme.palette.background.paper,
-    },
     heroButtons: {
         marginTop: theme.spacing(4),
     },
-    cardGrid: {
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8),
-    },
-    card: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    cardMedia: {
-        paddingTop: '56.25%', // 16:9
-    },
-    cardContent: {
-        flexGrow: 1,
-    },
     footer: {
-        //backgroundColor: theme.palette.background.paper,
+
         padding: theme.spacing(6),
     },
     link: {
@@ -85,6 +68,8 @@ const Home = () => {
     const classes = useStyles();
     const user: any = useSelector((state: IState) => state.core.user)
     const history = useHistory();
+    const [amount, setAmount] = React.useState<number>(0);
+    const [approve, setApprove] = React.useState<boolean>(false);
 
     function handleAdminConsole(e: any) {
         e.preventDefault()
@@ -94,6 +79,11 @@ const Home = () => {
     function handleLogin(e: any) {
         e.preventDefault()
         history.push(localRoutes.login)
+    }
+
+    function handleGetNow(amount: number) {
+        setAmount(amount)
+        setApprove(true)
     }
 
     return (
@@ -108,13 +98,13 @@ const Home = () => {
             <CssBaseline/>
             <AppBar position="relative" color='transparent'>
                 <Toolbar>
-                    <CameraIcon className={classes.icon}/>
+                    <Avatar alt="Logo" src={logo} className={classes.icon}/>
                     <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
                         Azima Credit Technologies
                     </Typography>
                     <nav>
                         {
-                            user &&
+                            user && isBackOfficeUser(user) &&
                             <Link
                                 variant="button"
                                 color="inherit" href="#"
@@ -138,28 +128,33 @@ const Home = () => {
                 </Toolbar>
             </AppBar>
             <main>
-                <Grid container>
-                    <Grid item md={6} sm={12} className={classes.heroContent}>
-                        <Typography component="h1" variant="h2" align="center" color="inherit" gutterBottom>
-                            Need extra money?
-                        </Typography>
+                <Container>
+                    <Grid container>
+                        <Grid item md={6} lg={5} sm={12} className={classes.heroContent}>
+                            <Typography component="div" variant="h1" align="center" color="inherit" gutterBottom>
+                                Need<br/> extra<br/> money?
+                            </Typography>
+                        </Grid>
+                        <Grid item md={6} lg={7} sm={12}>
+                            <Box pt={8} display='flex' justifyContent='center'>
+                                {
+                                    approve
+                                        ? <ApprovalStep amount={amount}/>
+                                        : <LoanCalculator onApply={handleGetNow}/>
+                                }
+                            </Box>
+                        </Grid>
                     </Grid>
-                    <Grid container md={6} sm={12}>
-                        <Box pt={8}>
-                            <LoanCalculator/>
-                        </Box>
-                    </Grid>
-                </Grid>
+                </Container>
 
                 <div className={classes.heroContent}>
-                    <Container maxWidth="sm">
+                    <Container maxWidth="md">
                         <Typography component="h1" variant="h2" align="center" color="inherit" gutterBottom>
                             About Us
                         </Typography>
                         <Typography variant="h5" align="center" color="inherit" paragraph>
-                            Proactively e-enable inexpensive technologies for interdependent strategic theme areas.
-                            Distinctively repurpose team driven initiatives via adaptive communities.
-                            Uniquely fashion fully tested alignments without unique infrastructures.
+                            A technology led company with a suite of digital products that remove barriers to provide
+                            access to quick, timely and affordable credit.
                         </Typography>
                         <div className={classes.heroButtons}>
                             <Grid container spacing={2} justify="center">
@@ -176,7 +171,7 @@ const Home = () => {
             {/* Footer */}
             <footer className={classes.footer}>
                 <Typography variant="subtitle1" align="center" color="inherit" component="p">
-                    We delight in serving you!
+                    We delight in serving you.
                 </Typography>
                 <Copyright/>
             </footer>

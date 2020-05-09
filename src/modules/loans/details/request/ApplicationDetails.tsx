@@ -3,7 +3,6 @@ import {SuccessIcon} from "../../../../components/xicons";
 import {XStep} from "../../stepper/XStepLabel";
 import {ILoan} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
-import {printDateTime} from "../../../../utils/dateHelpers";
 import {printMoney} from "../../../../utils/numberHelpers";
 import Grid from "@material-ui/core/Grid";
 import XRightLabel from "../../stepper/XRightLabel";

@@ -8,9 +8,6 @@ import {getEmail, getPhone, IContact, renderName} from "../../../contacts/types"
 import {printDate} from "../../../../utils/dateHelpers";
 import EmailLink from "../../../../components/links/EmalLink";
 import PreviousLoans from "./PreviousLoans";
-import {Box} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import XSubStep from "../../stepper/XSubStep";
 import XRightLabel from "../../stepper/XRightLabel";
 import SoreCard from "./ScoreCard";

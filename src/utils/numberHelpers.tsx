@@ -1,5 +1,5 @@
 import React from "react"
-import {random,range} from 'lodash'
+import {random, range} from 'lodash'
 
 export const printMoney = (money: number) => {
     try {

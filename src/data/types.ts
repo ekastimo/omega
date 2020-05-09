@@ -29,8 +29,11 @@ export interface IState {
 }
 
 export interface ICoreState {
-    user: IAuthUser
-    token: string
+    user: IAuthUser | null
+    token: string | null
+    splash: boolean,
+    isLoadingUser: true,
+    globalLoader: false
 }
 
 export interface ISearch {

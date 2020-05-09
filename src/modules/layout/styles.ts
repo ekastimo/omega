@@ -1,5 +1,5 @@
 import grey from "@material-ui/core/colors/grey";
-import {colors, createStyles, makeStyles, Theme} from "@material-ui/core";
+import {createStyles, makeStyles, Theme} from "@material-ui/core";
 
 export const drawerWidth = 240;
 export const navColor = "#24647D";

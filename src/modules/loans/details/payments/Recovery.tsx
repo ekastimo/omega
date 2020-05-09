@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import WarnMessage from "../../../../components/messages/WarnMessage";
 import {ILoan, IRecovery, LoanStatus, PayoutStatus} from "../../types";
-import DetailView, {IRec} from "../../../../components/DetailView";
+import {IRec} from "../../../../components/DetailView";
 import {printDateTime} from "../../../../utils/dateHelpers";
 import ContactLink from "../../../../components/links/ContactLink";
 import {Box, Typography} from "@material-ui/core";

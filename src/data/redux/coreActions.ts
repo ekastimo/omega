@@ -1,4 +1,5 @@
 import {coreConstants} from "./coreReducer";
+
 export const handleLogin = (data: any) => {
     return {
         type: coreConstants.coreLogin,
@@ -35,6 +36,9 @@ export const coreStopGlobalLoader = () => {
         type: coreConstants.coreStopGlobalLoader,
     }
 }
+
+
+
 
 
 

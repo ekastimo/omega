@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
 import {ILoan, ILoanFilter} from "../types";
 import Box from "@material-ui/core/Box";
 import XTable from "../../../components/table/XTable";
@@ -16,7 +15,7 @@ interface IProps {
 
 let headCells: XHeadCell[] = [...companyLoansHeadCells];
 const ContactLoans = ({contact}: IProps) => {
-    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<ILoan[]>([]);
 

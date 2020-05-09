@@ -42,7 +42,7 @@ const LoansList = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const {data}: ILoanState = useSelector((state: IState) => state.loans)
-    const user = useSelector((state: IState) => state.core.user)
+    const user = useSelector((state: any) => state.core.user)
     const headCells: XHeadCell[] = useMemo(() => {
         if (isPrimaryUser(user)) {
             return columns.map(it => {

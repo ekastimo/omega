@@ -12,7 +12,6 @@ import ContactLink from "../../../../components/links/ContactLink";
 import {trimString} from "../../../../utils/stringHelpers";
 import Typography from "@material-ui/core/Typography";
 import {useSelector} from "react-redux";
-import {IState} from "../../../../data/types";
 import {isPrimaryUser} from "../../../../data/appRoles";
 
 interface IProps {
@@ -57,7 +56,7 @@ export const displayFields = (data: IContact): IRec[] => {
 
 const AdminData = ({data}: IProps) => {
     const [dialog, setDialog] = useState(false)
-    const user = useSelector((state: IState) => state.core.user)
+    const user = useSelector((state: any) => state.core.user)
     const {organization, company} = data;
     const {contactPerson, responsibleContact} = company || {}
     const handleClick = () => {

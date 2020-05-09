@@ -8,7 +8,6 @@ import Toast from "../../../utils/Toast";
 import TextField from "@material-ui/core/TextField";
 import {hasNoValue, hasValue} from "../../../components/inputs/inputHelpers";
 import {IInvoice} from "./types";
-import CodeView from "../../../components/CodeView";
 
 interface IProps {
     onComplete: (data: IInvoice) => any

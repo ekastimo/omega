@@ -52,7 +52,7 @@ const useStyles = makeStyles(() =>
 );
 
 const InvoiceDetails = () => {
-    const user = useSelector((state: IState) => state.core.user)
+    const user = useSelector((state: any) => state.core.user)
     const [loading, setLoading] = useState(false);
     const [frameSrc, setFrameSrc] = useState<string | null>(null);
     const {invoiceId} = useParams<any>();

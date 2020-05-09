@@ -19,11 +19,10 @@ import {IState} from "../../../data/types";
 import Filter from "./Filter";
 
 const InvoiceList = () => {
-    const user = useSelector((state: IState) => state.core.user)
+    const user = useSelector((state: any) => state.core.user)
     const [filter, setFilter] = useState<any>({})
     const [loading, setLoading] = useState<boolean>(true)
     const [data, setData] = useState<any[]>([])
-    const [selected, setSelected] = useState<any | null>(null)
     const [dialog, setDialog] = useState<boolean>(false)
 
     const fetchData = useCallback((f: any) => {
@@ -42,7 +41,6 @@ const InvoiceList = () => {
     }
 
     function handleGenerate() {
-        setSelected(null)
         setDialog(true)
     }
 
@@ -52,7 +50,6 @@ const InvoiceList = () => {
     }
 
     const handleClose = () => {
-        setSelected(null)
         setDialog(false)
     }
 

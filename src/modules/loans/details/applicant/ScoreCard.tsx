@@ -1,6 +1,4 @@
 import React from 'react';
-import {SuccessIcon} from "../../../../components/xicons";
-import {XStep} from "../../stepper/XStepLabel";
 import {ILoan} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDateTime} from "../../../../utils/dateHelpers";

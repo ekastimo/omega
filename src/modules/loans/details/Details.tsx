@@ -18,7 +18,6 @@ import {renderStatus, renderSubStatus} from "../list/config";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import Summary from "./Summary";
-import SoreCard from "./applicant/ScoreCard";
 import ApplicationDetails from "./request/ApplicationDetails";
 import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";

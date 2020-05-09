@@ -14,7 +14,7 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
     const defaultMessage = "Invalid request, please contact admin";
     if ((res && res.forbidden) || (res && res.unauthorized)) {
         Toast.error("Authentication Error")
-        
+
     } else if (res && res.badRequest) {
         const {message, errors = []} = res.body
         let msg = message + '\n'
@@ -23,6 +23,26 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
             msg += (error + '\n')
         }
         Toast.error(msg || defaultMessage)
+    } else if ((res && res.clientError) || (res && res.notAcceptable) || (res && res.error)) {
+        const {message} = res.body || {}
+        Toast.error(message || defaultMessage)
+    } else {
+        const message = err.message || 'Unknown error, contact admin'
+        const finalMessage = message.indexOf("offline") !== -1
+            ? "Can't reach server, Check connectivity"
+            : message
+        Toast.error(finalMessage)
+    }
+}
+
+
+export const handleBadRequestError = (err: any = {}, res: superagent.Response, cb: (data: any) => void) => {
+    const defaultMessage = "Invalid request, please contact admin";
+    if ((res && res.forbidden) || (res && res.unauthorized)) {
+        Toast.error("Authentication Error")
+
+    } else if (res && res.badRequest) {
+        cb(res.body)
     } else if ((res && res.clientError) || (res && res.notAcceptable) || (res && res.error)) {
         const {message} = res.body || {}
         Toast.error(message || defaultMessage)

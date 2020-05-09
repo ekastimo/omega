@@ -1,4 +1,5 @@
 import * as yup from "yup";
+
 export const invalidInputs = [null, 'null', 'undefined', undefined, '']
 export const reqMsg = 'Input is required'
 export const reqNumber = yup.number().required(reqMsg).nullable(false)

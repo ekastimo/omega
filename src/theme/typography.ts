@@ -1,5 +1,6 @@
 import {TypographyOptions} from "@material-ui/core/styles/createTypography";
 import {colors} from "@material-ui/core";
+
 const palette: any = {
     text: {
         primary: colors.blueGrey[900],
