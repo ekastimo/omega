@@ -15,23 +15,38 @@ import Fab from '@material-ui/core/Fab';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Box from "@material-ui/core/Box";
 import {Alert} from "@material-ui/lab";
-import {printInteger} from "../../utils/numberHelpers";
+import {printFloatNumber, printInteger} from "../../utils/numberHelpers";
 import {computeLoanPayment} from "./helpers";
-import {ILoanPayment, ILoanSettings} from "./types";
+import {ILoanPayment, ILoanSettings, IWebAppLoanRequest} from "./types";
 import Typography from "@material-ui/core/Typography";
 import {handleBadRequestError, post} from "../../utils/ajax";
 import {remoteRoutes} from "../../data/constants";
-import {coreStartGlobalLoader, coreStopGlobalLoader, handleLogin} from "../../data/redux/coreActions";
+import {handleLogin} from "../../data/redux/coreActions";
 import Toast from "../../utils/Toast";
 import {addLoanSettings} from "../../data/redux/loans/reducer";
-import CodeView from "../../components/CodeView";
+import {XSlider} from "../../components/inputs/XSlider";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Link from "@material-ui/core/Link";
+import EmailLink from "../../components/links/EmalLink";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(2),
-        width: 450,
-        maxWidth: '100%'
+        [theme.breakpoints.up('md')]: {
+            width: 450,
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: '100%'
+        },
+        maxWidth: '100%',
+        borderRadius: 32,
+        [theme.breakpoints.down('sm')]: {
+            marginTop: theme.spacing(2)
+        }
     },
     stepper: {
         width: '100%'
@@ -42,28 +57,74 @@ interface IProps {
     amount: number
 }
 
-interface ILoanRequest {
-    phone: string;
-    network: string;
-    amount: number;
-    sessionId: string,
-    shortCode: string,
-    password: string,
-}
+
 
 const steps = {
     CHOOSE_AMOUNT: 0,
     APPROVE_PAYOUT: 1
 }
 
-export const createSuccessMessage = (payment: ILoanPayment, settings: ILoanSettings): any => {
-    return <Typography>
-        You have requested for <b>UGX {printInteger(payment.amount)}</b> only&nbsp;
-        at an interest rate of <b>{settings.interestRate}%</b> .<br/>
-        A total of <b>UGX {printInteger(payment.totalPayment)}</b> will be automatically&nbsp;
-        deducted from your salary at the end of the month.<br/>
-    </Typography>
 
+interface InfoMessageProps {
+    payment: ILoanPayment
+    settings: ILoanSettings
+}
+
+const termsLink = './Terms.pdf'
+
+export const InfoMessage = ({payment, settings}: InfoMessageProps) => {
+    return <Alert severity='info'>
+        <Typography>
+            <b>UGX&nbsp;{printFloatNumber(payment.interest)}</b> is the
+            interest amount ({settings.interestRate}% interest rate).&nbsp;
+            A total of <b>UGX {printInteger(payment.totalPayment)}</b> will
+            automatically be deducted from your salary at the end of the month.
+        </Typography>
+    </Alert>
+}
+
+interface SuccessMessageProps extends InfoMessageProps {
+    data: any
+    user: IAuthUser
+}
+
+export const SuccessMessage = ({payment, settings, data, user}: SuccessMessageProps) => {
+    return <Grid container spacing={2}>
+        <Grid item xs={12}>
+            <Alert severity='success'>
+                <Typography>
+                    Hello {user.fullName},<br/>
+                    You have requested for a loan of <b>UGX&nbsp;{printFloatNumber(payment.amount)}</b>&nbsp;
+                    interest rate <b>{settings.interestRate}%</b> (UGX {printFloatNumber(payment.interest)}).&nbsp;
+                    <br/><br/>
+                    Your application reference number is <b>{data.referenceNumber}</b>
+                    <br/><br/>
+                    You will receive an email on <b>{user.email}</b> shortly informing you of the status of your
+                    transaction.
+                    <br/><br/>
+                    A total of <b>UGX {printInteger(payment.totalPayment)}</b> will be
+                    automatically deducted from your salary at the end of the month.
+                    <br/><br/>
+                    In case of any queries, please reach out to our help line at <b>+256752683894</b>.&nbsp;
+                    Or send us an email at <EmailLink value='support@azima.co.ug'/>.
+                    <br/><br/>
+                    <Link href={termsLink} target='_blank'>Terms and conditions</Link>&nbsp;
+                    apply
+                </Typography>
+            </Alert>
+        </Grid>
+        <Grid item xs={12}>
+
+        </Grid>
+    </Grid>
+}
+
+export const createMessage = (message: string): any => {
+    return <Alert severity='error'>
+        <Typography>
+            {message}
+        </Typography>
+    </Alert>
 }
 
 const ApprovalStep = (props: IProps) => {
@@ -73,32 +134,62 @@ const ApprovalStep = (props: IProps) => {
     const loanSettings = useSelector((state: IState) => state.loans.loanSettings)
     const user: IAuthUser = useSelector((state: any) => state.core.user)
 
-    const [isComplete, setIsComplete] = useState<boolean>(false)
-    const [request, setRequest] = React.useState<ILoanRequest>({
+    const [loanData, setLoanData] = useState<any | null>(null)
+    const [loading, setLoading] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<any | null>(null)
+    const [password, setPassword] = useState<string>('Xpass@123')
+    const [request, setRequest] = React.useState<IWebAppLoanRequest>({
         phone: '256786000384',
-        password: "Xpass@123",
+        category: "WebApp",
         amount: props.amount,
         sessionId: "browser",
         shortCode: "-NA-",
         network: '-NA-',
-
+        terms: false
     });
 
     const loanPayment = computeLoanPayment(request.amount, loanSettings);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRequest({
-            ...request,
-            [event.target.name]: event.target.value,
-        });
+        if(event.target.name === 'password'){
+            setPassword(event.target.value)
+        }else {
+            setRequest({
+                ...request,
+                [event.target.name]: event.target.value,
+            });
+        }
     };
+
+    const handleAmountChange = (e: any, value: any) => {
+        const amount = parseInt(value);
+        if (amount >= loanSettings.minAmount && amount <= loanSettings.maxAmount) {
+            const req = {
+                ...request, amount
+            }
+            setRequest(req);
+        }
+    }
+
+    function handleAgreement(evt: any, terms: boolean) {
+        const req = {
+            ...request, terms
+        }
+        setRequest(req);
+    }
 
     function handleApprove() {
         console.log("Approving")
         if (
             hasNoValue(request.phone) ||
-            hasNoValue(request.password)
+            hasNoValue(password)
         ) {
             Toast.warn("Please enter all required fields")
+            return
+        }
+
+        if (!request.terms) {
+            Toast.warn("Please read and agree to the terms and conditions")
             return
         }
 
@@ -114,8 +205,7 @@ const ApprovalStep = (props: IProps) => {
             console.log("Done Logging in", {token, user})
             requestLoan(resp => {
                 Toast.success("Loan created successfully")
-                setIsComplete(true)
-                console.log("Response", resp)
+                setLoanData(resp)
             })
         })
     }
@@ -123,23 +213,23 @@ const ApprovalStep = (props: IProps) => {
     function doLogin(done: (dt: any) => any) {
         const login: any = {
             phone: request.phone,
-            password: request.password,
+            password,
         }
-        dispatch(coreStartGlobalLoader())
+        setLoading(true)
         //Login
         post(remoteRoutes.loginPhone, login, resp => {
             dispatch(handleLogin(resp))
             done(resp)
         }, () => {
-            Toast.error("Invalid credentials")
+            Toast.error("Authentication failed")
         }, () => {
-            dispatch(coreStopGlobalLoader())
+            setLoading(false)
         })
     }
 
     function requestLoan(done: (resp: any) => any) {
         if (user) {
-            dispatch(coreStartGlobalLoader())
+            setLoading(true)
             //Login
             post(
                 remoteRoutes.loansRequestLoan, request,
@@ -147,35 +237,36 @@ const ApprovalStep = (props: IProps) => {
                     done(resp)
                 },
                 (err: any = {}, res: any) => {
-
                     handleBadRequestError(err, res, resp => {
-                        Toast.error(resp.message)
+                        setErrorMessage(createMessage(resp.message))
                         if (hasValue(resp.data)) {
                             dispatch(addLoanSettings(resp.data))
                         }
-                        dispatch(coreStopGlobalLoader())
+                        setLoading(false)
                     })
                 },
                 () => {
-                    dispatch(coreStopGlobalLoader())
+                    setLoading(false)
                 })
         }
     }
 
-    console.log(request)
+
     const inputPaddingX = 3;
     const inputStyle: any = {
         textAlign: 'center',
         fontSize: "1.3rem",
         backgroundColor: grey[200]
     }
+
+
     return (
         <div className={classes.root}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Stepper
                         activeStep={steps.APPROVE_PAYOUT}
-                        alternativeLabel orientation='horizontal'
+                        orientation='horizontal'
                         className={classes.stepper}
                     >
                         <Step completed>
@@ -187,24 +278,50 @@ const ApprovalStep = (props: IProps) => {
                     </Stepper>
                 </Grid>
                 {
-
-                    isComplete ? <Grid item xs={12}>
-                        <Alert severity='success'>
-                            {createSuccessMessage(loanPayment, loanSettings)}
-                        </Alert>
+                    loanData ? <Grid item xs={12}>
+                        <SuccessMessage
+                            payment={loanPayment}
+                            settings={loanSettings}
+                            data={loanData}
+                            user={user}
+                        />
                     </Grid> : <>
                         <Grid item xs={12}>
-                            <Alert severity='info'>
-                                {createSuccessMessage(loanPayment, loanSettings)}
-                            </Alert>
+                            {
+                                errorMessage || <InfoMessage
+                                    payment={loanPayment}
+                                    settings={loanSettings}
+                                />
+                            }
                         </Grid>
                         <Grid item xs={12}>
                             <Box px={inputPaddingX}>
+                                <Box width="100%" display='flex'>
+                                    <Box width="50%">
+                                        <Typography variant='body2' color='primary'>
+                                            {printFloatNumber(loanSettings.minAmount)}
+                                        </Typography>
+                                    </Box>
+                                    <Box width="50%" display='flex' justifyContent='flex-end'>
+                                        <Typography variant='body2' color='primary'>
+                                            {printFloatNumber(loanSettings.maxAmount)}
+                                        </Typography>
+                                    </Box>
+                                </Box>
+                                <XSlider
+                                    step={10000}
+                                    value={request.amount}
+                                    min={loanSettings.minAmount}
+                                    max={loanSettings.maxAmount}
+                                    onChange={handleAmountChange}
+                                    disabled={loading}
+                                />
                                 <XMaskedInput
                                     hiddenLabel
                                     className={calcClasses.textField}
                                     variant="outlined"
                                     fullWidth
+                                    size='small'
                                     value={request.amount}
                                     onChange={handleChange}
                                     inputProps={
@@ -212,6 +329,7 @@ const ApprovalStep = (props: IProps) => {
                                             style: inputStyle
                                         }
                                     }
+                                    disabled={loading}
                                 />
                             </Box>
                         </Grid>
@@ -225,6 +343,7 @@ const ApprovalStep = (props: IProps) => {
                                     variant='outlined'
                                     name='phone'
                                     fullWidth
+                                    size='small'
                                     value={request.phone}
                                     onChange={handleChange}
                                     inputProps={
@@ -232,6 +351,7 @@ const ApprovalStep = (props: IProps) => {
                                             style: inputStyle
                                         }
                                     }
+                                    disabled={loading}
                                 />
                             </Box>
 
@@ -244,10 +364,12 @@ const ApprovalStep = (props: IProps) => {
                                     type="password"
                                     name='password'
                                     fullWidth
+                                    size='small'
                                     autoComplete="off"
                                     variant='outlined'
-                                    value={request.password}
+                                    value={password}
                                     onChange={handleChange}
+                                    disabled={loading}
                                     inputProps={
                                         {
                                             style: inputStyle
@@ -257,13 +379,40 @@ const ApprovalStep = (props: IProps) => {
                             </Box>
                         </Grid>
                         <Grid item xs={12}>
-                            <Box width="100%" py={2} display='flex' justifyContent='center'>
+                            <Box px={inputPaddingX}>
+                                <FormControlLabel
+                                    value="end"
+                                    checked={request.terms}
+                                    disabled={loading}
+                                    onChange={handleAgreement}
+                                    control={<Checkbox color="primary"/>}
+                                    label={<Typography style={{color: 'black'}}>
+                                        I have read and agree to the
+                                        &nbsp;<Link href={termsLink} target='_blank'>terms and conditions</Link>&nbsp;
+                                        of the Azima Customer Agreement
+                                    </Typography>}
+                                    labelPlacement="end"
+                                />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={2}>
+                            {
+                                loading &&
+                                <Box width="100%" py={2} display='flex' justifyContent='flex-end'>
+                                    <CircularProgress/>
+                                </Box>
+                            }
+
+                        </Grid>
+                        <Grid item xs={10}>
+                            <Box width="100%" py={2} pr={3} display='flex' justifyContent='flex-end'>
                                 <Fab
                                     variant="extended"
                                     color="primary"
                                     aria-label="add"
                                     className={calcClasses.button}
                                     onClick={handleApprove}
+                                    disabled={loading}
                                 >
                                     <AccountBalanceWalletIcon
                                         className={calcClasses.extendedIcon}

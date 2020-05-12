@@ -41,7 +41,7 @@ export const requestFields = (data: ILoan): IRec[] => {
         },
         {
             label: 'Phone',
-            value: request.userId
+            value: request.applicantReference
         }
     ]
 }

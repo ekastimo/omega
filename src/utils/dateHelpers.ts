@@ -1,11 +1,12 @@
 import {format, isValid, parseISO} from "date-fns";
+import {hasValue} from "../components/inputs/inputHelpers";
 
 export const dateFormat = 'dd.MM.yyyy'
 export const dateTimeFormat = 'dd.MM.yyyy HH:mm'
 export const standardDateTimeFormat = 'dd-MM-yyyy HH:mm'
 export const standardDateFormat = 'dd-MM-yyyy'
 export const printDateTime = (value: any): string => {
-    if (typeof value === 'string') {
+    if (typeof value === 'string' && hasValue(value)) {
         return printDateTime(strToDate(value))
     }
     if (isValid(value))

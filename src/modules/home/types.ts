@@ -10,4 +10,14 @@ export interface ILoanPayment {
     totalPayment: number
 }
 
+export interface IWebAppLoanRequest {
+    phone: string
+    category: string
+    network: string
+    terms: boolean
+    amount: number
+    sessionId: string
+    shortCode: string
+}
+
 

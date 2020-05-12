@@ -1,41 +1,33 @@
-import React, {useState} from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
+import React from 'react';
+
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Menu from '@material-ui/core/Menu';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Dialog from '@material-ui/core/Dialog';
-import PersonIcon from '@material-ui/icons/Person';
-import Avatar from '@material-ui/core/Avatar';
 import {useDispatch, useSelector} from "react-redux";
 import {IState} from "../data/types";
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
-import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
-import {getInitials} from "../utils/stringHelpers";
 import {handleLogout} from "../data/redux/coreActions";
+import {localRoutes} from "../data/constants";
+import {useHistory} from "react-router-dom";
+import Link from "@material-ui/core/Link";
+import IconButton from '@material-ui/core/IconButton';
+import {Grid} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import EmailIcon from '@material-ui/icons/Email';
+import PersonIcon from '@material-ui/icons/Person';
+import Avatar from '@material-ui/core/Avatar';
+import {getInitials} from "../utils/stringHelpers";
 
-export const BarView = (props: any) => {
+export const Profile = (props: any) => {
     const profile = useSelector((state: IState) => state.core.user)
     const dispatch = useDispatch();
-    const [dialogOpen, setDialogOpen] = useState(false);
+    const history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const menuOpen = Boolean(anchorEl);
 
-    function openDialog() {
-        setDialogOpen(true)
-    }
-
     function doLogout() {
         dispatch(handleLogout())
-    }
-
-    function closeDialog() {
-        setDialogOpen(false)
     }
 
     function handleMenu(event: React.MouseEvent<HTMLElement>) {
@@ -46,58 +38,77 @@ export const BarView = (props: any) => {
         setAnchorEl(null);
     }
 
-    return <div>
-        <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenu}
-            color="inherit"
-        >
-            <AccountCircle className={props.textClass}/>
-            &nbsp;
-            <HiddenJs xsDown>
-                <Typography className={props.textClass}>{profile?.fullName}</Typography>
-            </HiddenJs>
-            <HiddenJs smUp>
-                <Typography className={props.textClass}>{getInitials(profile?.fullName)}</Typography>
-            </HiddenJs>
-        </IconButton>
-        <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={menuOpen}
-            onClose={handleCloseMenu}
-        >
-            <MenuItem onClick={openDialog}>Profile</MenuItem>
-            <MenuItem onClick={doLogout}>Logout</MenuItem>
-        </Menu>
-        <Dialog onClose={closeDialog} aria-labelledby="simple-dialog-title" open={dialogOpen}>
-            <List>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar>
-                            <PersonIcon/>
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={profile?.fullName}/>
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <MailIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary={profile?.email}/>
-                </ListItem>
-            </List>
-        </Dialog>
-    </div>
+    function handleLogin(e: any) {
+        e.preventDefault()
+        history.push(localRoutes.login)
+    }
+
+
+    return <>
+        {
+            profile ?
+                <>
+                    <Link
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit" href="#"
+                        variant="button"
+                        style={{textDecoration: "none"}}
+                    >
+                        <IconButton color="inherit">
+                            <Avatar>{getInitials(profile.fullName)}</Avatar>
+                        </IconButton>
+                    </Link>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={menuOpen}
+                        onClose={handleCloseMenu}
+                    >
+                        <Box p={2} pt={1}>
+                            <Grid container spacing={2} style={{width: 250}}>
+                                <Grid item xs={12}>
+                                    <Typography variant='h6'>User profile</Typography>
+                                    <Divider/>
+                                </Grid>
+                                <Box display='flex' px={2} pb={1} width='100%'>
+                                    <Box pr={1} pt={0.5}>
+                                        <Typography variant='body1'>
+                                            <PersonIcon fontSize='small'/>
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant='body1'><b>{profile.fullName}</b></Typography>
+                                    </Box>
+                                </Box>
+                                <Box display='flex' px={2} pb={2} width='100%'>
+                                    <Box pr={1} pt={0.5}>
+                                        <Typography variant='body1'>
+                                            <EmailIcon fontSize='small'/>
+                                        </Typography>
+                                    </Box>
+                                    <Box>
+                                        <Typography variant='body1'><b>{profile.email}</b></Typography>
+                                    </Box>
+                                </Box>
+                                <Box display='flex' pl={2} justifyContent='flex-start' width='100%'>
+                                    <Button onClick={doLogout} color='primary' variant='outlined'
+                                            startIcon={<ExitToAppIcon/>}
+                                    >Log out</Button>
+                                </Box>
+                            </Grid>
+                        </Box>
+                    </Menu>
+                </> :
+                <Link
+                    variant="button"
+                    onClick={handleLogin}
+                    color="inherit"
+                    style={{textDecoration: "none"}}
+                >Login</Link>
+        }
+    </>
 }

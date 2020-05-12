@@ -60,7 +60,18 @@ const Payout = ({data}: IProps) => {
                     <DetailView data={displayFields(payment)} columns={2}/> :
                     <Box display='flex' px={4}>
                         <Box flexGrow={1} pr={2}>
-                            <Alert severity="error">{payment.message}</Alert>
+                            {
+                                payment.status === PayoutStatus.Failed &&
+                                <Alert severity="error">{payment.message}</Alert>
+                            }
+                            {
+                                payment.status === PayoutStatus.Pending &&
+                                <Alert severity="warning">{payment.message}</Alert>
+                            }
+                            {
+                                payment.status === PayoutStatus.Sent &&
+                                <Alert severity="info">{payment.message}</Alert>
+                            }
                         </Box>
                         <Box><Button
                             variant='outlined'

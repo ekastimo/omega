@@ -134,8 +134,8 @@ export interface ILoanScore {
 export interface ILoanRequest {
     id: string
     category: RequestCategory
-    entryDate: Date
-    userId: string
+    createdAt: Date
+    applicantReference: string
     metaData: any
 }
 
@@ -166,6 +166,8 @@ export interface IRecovery {
 }
 
 export enum PayoutStatus {
+    Pending = 'Pending',
+    Sent = 'Sent',
     Success = 'Success',
     Failed = 'Failed'
 }

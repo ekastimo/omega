@@ -1,6 +1,7 @@
 import * as superagent from 'superagent'
 import Toast from './Toast'
 import {AUTH_TOKEN_KEY} from "../data/constants";
+import {hasValue} from "../components/inputs/inputHelpers";
 
 export const getToken = (): string | null => {
     return localStorage.getItem(AUTH_TOKEN_KEY)
@@ -16,6 +17,10 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
         Toast.error("Authentication Error")
 
     } else if (res && res.badRequest) {
+        if (isStandardValidationError(res.body)) {
+            // Handled in the check
+            return
+        }
         const {message, errors = []} = res.body
         let msg = message + '\n'
         for (const err of errors) {
@@ -35,6 +40,40 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
     }
 }
 
+export interface IClientError {
+    type: string;
+    title: string;
+    status: number;
+    traceId: string;
+    errors: any;
+}
+
+/*
+
+{
+  "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+  "title": "One or more validation errors occurred.",
+  "status": 400,
+  "traceId": "|1ab3c932-4acb553f43ec470c.",
+  "errors": {
+    "Network": [
+      "The Network field is required."
+    ]
+  }
+}
+
+ */
+//TODO handle all errors
+const isStandardValidationError = (data: any): boolean => {
+
+    const error: IClientError = data
+    if (hasValue(error.title) && error.title.indexOf("validation errors") > -1) {
+        Toast.error(error.title)
+        return true;
+    }
+    return false
+}
+
 
 export const handleBadRequestError = (err: any = {}, res: superagent.Response, cb: (data: any) => void) => {
     const defaultMessage = "Invalid request, please contact admin";
@@ -42,7 +81,9 @@ export const handleBadRequestError = (err: any = {}, res: superagent.Response, c
         Toast.error("Authentication Error")
 
     } else if (res && res.badRequest) {
-        cb(res.body)
+        if (!isStandardValidationError(res.body)) {
+            cb(res.body)
+        }
     } else if ((res && res.clientError) || (res && res.notAcceptable) || (res && res.error)) {
         const {message} = res.body || {}
         Toast.error(message || defaultMessage)

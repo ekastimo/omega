@@ -11,7 +11,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
 import image from "../../assets/bg2.jpg";
 import logo from "../../assets/Azima-Icon-1.png";
-import Box from "@material-ui/core/Box";
 import LoanCalculator from "./LoanCalculator";
 import {useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -19,6 +18,8 @@ import {IState} from "../../data/types";
 import {localRoutes} from "../../data/constants";
 import {isBackOfficeUser} from "../../data/appRoles";
 import ApprovalStep from "./ApprovalStep";
+import {Profile} from "../../components/Profile";
+import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
 
 function Copyright() {
     return (
@@ -41,12 +42,11 @@ const useStyles = makeStyles((theme) => ({
         color: 'white'
     },
     heroContent: {
-        paddingTop: 100,
+        [theme.breakpoints.down('lg')]: {
+            paddingTop: theme.spacing(16),
+        },
+        paddingTop: theme.spacing(20),
         color: 'white',
-        fontVariant: '',
-        overflowWrap: 'break-word',
-        wordWrap: 'break-word',
-        font: 'italic bold 12px/30px Georgia, serif',
     },
     heroButtons: {
         marginTop: theme.spacing(4),
@@ -61,6 +61,17 @@ const useStyles = makeStyles((theme) => ({
     toolbarTitle: {
         flexGrow: 1,
     },
+    main: {
+        [theme.breakpoints.down('lg')]: {
+            paddingTop: theme.spacing(8),
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingTop: theme.spacing(0),
+        },
+        paddingTop: theme.spacing(12),
+        display: 'flex',
+        justifyContent: 'center'
+    }
 }));
 
 
@@ -74,11 +85,6 @@ const Home = () => {
     function handleAdminConsole(e: any) {
         e.preventDefault()
         history.push(localRoutes.dashboard)
-    }
-
-    function handleLogin(e: any) {
-        e.preventDefault()
-        history.push(localRoutes.login)
     }
 
     function handleGetNow(amount: number) {
@@ -103,46 +109,42 @@ const Home = () => {
                         Azima Credit Technologies
                     </Typography>
                     <nav>
-                        {
-                            user && isBackOfficeUser(user) &&
-                            <Link
-                                variant="button"
-                                color="inherit" href="#"
-                                className={classes.link}
-                                onClick={handleAdminConsole}
-                            >
-                                Admin Console
-                            </Link>
-                        }
+                        <HiddenJs smDown>
+                            {
+                                user && isBackOfficeUser(user) &&
+                                <Link
+                                    variant="button"
+                                    color="inherit" href="#"
+                                    className={classes.link}
+                                    onClick={handleAdminConsole}
+                                >
+                                    Admin Console
+                                </Link>
+                            }
+                        </HiddenJs>
 
-                        <Link
-                            variant="button"
-                            color="inherit"
-                            href="#"
-                            className={classes.link}
-                            onClick={handleLogin}
-                        >
-                            Login
-                        </Link>
+                        <Profile/>
                     </nav>
                 </Toolbar>
             </AppBar>
             <main>
                 <Container>
                     <Grid container>
-                        <Grid item md={6} lg={5} sm={12} className={classes.heroContent}>
-                            <Typography component="div" variant="h1" align="center" color="inherit" gutterBottom>
-                                Need<br/> extra<br/> money?
-                            </Typography>
-                        </Grid>
-                        <Grid item md={6} lg={7} sm={12}>
-                            <Box pt={8} display='flex' justifyContent='center'>
+                        <HiddenJs smDown>
+                            <Grid item md={6} lg={5} sm={12} className={classes.heroContent}>
+                                <Typography component="div" variant="h1" align="center" color="inherit" gutterBottom>
+                                    Need<br/> extra<br/> money?
+                                </Typography>
+                            </Grid>
+                        </HiddenJs>
+                        <Grid item md={6} lg={7} sm={12} xs={12}>
+                            <div className={classes.main}>
                                 {
                                     approve
                                         ? <ApprovalStep amount={amount}/>
                                         : <LoanCalculator onApply={handleGetNow}/>
                                 }
-                            </Box>
+                            </div>
                         </Grid>
                     </Grid>
                 </Container>

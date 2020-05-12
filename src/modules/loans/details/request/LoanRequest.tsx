@@ -4,6 +4,7 @@ import {XStep} from "../../stepper/XStepLabel";
 import {ILoan} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import {printDateTime} from "../../../../utils/dateHelpers";
+import {hasValue} from "../../../../components/inputs/inputHelpers";
 
 interface IProps {
     data: ILoan
@@ -11,6 +12,10 @@ interface IProps {
 
 export const requestFields = (data: ILoan): IRec[] => {
     const request = data.request;
+    let meta: any = {};
+    if (hasValue(request.metaData)) {
+        meta = JSON.parse(request.metaData)
+    }
     return [
         {
             label: 'Category',
@@ -18,15 +23,15 @@ export const requestFields = (data: ILoan): IRec[] => {
         },
         {
             label: 'Date',
-            value: printDateTime(request.entryDate)
+            value: printDateTime(request.createdAt)
         },
         {
-            label: 'Phone',
-            value: request.userId
+            label: 'Ref ',
+            value: request.applicantReference
         },
         {
             label: 'Network',
-            value: data.request.metaData.network
+            value: meta.network
         }
     ]
 }

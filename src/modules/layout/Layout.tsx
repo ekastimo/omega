@@ -6,7 +6,7 @@ import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
-import {BarView} from "../../components/Profile";
+import {Profile} from "../../components/Profile";
 import {useStyles} from "./styles";
 import NavMenu from "./NavMenu";
 import {Typography} from "@material-ui/core";
@@ -41,7 +41,7 @@ function Layout(props: IProps) {
                     <Typography variant="h6" noWrap className={classes.title}>
                         {props.title}
                     </Typography>
-                    <BarView/>
+                    <Profile/>
                 </Toolbar>
             </AppBar>
             <nav className={classes.drawer} aria-label="mailbox folders">
