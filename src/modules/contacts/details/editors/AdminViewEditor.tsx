@@ -35,12 +35,12 @@ const AdminViewEditor = ({data, done, contactId, contactType}: IProps) => {
             (data) => {
                 Toast.info('Operation successful')
                 actions.resetForm()
-                if(isPerson){
+                if (isPerson) {
                     dispatch({
                         type: crmConstants.crmEditContactOrg,
                         payload: {...data},
                     })
-                }else{
+                } else {
                     dispatch({
                         type: crmConstants.crmEditContactAdmin,
                         payload: {...data},
@@ -56,6 +56,7 @@ const AdminViewEditor = ({data, done, contactId, contactType}: IProps) => {
         )
     }
 
+    console.log("Initial data######", data)
     return (
         <XForm
             onSubmit={handleSubmit}

@@ -67,6 +67,8 @@ const AdminData = ({data}: IProps) => {
         setDialog(false)
     }
 
+    const adminData = {contactPerson, responsibleContact, organization};
+    console.log("Admin data>>>",adminData)
     return (
         <Grid container spacing={0}>
             <Grid item xs={12}>
@@ -85,7 +87,7 @@ const AdminData = ({data}: IProps) => {
                 </Box>
             </Grid>
             <EditDialog title="Admin Setup" open={dialog} onClose={handleClose}>
-                <AdminViewEditor data={{contactPerson, responsibleContact, organization}}
+                <AdminViewEditor data={adminData}
                                  contactId={data.id}
                                  done={handleClose} contactType={data.category}/>
             </EditDialog>

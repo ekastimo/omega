@@ -25,7 +25,7 @@ export interface IProps extends IXRemoteProps {
 const FakeProgress = () => <div style={{height: 20, width: 20}}>&nbsp;</div>
 const labelParser = (option: any) => {
     if (hasValue(option)) {
-        return option.label
+        return option.label || option.name
     }
     return ''
 }
