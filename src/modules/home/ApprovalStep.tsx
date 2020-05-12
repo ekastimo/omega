@@ -20,7 +20,7 @@ import {computeLoanPayment} from "./helpers";
 import {ILoanPayment, ILoanSettings, IWebAppLoanRequest} from "./types";
 import Typography from "@material-ui/core/Typography";
 import {handleBadRequestError, post} from "../../utils/ajax";
-import {remoteRoutes} from "../../data/constants";
+import {isDebug, remoteRoutes} from "../../data/constants";
 import {handleLogin} from "../../data/redux/coreActions";
 import Toast from "../../utils/Toast";
 import {addLoanSettings} from "../../data/redux/loans/reducer";
@@ -56,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
 interface IProps {
     amount: number
 }
-
 
 
 const steps = {
@@ -137,9 +136,9 @@ const ApprovalStep = (props: IProps) => {
     const [loanData, setLoanData] = useState<any | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<any | null>(null)
-    const [password, setPassword] = useState<string>('Xpass@123')
+    const [password, setPassword] = useState<string>( "")
     const [request, setRequest] = React.useState<IWebAppLoanRequest>({
-        phone: '256786000384',
+        phone: "",
         category: "WebApp",
         amount: props.amount,
         sessionId: "browser",
@@ -151,9 +150,9 @@ const ApprovalStep = (props: IProps) => {
     const loanPayment = computeLoanPayment(request.amount, loanSettings);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(event.target.name === 'password'){
+        if (event.target.name === 'password') {
             setPassword(event.target.value)
-        }else {
+        } else {
             setRequest({
                 ...request,
                 [event.target.name]: event.target.value,
