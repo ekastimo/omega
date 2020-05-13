@@ -321,6 +321,7 @@ const ApprovalStep = (props: IProps) => {
                                     variant="outlined"
                                     fullWidth
                                     size='small'
+                                    name='amount'
                                     value={request.amount}
                                     onChange={handleChange}
                                     inputProps={
