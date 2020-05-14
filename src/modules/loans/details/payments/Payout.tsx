@@ -53,6 +53,13 @@ const Payout = ({data}: IProps) => {
         })
     }
 
+    let buttonText = "Trigger";
+    if(payment.status === PayoutStatus.Failed){
+        buttonText = "Re-Trigger"
+    }else if(payment.status === PayoutStatus.Sent){
+        buttonText = "Check status"
+    }
+
     return (
         <Box>
             {
@@ -77,7 +84,10 @@ const Payout = ({data}: IProps) => {
                             variant='outlined'
                             onClick={handlePayout}
                             disabled={loading}
-                        >Re-Trigger</Button></Box>
+                            color='primary'
+                        >
+                            {buttonText}
+                        </Button></Box>
                     </Box>
 
             }

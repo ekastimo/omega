@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useDispatch, useSelector} from "react-redux";
 import {IAuthUser, ILoginResponse, IState} from "../../data/types";
-import {Grid} from "@material-ui/core";
+import {Grid, useMediaQuery} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {useCalculatorStyles} from "./styles";
 import grey from "@material-ui/core/colors/grey";
@@ -30,6 +30,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from "@material-ui/core/Link";
 import EmailLink from "../../components/links/EmalLink";
+import useTheme from "@material-ui/core/styles/useTheme";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -133,10 +134,12 @@ const ApprovalStep = (props: IProps) => {
     const loanSettings = useSelector((state: IState) => state.loans.loanSettings)
     const user: IAuthUser = useSelector((state: any) => state.core.user)
 
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     const [loanData, setLoanData] = useState<any | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<any | null>(null)
-    const [password, setPassword] = useState<string>( "")
+    const [password, setPassword] = useState<string>("")
     const [request, setRequest] = React.useState<IWebAppLoanRequest>({
         phone: "",
         category: "WebApp",
@@ -152,6 +155,8 @@ const ApprovalStep = (props: IProps) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.name === 'password') {
             setPassword(event.target.value)
+        } else if (event.target.name === 'amount') {
+            handleAmountChange(event, event.target.value)
         } else {
             setRequest({
                 ...request,
@@ -161,7 +166,7 @@ const ApprovalStep = (props: IProps) => {
     };
 
     const handleAmountChange = (e: any, value: any) => {
-        const amount = parseInt(value);
+        const amount = Number(value);
         if (amount >= loanSettings.minAmount && amount <= loanSettings.maxAmount) {
             const req = {
                 ...request, amount
@@ -169,6 +174,7 @@ const ApprovalStep = (props: IProps) => {
             setRequest(req);
         }
     }
+
 
     function handleAgreement(evt: any, terms: boolean) {
         const req = {
@@ -251,7 +257,11 @@ const ApprovalStep = (props: IProps) => {
     }
 
 
-    const inputPaddingX = 3;
+    let inputPaddingX = 3;
+    if (isSmall) {
+        inputPaddingX = 1;
+    }
+
     const inputStyle: any = {
         textAlign: 'center',
         fontSize: "1.3rem",
@@ -309,7 +319,7 @@ const ApprovalStep = (props: IProps) => {
                                 </Box>
                                 <XSlider
                                     step={10000}
-                                    value={request.amount}
+                                    value={Number(request.amount)}
                                     min={loanSettings.minAmount}
                                     max={loanSettings.maxAmount}
                                     onChange={handleAmountChange}

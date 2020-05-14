@@ -1,5 +1,5 @@
 import React from 'react';
-import {ErrorIcon, SuccessIcon} from "../../../../components/xicons";
+import {ErrorIcon, SuccessIcon, WarningIcon} from "../../../../components/xicons";
 import {XStep} from "../../stepper/XStepLabel";
 import {ILoan, PayoutStatus} from "../../types";
 import XSubStep from "../../stepper/XSubStep";
@@ -13,20 +13,48 @@ interface IProps {
 
 const Payments = ({data}: IProps) => {
     const payment = data.payout
-    const isSuccess = payment.status === PayoutStatus.Success;
+    let icon = ErrorIcon
+    if (payment.status === PayoutStatus.Success)
+        icon = SuccessIcon
+    else if (payment.status === PayoutStatus.Sent) {
+        icon = WarningIcon
+    } else if (payment.status === PayoutStatus.Pending) {
+        icon = WarningIcon
+    }
     return (
-        <XStep icon={isSuccess ? SuccessIcon : ErrorIcon}
+        <XStep icon={icon}
                title='Payments'
                rightLabelComponent={
-                   isSuccess ?
-                       <XRightLabel
-                           text='Paid at '
-                           date={payment.transactionDate}
-                       /> :
-                       <XRightLabel
-                           text='Payment failed'
-                           error
-                       />
+                   <>
+                       {
+                           payment.status === PayoutStatus.Success &&
+                           <XRightLabel
+                               text='Paid at '
+                               date={payment.transactionDate}
+                           />
+                       }
+                       {
+                           payment.status === PayoutStatus.Sent &&
+                           <XRightLabel
+                               text='Pending acknowledgement'
+                               warning
+                           />
+                       }
+                       {
+                           payment.status === PayoutStatus.Failed &&
+                           <XRightLabel
+                               text='Payment failed'
+                               error
+                           />
+                       }
+                       {
+                           payment.status === PayoutStatus.Pending &&
+                           <XRightLabel
+                               text='Payment not triggered'
+                               error
+                           />
+                       }
+                   </>
                }
                open={true}
                hideContentPaper

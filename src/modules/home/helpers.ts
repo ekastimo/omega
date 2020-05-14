@@ -2,11 +2,15 @@ import {ILoanPayment, ILoanSettings} from "./types";
 import {printInteger} from "../../utils/numberHelpers";
 
 export const computeLoanPayment = (amount: number, settings: ILoanSettings): ILoanPayment => {
-    const interest = ((amount * settings.interestRate) / 100);
+
+    const amm = Number(amount)
+    const intRt = Number(settings.interestRate)
+
+    const interest = ((amm * intRt) / 100);
     return {
-        amount,
+        amount: amm,
         interest,
-        totalPayment: amount + interest
+        totalPayment: amm + interest
     }
 }
 
