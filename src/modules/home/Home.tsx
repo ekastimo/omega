@@ -13,13 +13,15 @@ import image from "../../assets/bg2.jpg";
 import logo from "../../assets/Azima-Icon-1.png";
 import LoanCalculator from "./LoanCalculator";
 import {useHistory} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {IState} from "../../data/types";
 import {localRoutes} from "../../data/constants";
 import {isBackOfficeUser} from "../../data/appRoles";
 import ApprovalStep from "./ApprovalStep";
 import {Profile} from "../../components/Profile";
 import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
+import {coreSetHomeStep} from "../../data/redux/coreActions";
+import {homeSteps} from "./types";
 
 function Copyright() {
     return (
@@ -79,8 +81,9 @@ const Home = () => {
     const classes = useStyles();
     const user: any = useSelector((state: IState) => state.core.user)
     const history = useHistory();
+    const dispatch = useDispatch()
     const [amount, setAmount] = React.useState<number>(0);
-    const [approve, setApprove] = React.useState<boolean>(false);
+    const homeState = useSelector((state: IState) => state.core.home);
 
     function handleAdminConsole(e: any) {
         e.preventDefault()
@@ -89,7 +92,7 @@ const Home = () => {
 
     function handleGetNow(amount: number) {
         setAmount(amount)
-        setApprove(true)
+        dispatch(coreSetHomeStep(homeSteps.APPROVE_PAYOUT))
     }
 
     return (
@@ -140,7 +143,7 @@ const Home = () => {
                         <Grid item md={6} lg={7} sm={12} xs={12}>
                             <div className={classes.main}>
                                 {
-                                    approve
+                                    homeState.step === homeSteps.APPROVE_PAYOUT
                                         ? <ApprovalStep amount={amount}/>
                                         : <LoanCalculator onApply={handleGetNow}/>
                                 }

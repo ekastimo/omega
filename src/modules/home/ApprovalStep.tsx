@@ -17,10 +17,10 @@ import Box from "@material-ui/core/Box";
 import {Alert} from "@material-ui/lab";
 import {printFloatNumber, printInteger} from "../../utils/numberHelpers";
 import {computeLoanPayment} from "./helpers";
-import {ILoanPayment, ILoanSettings, IWebAppLoanRequest} from "./types";
+import {homeSteps, ILoanPayment, ILoanSettings, IWebAppLoanRequest} from "./types";
 import Typography from "@material-ui/core/Typography";
 import {handleBadRequestError, post} from "../../utils/ajax";
-import {isDebug, remoteRoutes} from "../../data/constants";
+import {AUTH_TOKEN_KEY, AUTH_USER_KEY, remoteRoutes} from "../../data/constants";
 import {handleLogin} from "../../data/redux/coreActions";
 import Toast from "../../utils/Toast";
 import {addLoanSettings} from "../../data/redux/loans/reducer";
@@ -31,7 +31,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from "@material-ui/core/Link";
 import EmailLink from "../../components/links/EmalLink";
 import useTheme from "@material-ui/core/styles/useTheme";
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,12 +55,6 @@ const useStyles = makeStyles((theme) => ({
 
 interface IProps {
     amount: number
-}
-
-
-const steps = {
-    CHOOSE_AMOUNT: 0,
-    APPROVE_PAYOUT: 1
 }
 
 
@@ -132,11 +125,12 @@ const ApprovalStep = (props: IProps) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const loanSettings = useSelector((state: IState) => state.loans.loanSettings)
-    const user: IAuthUser = useSelector((state: any) => state.core.user)
+    //const user: IAuthUser = useSelector((state: any) => state.core.user)
 
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     const [loanData, setLoanData] = useState<any | null>(null)
+    const [session, setSession] = useState<any | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<any | null>(null)
     const [password, setPassword] = useState<string>("")
@@ -175,6 +169,9 @@ const ApprovalStep = (props: IProps) => {
         }
     }
 
+    const doRealLogin=()=>{
+        dispatch(handleLogin(session))
+    }
 
     function handleAgreement(evt: any, terms: boolean) {
         const req = {
@@ -208,7 +205,7 @@ const ApprovalStep = (props: IProps) => {
         doLogin((session: any) => {
             const {token, user}: ILoginResponse = session
             console.log("Done Logging in", {token, user})
-            requestLoan(resp => {
+            requestLoan(session,resp => {
                 Toast.success("Loan created successfully")
                 setLoanData(resp)
             })
@@ -223,7 +220,10 @@ const ApprovalStep = (props: IProps) => {
         setLoading(true)
         //Login
         post(remoteRoutes.loginPhone, login, resp => {
-            dispatch(handleLogin(resp))
+            const {token, user}: ILoginResponse = resp
+            localStorage.setItem(AUTH_TOKEN_KEY, token)
+            localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user))
+            setSession({...resp})
             done(resp)
         }, () => {
             Toast.error("Authentication failed")
@@ -232,8 +232,8 @@ const ApprovalStep = (props: IProps) => {
         })
     }
 
-    function requestLoan(done: (resp: any) => any) {
-        if (user) {
+    function requestLoan(sess:any,done: (resp: any) => any) {
+        if (sess) {
             setLoading(true)
             //Login
             post(
@@ -256,7 +256,6 @@ const ApprovalStep = (props: IProps) => {
         }
     }
 
-
     let inputPaddingX = 3;
     if (isSmall) {
         inputPaddingX = 1;
@@ -274,7 +273,7 @@ const ApprovalStep = (props: IProps) => {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Stepper
-                        activeStep={steps.APPROVE_PAYOUT}
+                        activeStep={homeSteps.APPROVE_PAYOUT}
                         orientation='horizontal'
                         className={classes.stepper}
                     >
@@ -292,7 +291,7 @@ const ApprovalStep = (props: IProps) => {
                             payment={loanPayment}
                             settings={loanSettings}
                             data={loanData}
-                            user={user}
+                            user={session.user}
                         />
                     </Grid> : <>
                         <Grid item xs={12}>

@@ -1,12 +1,14 @@
 import {AUTH_TOKEN_KEY, AUTH_USER_KEY} from "../constants";
 import {ICoreState, ILoginResponse} from "../types";
+import {homeSteps} from "../../modules/home/types";
 
 const initialState: ICoreState = {
     splash: true,
     user: null,
     isLoadingUser: true,
     globalLoader: false,
-    token:null
+    token: null,
+    home: {step: homeSteps.CHOOSE_AMOUNT}
 }
 
 export const coreConstants = {
@@ -15,7 +17,8 @@ export const coreConstants = {
     stopLoading: "CORE_STOP_LOADING",
     coreLogout: "CORE_LOGOUT",
     coreStartGlobalLoader: "coreStartGlobalLoader",
-    coreStopGlobalLoader: "coreStopGlobalLoader"
+    coreStopGlobalLoader: "coreStopGlobalLoader",
+    coreHomeSetStep: "coreHomeSetStep"
 }
 
 export default function reducer(state = initialState, action: any) {
@@ -45,6 +48,11 @@ export default function reducer(state = initialState, action: any) {
         }
         case coreConstants.startLoading: {
             return {...state, isLoadingUser: true}
+        }
+
+        case coreConstants.coreHomeSetStep: {
+            const step: number = action.payload
+            return {...state, home: {...state.home, step}}
         }
         default: {
             return state

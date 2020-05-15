@@ -37,6 +37,13 @@ export const coreStopGlobalLoader = () => {
     }
 }
 
+export const coreSetHomeStep = (step:number) => {
+    return {
+        type: coreConstants.coreHomeSetStep,
+        payload: step,
+    }
+}
+
 
 
 

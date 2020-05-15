@@ -1,5 +1,6 @@
 import {ICrmState} from "./redux/contacts/reducer";
 import {ILoanState} from "./redux/loans/reducer";
+import {IHomeState} from "../modules/home/types";
 
 export interface BaseModel {
     id: string
@@ -34,6 +35,7 @@ export interface ICoreState {
     splash: boolean,
     isLoadingUser: true,
     globalLoader: false
+    home: IHomeState
 }
 
 export interface ISearch {

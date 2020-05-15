@@ -4,6 +4,15 @@ export interface ILoanSettings {
     interestRate: number
 }
 
+
+export const homeSteps = {
+    CHOOSE_AMOUNT: 0,
+    APPROVE_PAYOUT: 1
+}
+export interface IHomeState {
+    step: number
+}
+
 export interface ILoanPayment {
     amount: number
     interest: number

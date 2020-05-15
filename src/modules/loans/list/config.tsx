@@ -35,7 +35,7 @@ export const renderStatus = (value: LoanStatus) => {
 
 
 export const renderSubStatus = (value: LoanSubStatus) => {
-    let color: any = successColor
+    let color: any = warningColor
     switch (value) {
         case LoanSubStatus.Recovered:
             color = successColor
