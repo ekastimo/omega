@@ -169,9 +169,9 @@ const ApprovalStep = (props: IProps) => {
         }
     }
 
-    const doRealLogin=()=>{
-        dispatch(handleLogin(session))
-    }
+    // const doRealLogin=()=>{
+    //     dispatch(handleLogin(session))
+    // }
 
     function handleAgreement(evt: any, terms: boolean) {
         const req = {

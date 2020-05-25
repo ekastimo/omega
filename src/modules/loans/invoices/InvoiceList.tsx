@@ -15,7 +15,6 @@ import {isPrimaryUser} from "../../../data/appRoles";
 import XTable from "../../../components/table/XTable";
 import Paper from "@material-ui/core/Paper";
 import {useSelector} from "react-redux";
-import {IState} from "../../../data/types";
 import Filter from "./Filter";
 
 const InvoiceList = () => {
