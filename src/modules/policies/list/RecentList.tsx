@@ -15,7 +15,7 @@ import {remoteRoutes} from "../../../data/constants";
 
 const headCells: XHeadCell[] = [...recentLoansHeadCells];
 
-const RecentLoansList = () => {
+const RecentList = () => {
     const dispatch = useDispatch();
     const {recent}: ILoanState = useSelector((state: IState) => state.loans)
     const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ const RecentLoansList = () => {
     return (
         <Box p={1} width='100%'>
             <Box pb={2}>
-                <Typography variant='h5'>New Loans</Typography>
+                <Typography variant='h5'>New Policies</Typography>
             </Box>
             {
                 loading ? <Loading/> :
@@ -56,4 +56,4 @@ const RecentLoansList = () => {
     );
 }
 
-export default RecentLoansList
+export default RecentList

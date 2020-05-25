@@ -1,13 +1,11 @@
-import purple from '@material-ui/core/colors/cyan';
 import red from "@material-ui/core/colors/red";
 import green from "@material-ui/core/colors/green";
 import amber from "@material-ui/core/colors/amber";
 import {colors} from "@material-ui/core";
-import {grey} from "@material-ui/core/colors";
 
 
-export const backgroundGrey = grey[100]
-export const themeBackground = purple[700]
+export const themeColor = "#1a237e"
+export const themeColorDark = "#000051"
 export const successColor = green[600]
 export const warningColor = amber[800]
 export const errorColor = red[500]

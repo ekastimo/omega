@@ -18,6 +18,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import Avatar from '@material-ui/core/Avatar';
 import {getInitials} from "../utils/stringHelpers";
+import Hidden from "@material-ui/core/Hidden";
 
 export const Profile = (props: any) => {
     const profile = useSelector((state: IState) => state.core.user)
@@ -57,9 +58,14 @@ export const Profile = (props: any) => {
                         variant="button"
                         style={{textDecoration: "none"}}
                     >
-                        <IconButton color="inherit">
-                            <Avatar>{getInitials(profile.fullName)}</Avatar>
-                        </IconButton>
+                        <Hidden smDown>
+                            <Typography variant='body2' >{profile.fullName}</Typography>
+                        </Hidden>
+                        <Hidden mdUp>
+                            <IconButton color="inherit">
+                                <Avatar>{getInitials(profile.fullName)}</Avatar>
+                            </IconButton>
+                        </Hidden>
                     </Link>
                     <Menu
                         id="menu-appbar"

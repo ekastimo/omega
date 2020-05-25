@@ -13,7 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {IState} from "../../../data/types";
 import {columns, companyColumn} from "./config";
 import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
-import RecentLoansList from "./RecentLoansList";
+import RecentList from "./RecentList";
 import Filter from "./Filter";
 import {remoteRoutes} from "../../../data/constants";
 import {search} from "../../../utils/ajax";
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const LoansList = () => {
+const ListView = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const {data}: ILoanState = useSelector((state: IState) => state.loans)
@@ -83,12 +83,12 @@ const LoansList = () => {
         <Layout>
             <Grid container spacing={2}>
                 <Grid item xs={9}>
-                    <RecentLoansList/>
+                    <RecentList/>
                     <Box p={1} className={classes.root}>
                         <Box pb={2}>
                             <Grid container>
                                 <Grid item sm={6}>
-                                    <Typography variant='h5'>Loans</Typography>
+                                    <Typography variant='h5'>Policies</Typography>
                                 </Grid>
                             </Grid>
                         </Box>
@@ -121,4 +121,4 @@ const LoansList = () => {
     );
 }
 
-export default LoansList
+export default ListView

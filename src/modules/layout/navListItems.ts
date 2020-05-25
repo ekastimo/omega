@@ -13,12 +13,12 @@ export const menuItems = [
     },
     {
         icon: MoneyIcon,
-        name: "Loans",
+        name: "Policies",
         route: localRoutes.loans
     },
     {
         icon: FileIcon,
-        name: "Invoices",
+        name: "Claims",
         route: localRoutes.invoices
     },
     {

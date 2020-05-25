@@ -1,6 +1,5 @@
 import {AUTH_TOKEN_KEY, AUTH_USER_KEY} from "../constants";
 import {ICoreState, ILoginResponse} from "../types";
-import {homeSteps} from "../../modules/home/types";
 
 const initialState: ICoreState = {
     splash: true,
@@ -8,7 +7,6 @@ const initialState: ICoreState = {
     isLoadingUser: true,
     globalLoader: false,
     token: null,
-    home: {step: homeSteps.CHOOSE_AMOUNT}
 }
 
 export const coreConstants = {
@@ -50,10 +48,6 @@ export default function reducer(state = initialState, action: any) {
             return {...state, isLoadingUser: true}
         }
 
-        case coreConstants.coreHomeSetStep: {
-            const step: number = action.payload
-            return {...state, home: {...state.home, step}}
-        }
         default: {
             return state
         }

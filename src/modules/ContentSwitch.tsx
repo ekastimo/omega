@@ -4,19 +4,19 @@ import {localRoutes} from "../data/constants";
 import Dashboard from "./dashboard/Dashboard";
 import Contacts from "./contacts/list/Contacts";
 import ContactDetails from "./contacts/details/Details";
-import LoanDetails from "./loans/details/Details";
-import Loans from "./loans/list/LoansList";
+import LoanDetails from "./policies/details/Details";
+import Loans from "./policies/list/ListView";
 
-import InvoiceDetails from "./loans/invoices/InvoiceDetails";
-import InvoiceList from "./loans/invoices/InvoiceList";
+import InvoiceDetails from "./policies/invoices/InvoiceDetails";
+import InvoiceList from "./policies/invoices/InvoiceList";
 
 import Settings from "./settings/Settings";
 import Users from "./admin/users/Users";
-import Home from "./home/Home";
+
 
 const ContentSwitch = () => {
     return <Switch>
-        <Route exact={true} path="/" component={Home}/>
+        <Route exact={true} path="/" component={Dashboard}/>
         <Route path={localRoutes.dashboard} component={Dashboard}/>
         <Route path={localRoutes.contactsDetails} component={ContactDetails}/>
         <Route path={localRoutes.contacts} component={Contacts}/>
@@ -26,7 +26,7 @@ const ContentSwitch = () => {
         <Route path={localRoutes.invoices} component={InvoiceList}/>
         <Route path={localRoutes.users} component={Users}/>
         <Route path={localRoutes.settings} component={Settings}/>
-        <Route component={Home}/>
+        <Route component={Dashboard}/>
     </Switch>
 }
 

@@ -18,7 +18,7 @@ import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {crmConstants} from "../../../data/redux/contacts/reducer";
-import ContactLoans from "../../loans/list/ContactLoans";
+import ContactList from "../../policies/list/ContactList";
 
 interface IProps extends RouteComponentProps {
 
@@ -130,7 +130,7 @@ const Details = (props: IProps) => {
                                     <Info data={data}/>
                                 </TabPanel>
                                 <TabPanel value={value} index="two">
-                                    <ContactLoans contact={data}/>
+                                    <ContactList contact={data}/>
                                 </TabPanel>
                             </Grid>
                         </Grid>

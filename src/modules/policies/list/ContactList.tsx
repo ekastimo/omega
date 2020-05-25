@@ -14,7 +14,7 @@ interface IProps {
 }
 
 let headCells: XHeadCell[] = [...companyLoansHeadCells];
-const ContactLoans = ({contact}: IProps) => {
+const ContactList = ({contact}: IProps) => {
 
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<ILoan[]>([]);
@@ -56,4 +56,4 @@ const ContactLoans = ({contact}: IProps) => {
 }
 
 
-export default ContactLoans;
+export default ContactList;
