@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import {useTheme} from "@material-ui/styles";
-import ContactListSummary from "../../../policies/list/ContactListSummary";
+import ContactListSummary from "../../../loans/list/ContactListSummary";
 
 interface IProps {
     data: IContact

@@ -18,7 +18,7 @@ import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import {useDispatch, useSelector} from "react-redux";
 import {crmConstants} from "../../../data/redux/contacts/reducer";
-import ContactList from "../../policies/list/ContactList";
+import ContactList from "../../loans/list/ContactList";
 
 interface IProps extends RouteComponentProps {
 

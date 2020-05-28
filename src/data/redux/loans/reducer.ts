@@ -1,4 +1,4 @@
-import {ILoan, IPayout, IRecoverResponse} from "../../../modules/policies/types";
+import {ILoan, IPayout, IRecoverResponse} from "../../../modules/loans/types";
 
 export const loanConstants = {
     loanFetchAll: "loanFetchAll",
