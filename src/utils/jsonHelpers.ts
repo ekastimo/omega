@@ -1,4 +1,4 @@
-import jp from 'jsonpath'
+import {JSONPath} from 'jsonpath-plus'
 
 export function prettyJson(json: string): string {
     try {
@@ -15,7 +15,7 @@ export function parseXpath(data: any, path: any): any {
         if (!p.startsWith("$")) {
             p = `$.${path}`
         }
-        const resp = jp.query(data, p)
+        const resp = JSONPath({path: p, json: data});
         if (resp && resp.length > 0) {
             return resp[0]
         }

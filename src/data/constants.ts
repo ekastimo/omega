@@ -33,7 +33,7 @@ const urls: any = {
 }
 
 
-const evVar = process.env.REACT_APP_ENV || 'dev'
+const evVar = process.env.REACT_APP_ENV || 'test'
 const environment = evVar.trim()
 console.log(`############# Env : ${environment} ###############`)
 const url = urls[environment]
