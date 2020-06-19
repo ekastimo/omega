@@ -2,11 +2,6 @@ export const AUTH_TOKEN_KEY = '__omega__token'
 export const AUTH_USER_KEY = '__omega__user'
 
 
-
-
-
-
-
 export const redux = {
     doLogin: 'DO_LOGIN',
     doLogout: 'DO_LOGOUT',
@@ -31,9 +26,18 @@ export const localRoutes = {
     login: '/login'
 }
 
-export const isDebug = process.env.NODE_ENV !== 'production'
-export const url = isDebug ? 'http://localhost:9001' :
-    'https://jasperapitest.azurewebsites.net'
+const urls: any = {
+    dev: 'https://localhost:9001',
+    test: 'https://jasperapitest.azurewebsites.net',
+    production: 'https://azima.co.ug:9001'
+}
+
+
+const evVar = process.env.REACT_APP_ENV || 'dev'
+const environment = evVar.trim()
+console.log(`############# Env : ${environment} ###############`)
+const url = urls[environment]
+export const isDebug = environment === 'dev'
 
 export const remoteRoutes = {
     authServer: url,

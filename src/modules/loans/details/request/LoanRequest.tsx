@@ -19,7 +19,7 @@ export const requestFields = (data: ILoan): IRec[] => {
     return [
         {
             label: 'Category',
-            value: request.category.toLocaleUpperCase()
+            value: request.category?.toLocaleUpperCase()
         },
         {
             label: 'Date',
