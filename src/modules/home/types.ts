@@ -1,6 +1,7 @@
 export interface ILoanSettings {
     maxAmount: number
     minAmount: number
+    stepAmount: number
     interestRate: number
 }
 

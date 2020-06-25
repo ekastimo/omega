@@ -27,7 +27,7 @@ export const localRoutes = {
 }
 
 const urls: any = {
-    dev: 'https://localhost:9001',
+    dev: 'http://localhost:9001',
     test: 'https://jasperapitest.azurewebsites.net',
     production: 'https://azima.co.ug:9001'
 }

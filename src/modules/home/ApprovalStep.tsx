@@ -21,7 +21,6 @@ import {homeSteps, ILoanPayment, ILoanSettings, IWebAppLoanRequest} from "./type
 import Typography from "@material-ui/core/Typography";
 import {handleBadRequestError, post} from "../../utils/ajax";
 import {AUTH_TOKEN_KEY, AUTH_USER_KEY, remoteRoutes} from "../../data/constants";
-import {handleLogin} from "../../data/redux/coreActions";
 import Toast from "../../utils/Toast";
 import {addLoanSettings} from "../../data/redux/loans/reducer";
 import {XSlider} from "../../components/inputs/XSlider";
@@ -169,10 +168,6 @@ const ApprovalStep = (props: IProps) => {
         }
     }
 
-    // const doRealLogin=()=>{
-    //     dispatch(handleLogin(session))
-    // }
-
     function handleAgreement(evt: any, terms: boolean) {
         const req = {
             ...request, terms
@@ -205,7 +200,7 @@ const ApprovalStep = (props: IProps) => {
         doLogin((session: any) => {
             const {token, user}: ILoginResponse = session
             console.log("Done Logging in", {token, user})
-            requestLoan(session,resp => {
+            requestLoan(session, resp => {
                 Toast.success("Loan created successfully")
                 setLoanData(resp)
             })
@@ -232,7 +227,7 @@ const ApprovalStep = (props: IProps) => {
         })
     }
 
-    function requestLoan(sess:any,done: (resp: any) => any) {
+    function requestLoan(sess: any, done: (resp: any) => any) {
         if (sess) {
             setLoading(true)
             //Login
@@ -317,7 +312,7 @@ const ApprovalStep = (props: IProps) => {
                                     </Box>
                                 </Box>
                                 <XSlider
-                                    step={10000}
+                                    step={loanSettings.stepAmount}
                                     value={Number(request.amount)}
                                     min={loanSettings.minAmount}
                                     max={loanSettings.maxAmount}

@@ -50,7 +50,7 @@ const AmountPicker = ({loanSettings, onChange, value}: IProps) => {
             </Box>
             <Box width="100%">
                 <XSlider
-                    step={10000}
+                    step={loanSettings.stepAmount}
                     value={value}
                     min={loanSettings.minAmount}
                     max={loanSettings.maxAmount}

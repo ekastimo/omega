@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,26 +15,16 @@ import LoanCalculator from "./LoanCalculator";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {IState} from "../../data/types";
-import {localRoutes} from "../../data/constants";
+import {localRoutes, remoteRoutes} from "../../data/constants";
 import {isBackOfficeUser} from "../../data/appRoles";
 import ApprovalStep from "./ApprovalStep";
 import {Profile} from "../../components/Profile";
 import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
 import {coreSetHomeStep} from "../../data/redux/coreActions";
 import {homeSteps} from "./types";
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="inherit" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="#">
-                Azima Credit Technologies Ltd
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import {get} from "../../utils/ajax";
+import {addLoanSettings} from "../../data/redux/loans/reducer";
+import {Copyright} from "./Copyright";
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -59,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         margin: theme.spacing(1, 1.5),
+        cursor:'pointer'
     },
     toolbarTitle: {
         flexGrow: 1,
@@ -79,11 +70,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
     const classes = useStyles();
-    const user: any = useSelector((state: IState) => state.core.user)
+    const user: any = useSelector((state: IState) => state.core.user);
     const history = useHistory();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [amount, setAmount] = React.useState<number>(0);
     const homeState = useSelector((state: IState) => state.core.home);
+
+    useEffect(()=>{
+        get(remoteRoutes.loansRequestLoan,(data)=>{
+            dispatch(addLoanSettings(data))
+        })
+    },[dispatch])
 
     function handleAdminConsole(e: any) {
         e.preventDefault()
@@ -125,7 +122,6 @@ const Home = () => {
                                 </Link>
                             }
                         </HiddenJs>
-
                         <Profile/>
                     </nav>
                 </Toolbar>

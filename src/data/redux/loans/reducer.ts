@@ -26,7 +26,8 @@ const initialState: ILoanState = {
     loanSettings: {
         maxAmount: 1000000,
         interestRate: 8.5,
-        minAmount: 100000
+        minAmount: 100000,
+        stepAmount: 10000
     }
 }
 

@@ -107,7 +107,7 @@ export const Profile = (props: any) => {
                     variant="button"
                     onClick={handleLogin}
                     color="inherit"
-                    style={{textDecoration: "none"}}
+                    style={{textDecoration: "none",cursor:'pointer'}}
                 >Login</Link>
         }
     </>
