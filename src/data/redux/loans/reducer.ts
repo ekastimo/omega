@@ -24,9 +24,9 @@ const initialState: ILoanState = {
     recent: [],
     selected: undefined,
     loanSettings: {
-        maxAmount: 1000000,
+        maxAmount: 100000,
         interestRate: 8.5,
-        minAmount: 100000,
+        minAmount: 10000,
         stepAmount: 10000
     }
 }

@@ -6,6 +6,7 @@ import Loading from "../components/Loading";
 const Dashboard = lazy(() => import( "./dashboard/Dashboard"));
 const Contacts = lazy(() => import( "./contacts/list/Contacts"));
 const ContactDetails = lazy(() => import( "./contacts/details/Details"));
+
 const LoanDetails = lazy(() => import( "./loans/details/Details"));
 const Loans = lazy(() => import( "./loans/list/LoansList"));
 
