@@ -5,12 +5,13 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import {hasValue, IOption} from "./inputHelpers";
+import {hasValue} from "./inputHelpers";
+import {Option} from "./option";
 
 interface IProps {
     label: string
     name: string
-    options: IOption[]
+    options: Option[]
     multiple?: boolean
     variant?: 'standard' | 'outlined' | 'filled'
     size?: 'small' | 'medium'
@@ -43,9 +44,9 @@ const XSelectInput = (props: IProps) => {
             {
                 options.map(
                     it => <MenuItem
-                        value={it.value}
-                        key={it.value}
-                    >{it.label}</MenuItem>
+                        value={it.id}
+                        key={it.id}
+                    >{it.name}</MenuItem>
                 )
             }
         </Select>

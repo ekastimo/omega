@@ -6,17 +6,13 @@ import XDateInput from "./XDateInput";
 import XRadioInput from "./XRadioInput";
 import XSelectInput from "./XSelectInput";
 import XTextAreaInput from "./XTextAreaInput";
+import {Option} from "./option";
 
-export interface IOption {
-    label: string
-    value: any
+export const toOptions = (data: string[]): Option[] => {
+    return data.map(it => ({name: it, id: it}))
 }
 
-export const toOptions = (data: string[]): IOption[] => {
-    return data.map(it => ({label: it, value: it}))
-}
-
-export const comboParser = ({id, name}: any) => ({value: id, label: name})
+export const comboParser = ({id, name}: any):Option => ({id: id, name})
 
 
 export const hasValue = (data: any) => {

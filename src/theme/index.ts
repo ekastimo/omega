@@ -1,9 +1,23 @@
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import responsiveFontSizes from "@material-ui/core/styles/responsiveFontSizes";
-import palette from './palette';
+import {red} from '@material-ui/core/colors';
+import {createMuiTheme} from '@material-ui/core/styles';
+import {themeColor} from "./custom-colors";
 
+// A custom theme for this app
 const theme = createMuiTheme({
-    palette,
+    palette: {
+        primary: {
+            main: themeColor,
+        },
+        secondary: {
+            main: themeColor,
+        },
+        error: {
+            main: red.A400,
+        },
+        background: {
+            default: '#fff',
+        },
+    },
     typography: {
         fontFamily: [
             '-apple-system',
@@ -20,4 +34,5 @@ const theme = createMuiTheme({
         fontSize: 13.5
     }
 });
-export default responsiveFontSizes(theme);
+
+export default theme;

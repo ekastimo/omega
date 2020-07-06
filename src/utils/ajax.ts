@@ -1,10 +1,10 @@
 import * as superagent from 'superagent'
 import Toast from './Toast'
-import {AUTH_TOKEN_KEY} from "../data/constants";
+import {AUTH_KEY_TOKEN, AUTH_KEY_USER} from "../data/constants";
 import {hasValue} from "../components/inputs/inputHelpers";
 
 export const getToken = (): string | null => {
-    return localStorage.getItem(AUTH_TOKEN_KEY)
+    return localStorage.getItem(AUTH_KEY_TOKEN)
 }
 
 type CallbackFunction = (data?: any) => void;
@@ -15,10 +15,12 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
     const defaultMessage = "Invalid request, please contact admin";
     if ((res && res.forbidden) || (res && res.unauthorized)) {
         Toast.error("Authentication Error")
-
+        localStorage.removeItem(AUTH_KEY_TOKEN)
+        localStorage.removeItem(AUTH_KEY_USER)
+        window.location.reload()
     } else if (res && res.badRequest) {
         if (isStandardValidationError(res.body)) {
-            // Handled in the check
+            // Handled in the check (isStandardValidationError)
             return
         }
         const {message, errors = []} = res.body
@@ -28,7 +30,7 @@ export const handleError = (err: any = {}, res: superagent.Response) => {
             msg += (error + '\n')
         }
         Toast.error(msg || defaultMessage)
-    } else if ((res && res.clientError) || (res && res.notAcceptable) || (res && res.error)) {
+    } else if (isClientError(res)) {
         const {message} = res.body || {}
         Toast.error(message || defaultMessage)
     } else {
@@ -65,13 +67,16 @@ export interface IClientError {
  */
 //TODO handle all errors
 const isStandardValidationError = (data: any): boolean => {
-
     const error: IClientError = data
     if (hasValue(error.title) && error.title.indexOf("validation errors") > -1) {
         Toast.error(error.title)
         return true;
     }
     return false
+}
+
+const isClientError = (res: any) => {
+    return (res && res.clientError) || (res && res.notAcceptable) || (res && res.error)
 }
 
 
@@ -84,7 +89,7 @@ export const handleBadRequestError = (err: any = {}, res: superagent.Response, c
         if (!isStandardValidationError(res.body)) {
             cb(res.body)
         }
-    } else if ((res && res.clientError) || (res && res.notAcceptable) || (res && res.error)) {
+    } else if (isClientError(res)) {
         const {message} = res.body || {}
         Toast.error(message || defaultMessage)
     } else {

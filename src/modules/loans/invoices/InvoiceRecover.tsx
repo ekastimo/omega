@@ -21,7 +21,7 @@ const InvoiceRecover = (props: IProps) => {
     const [files, setFiles] = useState<FileList | null>(null)
 
     function handleSubmit() {
-        if(files===null){
+        if (files === null) {
             Toast.info("Please select a file")
             return
         }
@@ -43,6 +43,7 @@ const InvoiceRecover = (props: IProps) => {
             setFiles(files)
         }
     }
+
     return (
         <Box px={2} pb={2}>
             <Grid container spacing={2}>
@@ -54,7 +55,7 @@ const InvoiceRecover = (props: IProps) => {
                         fullWidth
                         onChange={handleFileChange}
                         inputProps={{
-                            accept:"image/jpeg,image/gif,image/png,application/pdf"
+                            accept: "image/jpeg,image/gif,image/png,application/pdf"
                         }}
 
                     />

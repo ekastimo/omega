@@ -10,11 +10,14 @@ interface IProps {
 
 const XCheckBoxInput = (props: IProps) => {
     const [field] = useField({name: props.name});
+
+
     return <FormControlLabel
         label={props.label}
         control={
             <Checkbox
-                checked={field.value}
+                checked={Boolean(field.value)}
+                value={Boolean(field.value)}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 name={props.name}

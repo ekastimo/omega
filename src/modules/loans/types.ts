@@ -9,15 +9,13 @@ export enum LoanDocumentCategory {
 
 export enum LoanSubStatus {
 
-    MissingInformation = 'MissingInformation',
-    LowCredit = 'LowCredit',
-    ReachedLimit = 'ReachedLimit',
+    Pending = 'Pending',
+    PendingPayout = 'PendingPayout',
+    PaidOut = 'PaidOut',
     PayoutFailure = 'PayoutFailure',
 
-    PaidOut = 'PaidOut',
-    Overdue = 'Overdue',
-
     Recovered = 'Recovered',
+    Overdue = 'Overdue'
 }
 
 export enum LoanStatus {
@@ -198,6 +196,13 @@ export interface ILoanDocument {
     verifierId?: string
     verifier?: any
     dateVerified?: Date
+}
+
+export interface ILoanSettings {
+    maxAmount: number
+    minAmount: number
+    stepAmount: number
+    interestRate: number
 }
 
 

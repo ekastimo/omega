@@ -2,13 +2,17 @@ import * as React from "react";
 import {useState} from "react";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import {toOptions} from "../../../components/inputs/inputHelpers";
 import {Box} from "@material-ui/core";
-import TextField from '@material-ui/core/TextField';
-import PSelectInput from "../../../components/plain-inputs/PSelectInput";
 import PDateInput from "../../../components/plain-inputs/PDateInput";
 import {enumToArray} from "../../../utils/stringHelpers";
-import {ILoanFilter, LoanSubStatus} from "../types";
+import {ILoanFilter, LoanStatus, LoanSubStatus} from "../types";
+import PComboInput from "../../../components/plain-inputs/PComboInput";
+import {PRemoteSelect} from "../../../components/plain-inputs/PRemoteSelect";
+import {remoteRoutes} from "../../../data/constants";
+import {useSelector} from "react-redux";
+import {AppState} from "../../../data/types";
+import {isPrimaryUser} from "../../../data/appRoles";
+import {cleanComboValue} from "../../../utils/dataHelpers";
 
 interface IProps {
     onFilter: (data: any) => any
@@ -16,33 +20,39 @@ interface IProps {
 }
 
 const Filter = ({onFilter, loading}: IProps) => {
+    const user = useSelector((state: AppState) => state.core.user!)
     const [data, setData] = useState<ILoanFilter>({
         from: null,
         to: null,
         categories: [],
         statuses: [],
         subStatuses: [],
-        userId: '',
-        applicantId: '',
-        assignee: ''
+        userId: undefined,
+        applicantId: undefined,
+        assignee: undefined
     })
 
     function submitForm(values: any) {
         onFilter(values)
     }
 
-    function handleChange(event: React.ChangeEvent<any>) {
-        const name = event.target.name
-        const value = event.target.value
-        const newData = {...data, [name]: value}
-        setData({...newData})
-        submitForm(newData)
+    const handleDateChange = (name: string) => (value: Date | null) => {
+        if (value) {
+            const newData = {...data, [name]: value.toISOString()}
+            setData({...newData})
+            submitForm(newData)
+        } else {
+            const newData = {...data, [name]: null}
+            setData({...newData})
+            submitForm(newData)
+        }
     }
 
-    const handleValueChange = (name: string) => (value: any) => {
+    const handleComboChange = (name: string) => (value: any) => {
         const newData = {...data, [name]: value}
-        setData({...newData})
-        submitForm(newData)
+        const filterData = {...data, [name]: cleanComboValue(value)}
+        setData(newData)
+        submitForm(filterData)
     }
 
     return <form>
@@ -51,7 +61,7 @@ const Filter = ({onFilter, loading}: IProps) => {
                 <PDateInput
                     name="from"
                     value={data['from'] || null}
-                    onChange={handleValueChange('from')}
+                    onChange={handleDateChange('from')}
                     label="From"
                     variant="inline"
                     inputVariant='outlined'
@@ -61,70 +71,66 @@ const Filter = ({onFilter, loading}: IProps) => {
                 <PDateInput
                     name="to"
                     value={data['to'] || null}
-                    onChange={handleValueChange('to')}
+                    onChange={handleDateChange('to')}
                     label="To"
                     variant="inline"
                     inputVariant='outlined'
                 />
             </Grid>
             <Grid item xs={12}>
-                <PSelectInput
+                <PComboInput
                     name="statuses"
-                    value={data['statuses']}
-                    onChange={handleChange}
-                    label="Categories"
+                    value={data['statuses'] || null}
+                    onChange={handleComboChange('statuses')}
+                    label="Status"
                     variant="outlined"
                     size='small'
-                    options={toOptions(enumToArray(LoanSubStatus))}
+                    multiple
+                    options={enumToArray(LoanStatus)}
                 />
             </Grid>
             <Grid item xs={12}>
-                <PSelectInput
+                <PComboInput
                     name="subStatuses"
-                    value={data['subStatuses']}
-                    onChange={handleChange}
+                    value={data['subStatuses'] || null}
+                    onChange={handleComboChange('subStatuses')}
                     label="Sub Status"
                     variant="outlined"
                     size='small'
-                    options={toOptions(enumToArray(LoanSubStatus))}
+                    options={enumToArray(LoanSubStatus)}
+                    multiple
                 />
             </Grid>
             <Grid item xs={12}>
-                <TextField
-                    name="assignee"
-                    value={data['assignee']}
-                    onChange={handleChange}
-                    label="Assignee"
-                    type="text"
-                    variant='outlined'
-                    size='small'
-                    fullWidth
-                />
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
+                <PRemoteSelect
                     name="applicant"
-                    value={data['applicantId']}
-                    onChange={handleChange}
+                    value={data['applicantId'] || null}
+                    onChange={handleComboChange('applicantId')}
                     label="Applicant"
-                    type="text"
                     variant='outlined'
                     size='small'
+                    remote={remoteRoutes.usersComboAll}
                     fullWidth
+                    margin='none'
+                    searchOnline
                 />
             </Grid>
-            <Grid item xs={12}>
-                <TextField
-                    name="userId"
-                    value={data['userId']}
-                    onChange={handleChange}
-                    label="User/Agent"
-                    type="text"
-                    variant='outlined'
-                    size='small'
-                    fullWidth
-                />
-            </Grid>
+            {
+                isPrimaryUser(user) &&
+                <Grid item xs={12}>
+                    <PRemoteSelect
+                        name="assignee"
+                        value={data['assignee'] || null}
+                        onChange={handleComboChange('assignee')}
+                        label="Assignee"
+                        variant='outlined'
+                        size='small'
+                        remote={remoteRoutes.usersComboPrimary}
+                        fullWidth
+                        margin='none'
+                    />
+                </Grid>
+            }
             <Grid item xs={12}>
                 <Box display="flex" flexDirection="row-reverse">
                     <Button

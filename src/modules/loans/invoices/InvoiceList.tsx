@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import Layout from "../../layout/Layout";
+import Layout from "../../../layout/Layout";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import EditDialog from "../../../components/EditDialog";
 import InvoiceEditor from "./InvoiceEditor";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loaders/Loading";
 import {columns} from "./config";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";

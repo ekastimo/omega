@@ -1,6 +1,6 @@
 import React from 'react';
 import DialogContent from "@material-ui/core/DialogContent";
-import Loading from "./Loading";
+import Loading from "./loaders/Loading";
 import Dialog from "@material-ui/core/Dialog";
 
 interface IProps {

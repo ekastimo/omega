@@ -4,7 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {IOption} from "../inputs/inputHelpers";
+import {Option} from "../inputs/option";
 
 interface IProps {
     onChange?: (event: React.ChangeEvent<{ value: unknown }>) => any
@@ -14,7 +14,7 @@ interface IProps {
     size?: 'small' | 'medium'
     variant?: 'standard' | 'outlined' | 'filled'
     helperText?: string
-    options: IOption[]
+    options: Option[]
     multiple?: boolean;
 }
 
@@ -35,7 +35,7 @@ const PSelectInput = ({name, multiple, helperText, size, options, variant, label
                 multiple={multiple}
                 autoComplete="off"
             >
-                {options.map(it => <MenuItem value={it.value} key={it.value}>{it.label}</MenuItem>)}
+                {options.map(it => <MenuItem value={it.id} key={it.id}>{it.name}</MenuItem>)}
             </Select>
             {helperText && <FormHelperText>{helperText}</FormHelperText>}
         </FormControl>

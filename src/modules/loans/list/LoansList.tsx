@@ -1,16 +1,14 @@
 import React, {useEffect, useMemo, useState} from "react";
-import Layout from "../../layout/Layout";
+import Layout from "../../../layout/Layout";
 import Paper from '@material-ui/core/Paper';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
-
-import Loading from "../../../components/Loading";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
-import {IState} from "../../../data/types";
+import {AppState} from "../../../data/types";
 import {columns, companyColumn} from "./config";
 import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
 import RecentLoansList from "./RecentLoansList";
@@ -19,6 +17,7 @@ import {remoteRoutes} from "../../../data/constants";
 import {search} from "../../../utils/ajax";
 import {ILoanFilter} from "../types";
 import {isPrimaryUser} from "../../../data/appRoles";
+import TableLoading from "../../../components/loaders/TableLoading";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const LoansList = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const {data}: ILoanState = useSelector((state: IState) => state.loans)
+    const {data}: ILoanState = useSelector((state: AppState) => state.loans)
     const user = useSelector((state: any) => state.core.user)
     const headCells: XHeadCell[] = useMemo(() => {
         if (isPrimaryUser(user)) {
@@ -77,8 +76,6 @@ const LoansList = () => {
     }
 
 
-
-
     return (
         <Layout>
             <Grid container spacing={2}>
@@ -93,7 +90,7 @@ const LoansList = () => {
                             </Grid>
                         </Box>
                         {
-                            loading ? <Loading/> :
+                            loading ? <TableLoading rows={11}/>  :
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
                                         <XTable

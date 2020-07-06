@@ -4,7 +4,7 @@ import {BoldTableView, IRec} from "../../../components/DetailView";
 import {printDateTime} from "../../../utils/dateHelpers";
 import {printMoney} from "../../../utils/numberHelpers";
 import ContactLink from "../../../components/links/ContactLink";
-import {renderName} from "../../contacts/types";
+import {renderName} from "../../crm/types";
 import Box from '@material-ui/core/Box';
 import {Typography} from "@material-ui/core";
 import {applicantFields} from "./applicant/ApplicantDetails";
@@ -40,8 +40,6 @@ export const appDetailsFields = (data: ILoan): IRec[] => {
         }
     ]
 }
-
-
 
 interface IProps {
     data: ILoan

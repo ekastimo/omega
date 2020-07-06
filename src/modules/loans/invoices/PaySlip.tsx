@@ -3,7 +3,7 @@ import {createStyles, makeStyles} from '@material-ui/core/styles';
 import Box from "@material-ui/core/Box";
 
 import {Alert} from "@material-ui/lab";
-import Loading from "../../../components/Loading";
+import Loading from "../../../components/loaders/Loading";
 import PdfViewer from "../../../components/PdfViewer";
 import {remoteRoutes} from "../../../data/constants";
 import {downLoad, get} from "../../../utils/ajax";

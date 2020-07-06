@@ -14,10 +14,11 @@ import {del} from "../../../utils/ajax";
 import Toast from "../../../utils/Toast";
 import {clientAssignRoles, isPrimaryUser, primaryAssignRoles} from "../../../data/appRoles";
 import {useSelector} from "react-redux";
-import {IAuthUser} from "../../../data/types";
+import {AppUser} from "../../../data/types";
+import {UserEditModel, UserListModel} from "./config";
 
 interface IProps {
-    data: any
+    data: UserListModel | null
     isNew: boolean
     done: (dt: any) => any
     onDeleted: (dt: any) => any
@@ -39,10 +40,21 @@ const editSchema = yup.object().shape(
     }
 )
 
+const makeEditable = ({id, contactId, fullName, roles, username}: UserListModel): UserEditModel => {
+
+    return {
+        id,
+        fullName,
+        username,
+        roles: roles ? toOptions(roles) : [],
+        contact: {id: contactId, name: fullName}
+    }
+}
+
 const initialValues = {contact: null, password: '', roles: []}
 
 const UserEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
-    const user: IAuthUser = useSelector((state: any) => state.core.user)
+    const user: AppUser = useSelector((state: any) => state.core.user)
     const [loading, setLoading] = useState<boolean>(false)
 
     function handleSubmit(values: any, actions: FormikHelpers<any>) {
@@ -74,12 +86,16 @@ const UserEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
             })
     }
 
+    let initialData: any = initialValues;
+    if (data) {
+        initialData = makeEditable(data)
+    }
 
     return (
         <XForm
             onSubmit={handleSubmit}
             schema={isNew ? schema : editSchema}
-            initialValues={data || initialValues}
+            initialValues={initialData}
             onDelete={isNew ? undefined : handleDelete}
             loading={loading}
             onCancel={onCancel}
@@ -123,6 +139,5 @@ const UserEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
         </XForm>
     );
 }
-
 
 export default UserEditor;

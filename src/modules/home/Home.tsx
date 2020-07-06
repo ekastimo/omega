@@ -14,11 +14,11 @@ import logo from "../../assets/Azima-Icon-1.png";
 import LoanCalculator from "./LoanCalculator";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {IState} from "../../data/types";
+import {AppState} from "../../data/types";
 import {localRoutes, remoteRoutes} from "../../data/constants";
 import {isBackOfficeUser} from "../../data/appRoles";
 import ApprovalStep from "./ApprovalStep";
-import {Profile} from "../../components/Profile";
+import {Profile} from "../../layout/Profile";
 import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
 import {coreSetHomeStep} from "../../data/redux/coreActions";
 import {homeSteps} from "./types";
@@ -70,11 +70,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
     const classes = useStyles();
-    const user: any = useSelector((state: IState) => state.core.user);
+    const user: any = useSelector((state: AppState) => state.core.user);
     const history = useHistory();
     const dispatch = useDispatch();
     const [amount, setAmount] = React.useState<number>(0);
-    const homeState = useSelector((state: IState) => state.core.home);
+    const homeState = useSelector((state: AppState) => state.core.home);
 
     useEffect(()=>{
         get(remoteRoutes.loansRequestLoan,(data)=>{
@@ -169,14 +169,12 @@ const Home = () => {
                     </Container>
                 </div>
             </main>
-            {/* Footer */}
             <footer className={classes.footer}>
                 <Typography variant="subtitle1" align="center" color="inherit" component="p">
                     We delight in serving you.
                 </Typography>
                 <Copyright/>
             </footer>
-            {/* End footer */}
         </div>
     );
 }

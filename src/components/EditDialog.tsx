@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import {appBarColor} from "../modules/layout/styles";
+import {appBarColor} from "../layout/styles";
 
 interface IProps {
     open: boolean
@@ -28,24 +28,28 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: theme.spacing(2),
             flex: 1,
         },
+        body: {
+            [theme.breakpoints.up('md')]: {
+                minWidth: 350
+            }
+        },
     }),
 );
 
 const EditDialog = (props: IProps) => {
     const classes = useStyles();
     const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     return (
         <Dialog
             open={props.open}
             onClose={props.onClose}
-            fullScreen={matches}
+            fullScreen={isSmall}
             maxWidth={props.maxWidth}
             disableBackdropClick={props.disableBackdropClick}
         >
-
             {
-                matches ?
+                isSmall ?
                     <AppBar className={classes.appBar}>
                         <Toolbar>
                             <IconButton edge="start" color="inherit" onClick={props.onClose} aria-label="close">
@@ -59,7 +63,9 @@ const EditDialog = (props: IProps) => {
                     <DialogTitle>{props.title}</DialogTitle>
             }
             <DialogContent>
-                {props.children}
+                <div className={classes.body}>
+                    {props.children}
+                </div>
             </DialogContent>
         </Dialog>
     );

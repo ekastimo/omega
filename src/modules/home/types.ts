@@ -1,15 +1,8 @@
-export interface ILoanSettings {
-    maxAmount: number
-    minAmount: number
-    stepAmount: number
-    interestRate: number
-}
-
-
 export const homeSteps = {
     CHOOSE_AMOUNT: 0,
     APPROVE_PAYOUT: 1
 }
+
 export interface IHomeState {
     step: number
 }

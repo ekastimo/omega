@@ -7,17 +7,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import {hasValue} from "./inputHelpers";
+import {Option} from "./option";
 
-
-interface IOption {
-    label: string
-    value: string
-}
 
 interface IProps {
     label: string
     name: string
-    options: IOption[]
+    options: Option[]
 }
 
 const XRadioInput = (props: IProps) => {
@@ -47,9 +43,9 @@ const XRadioInput = (props: IProps) => {
                 {
                     options.map(
                         it => <FormControlLabel
-                            key={it.value}
-                            value={it.value}
-                            label={it.label}
+                            key={it.id}
+                            value={it.id}
+                            label={it.name}
                             control={<Radio color='primary'/>}
                         />
                     )

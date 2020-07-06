@@ -1,4 +1,4 @@
-import {IAuthUser} from "./types";
+import {AppUser} from "./types";
 
 export const appRoles = {
     Super: "SUPER",
@@ -17,22 +17,22 @@ export const backOfficeRoles = [...primaryRoles, appRoles.ClientAdmin, appRoles.
 export const primaryAssignRoles = [...backOfficeRoles, appRoles.User]
 export const clientAssignRoles = [...clientRoles, appRoles.User]
 
-export const hasRole = (user: IAuthUser, role: string): boolean => {
+export const hasRole = (user: AppUser, role: string): boolean => {
     return user.roles.indexOf(role) > -1
 }
 
-export const hasAnyRole = (user: IAuthUser, roles: string[]): boolean => {
+export const hasAnyRole = (user: AppUser, roles: string[]): boolean => {
     return roles.some(it => hasRole(user, it))
 }
 
-export const isPrimaryUser = (user: IAuthUser) => {
+export const isPrimaryUser = (user: AppUser) => {
     return hasAnyRole(user, [...primaryRoles, appRoles.Super])
 }
 
-export const isBackOfficeUser = (user: IAuthUser) => {
+export const isBackOfficeUser = (user: AppUser) => {
     return hasAnyRole(user, [...backOfficeRoles, appRoles.Super])
 }
 
-export const isClientAdmin = (user: IAuthUser) => {
+export const isClientAdmin = (user: AppUser) => {
     return hasAnyRole(user, [appRoles.ClientAdmin])
 }

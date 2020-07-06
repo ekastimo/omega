@@ -6,7 +6,8 @@ import {XSlider} from "../../../components/inputs/XSlider";
 import XMaskedInput from "../../../components/inputs/XMaskedInput";
 import grey from "@material-ui/core/colors/grey";
 import {useCalculatorStyles} from "../styles";
-import {ILoanSettings} from "../types";
+import {ILoanSettings} from "../../loans/types";
+
 
 
 interface IProps {

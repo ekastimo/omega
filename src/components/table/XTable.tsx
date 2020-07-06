@@ -11,7 +11,7 @@ import {getSorting, Order, stableSort} from "./helpers";
 import XToolbar from "./XToolbar";
 import {useTableStyles} from "./tableStyles";
 import XTableHead, {XHeadCell} from "./XTableHead";
-import Loading from "../Loading";
+import Loading from "../loaders/Loading";
 import {parseXpath} from "../../utils/jsonHelpers";
 import Alert from '@material-ui/lab/Alert';
 import {Box} from "@material-ui/core";
@@ -191,7 +191,6 @@ export default function XTable(props: XTableProps) {
                                     )}
                                 </TableBody>
                         }
-
                     </Table>
                 </div>
                 {

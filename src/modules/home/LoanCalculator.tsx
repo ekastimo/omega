@@ -5,7 +5,7 @@ import {printFloatNumber} from "../../utils/numberHelpers";
 import Fab from '@material-ui/core/Fab';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import {useSelector} from "react-redux";
-import {IState} from "../../data/types";
+import {AppState} from "../../data/types";
 import {useCalculatorStyles} from "./styles";
 import AmountPicker from "./components/AmountPicker";
 import {computeLoanPayment} from "./helpers";
@@ -39,7 +39,7 @@ export const Preview = ({interest, interestRate}: IPreviewProps) => {
 
 const LoanCalculator = (props: IProps) => {
     const classes = useCalculatorStyles();
-    const loanSettings = useSelector((state: IState) => state.loans.loanSettings)
+    const loanSettings = useSelector((state: AppState) => state.loans.loanSettings)
     const [amount, setAmount] = useState<any>(loanSettings.maxAmount / 2)
     const handleChange = (value: number) => {
         setAmount(value)

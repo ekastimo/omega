@@ -1,17 +1,11 @@
 import {coreConstants} from "./coreReducer";
+import {createAction} from "@reduxjs/toolkit";
+import {LoginResponse} from "../types";
 
-export const handleLogin = (data: any) => {
-    return {
-        type: coreConstants.coreLogin,
-        payload: {...data},
-    }
-}
+export const doLogin =  createAction<LoginResponse>(coreConstants.coreLogin)
 
-export const handleLogout = () => {
-    return {
-        type: coreConstants.coreLogout,
-    }
-}
+export const handleLogout = createAction(coreConstants.coreLogout)
+
 
 export const startLoading = () => {
     return {
@@ -37,7 +31,7 @@ export const coreStopGlobalLoader = () => {
     }
 }
 
-export const coreSetHomeStep = (step:number) => {
+export const coreSetHomeStep = (step: number) => {
     return {
         type: coreConstants.coreHomeSetStep,
         payload: step,

@@ -3,7 +3,7 @@ import {Box} from "@material-ui/core";
 import {ILoan, ILoanFilter} from "../../types";
 import {renderStatus, renderSubStatus} from "../../list/config";
 import {XHeadCell} from "../../../../components/table/XTableHead";
-import Loading from "../../../../components/Loading";
+import Loading from "../../../../components/loaders/Loading";
 import XTable from "../../../../components/table/XTable";
 import {search} from "../../../../utils/ajax";
 import {remoteRoutes} from "../../../../data/constants";

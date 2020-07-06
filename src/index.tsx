@@ -1,25 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux'
-import {ThemeProvider,} from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import {ThemeProvider} from '@material-ui/core/styles';
 import 'react-toastify/dist/ReactToastify.css';
-import store from "./data/redux/store";
-import 'react-sortable-tree/style.css';
 import './index.css';
+import {ToastContainer} from "react-toastify";
+import store from "./data/redux/store";
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import theme from "./theme";
+import theme from './theme';
+import {Provider} from "react-redux";
 
 ReactDOM.render(
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <>
-                <CssBaseline/>
-                <App/>
-            </>
+            <ToastContainer/>
+            <CssBaseline/>
+            <App />
         </ThemeProvider>
-    </Provider>, document.getElementById('root'));
+    </Provider>,
+    document.getElementById('root')
+);
 
 serviceWorker.register({
     onUpdate: registration => {

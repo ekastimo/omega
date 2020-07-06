@@ -1,22 +1,12 @@
 import React from 'react';
 import {useField} from "formik";
-import {hasValue, IOption} from "./inputHelpers";
-import {PRemoteSelect} from "../plain-inputs/PRemoteSelect";
+import {hasValue} from "./inputHelpers";
+import {IPRemoteProps, PRemoteSelect} from "../plain-inputs/PRemoteSelect";
+import {ComboValue} from "../plain-inputs/PComboInput";
 
-export interface IXRemoteProps {
-    name: string
-    label: string
-    remote: string
-    filter?: any
-    parser: (d: any) => IOption
-    variant?: 'outlined' | 'filled' | 'standard'
-    multiple?: any
-    size?: 'small' | 'medium';
-    searchOnline?: boolean
-    defaultOptions?: IOption[]
-}
+type XRemoteProps = Omit<IPRemoteProps, 'onChange'|'value'|'onBlur'|'helperText'|'showError'>
 
-export const XRemoteSelect = (props: IXRemoteProps) => {
+export const XRemoteSelect = (props: XRemoteProps) => {
     const [field, meta, helpers] = useField({name: props.name});
     const error = hasValue(meta.error) ? meta.error : undefined
     const showError = Boolean(error && meta.touched)
@@ -25,7 +15,7 @@ export const XRemoteSelect = (props: IXRemoteProps) => {
         helpers.setTouched(true)
     }
 
-    function handleChange(value: IOption) {
+    function handleChange(value: ComboValue) {
         helpers.setValue(value)
     }
 
@@ -34,7 +24,7 @@ export const XRemoteSelect = (props: IXRemoteProps) => {
         value={field.value}
         onChange={handleChange}
         onBlur={handleTouch}
-        error={Boolean(showError)}
-        helperText={showError && error}
+        showError={Boolean(showError)}
+        helperText={showError ? error:undefined}
     />
 }

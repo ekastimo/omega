@@ -8,7 +8,7 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import TabletMacIcon from '@material-ui/icons/TabletMac';
 import {iconColor, warning, white} from "../../theme/custom-colors";
 
-const useStyles = makeStyles((theme:Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     root: {
         height: '100%'
     },
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme:Theme) => ({
 const UsersByDevice = () => {
 
     const classes = useStyles();
-    const theme:Theme = useTheme();
+    const theme: Theme = useTheme();
 
     const data = {
         datasets: [
@@ -60,7 +60,7 @@ const UsersByDevice = () => {
         maintainAspectRatio: false,
         animation: false,
         cutoutPercentage: 80,
-        layout: { padding: 0 },
+        layout: {padding: 0},
         tooltips: {
             enabled: true,
             mode: 'index',
@@ -78,19 +78,19 @@ const UsersByDevice = () => {
         {
             title: 'Desktop',
             value: '63',
-            icon: <LaptopMacIcon />,
+            icon: <LaptopMacIcon/>,
             color: theme.palette.primary.main
         },
         {
             title: 'Tablet',
             value: '15',
-            icon: <TabletMacIcon />,
+            icon: <TabletMacIcon/>,
             color: theme.palette.error.main
         },
         {
             title: 'Mobile',
             value: '23',
-            icon: <PhoneIphoneIcon />,
+            icon: <PhoneIphoneIcon/>,
             color: warning.main
         }
     ];
@@ -102,12 +102,12 @@ const UsersByDevice = () => {
             <CardHeader
                 action={
                     <IconButton size="small">
-                        <RefreshIcon />
+                        <RefreshIcon/>
                     </IconButton>
                 }
                 title={<Typography variant='h6'>Users By Device</Typography>}
             />
-            <Divider />
+            <Divider/>
             <CardContent>
                 <div className={classes.chartContainer}>
                     <Doughnut
@@ -124,7 +124,7 @@ const UsersByDevice = () => {
                             <span className={classes.deviceIcon}>{device.icon}</span>
                             <Typography variant="body1">{device.title}</Typography>
                             <Typography
-                                style={{ color: device.color }}
+                                style={{color: device.color}}
                                 variant="h6"
                             >
                                 {device.value}%

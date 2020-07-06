@@ -1,5 +1,7 @@
-export const AUTH_TOKEN_KEY = '__omega__token'
-export const AUTH_USER_KEY = '__omega__user'
+export const AUTH_KEY_TOKEN = '__ri_client__token'
+export const AUTH_KEY_USER = '__ri_client__user'
+export const APP_NAME = 'Azima Credit Platform'
+export const COMPANY_NAME = 'Azima Credit Technologies'
 
 
 export const redux = {
@@ -60,7 +62,9 @@ export const remoteRoutes = {
     contactsBankAccount: url + '/api/crm/bankaccount',
     tags: url + '/api/tags',
     users: url + '/api/users',
-    userGroups: url + '/api/user-groups',
+    usersComboAll: url + '/api/user-combo/all',
+    usersComboPrimary: url + '/api/user-combo/primary',
+
     contactsPhone: url + '/api/crm/phone',
     contactsAddress: url + '/api/crm/address',
     contactsIdentification: url + '/api/crm/identification',

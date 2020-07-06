@@ -38,7 +38,7 @@ const SoreCard = ({data}: IProps) => {
         <Box>
             {
                 hasValue(data.score) ?
-                    <DetailView data={scoreFields(data)} columns={2} /> :
+                    <DetailView data={scoreFields(data)} columns={2}/> :
                     <WarnMessage text='No score data'/>
             }
         </Box>

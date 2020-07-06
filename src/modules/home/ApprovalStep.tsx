@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useDispatch, useSelector} from "react-redux";
-import {IAuthUser, ILoginResponse, IState} from "../../data/types";
+import {AppUser, LoginResponse, AppState} from "../../data/types";
 import {Grid, useMediaQuery} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {useCalculatorStyles} from "./styles";
@@ -17,10 +17,10 @@ import Box from "@material-ui/core/Box";
 import {Alert} from "@material-ui/lab";
 import {printFloatNumber, printInteger} from "../../utils/numberHelpers";
 import {computeLoanPayment} from "./helpers";
-import {homeSteps, ILoanPayment, ILoanSettings, IWebAppLoanRequest} from "./types";
+import {homeSteps, ILoanPayment, IWebAppLoanRequest} from "./types";
 import Typography from "@material-ui/core/Typography";
 import {handleBadRequestError, post} from "../../utils/ajax";
-import {AUTH_TOKEN_KEY, AUTH_USER_KEY, remoteRoutes} from "../../data/constants";
+import {AUTH_KEY_TOKEN, AUTH_KEY_USER, remoteRoutes} from "../../data/constants";
 import Toast from "../../utils/Toast";
 import {addLoanSettings} from "../../data/redux/loans/reducer";
 import {XSlider} from "../../components/inputs/XSlider";
@@ -30,6 +30,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from "@material-ui/core/Link";
 import EmailLink from "../../components/links/EmalLink";
 import useTheme from "@material-ui/core/styles/useTheme";
+import {ILoanSettings} from "../loans/types";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -77,7 +78,7 @@ export const InfoMessage = ({payment, settings}: InfoMessageProps) => {
 
 interface SuccessMessageProps extends InfoMessageProps {
     data: any
-    user: IAuthUser
+    user: AppUser
 }
 
 export const SuccessMessage = ({payment, settings, data, user}: SuccessMessageProps) => {
@@ -123,8 +124,8 @@ const ApprovalStep = (props: IProps) => {
     const calcClasses = useCalculatorStyles();
     const dispatch = useDispatch();
     const classes = useStyles();
-    const loanSettings = useSelector((state: IState) => state.loans.loanSettings)
-    //const user: IAuthUser = useSelector((state: any) => state.core.user)
+    const loanSettings = useSelector((state: AppState) => state.loans.loanSettings)
+
 
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
@@ -198,7 +199,7 @@ const ApprovalStep = (props: IProps) => {
             return
         }
         doLogin((session: any) => {
-            const {token, user}: ILoginResponse = session
+            const {token, user}: LoginResponse = session
             console.log("Done Logging in", {token, user})
             requestLoan(session, resp => {
                 Toast.success("Loan created successfully")
@@ -215,9 +216,9 @@ const ApprovalStep = (props: IProps) => {
         setLoading(true)
         //Login
         post(remoteRoutes.loginPhone, login, resp => {
-            const {token, user}: ILoginResponse = resp
-            localStorage.setItem(AUTH_TOKEN_KEY, token)
-            localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user))
+            const {token, user}: LoginResponse = resp
+            localStorage.setItem(AUTH_KEY_TOKEN, token)
+            localStorage.setItem(AUTH_KEY_USER, JSON.stringify(user))
             setSession({...resp})
             done(resp)
         }, () => {

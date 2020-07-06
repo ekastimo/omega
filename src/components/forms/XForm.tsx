@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import {Alert} from "@material-ui/lab";
 import {hasValue} from "../inputs/inputHelpers";
+import CodeView from "../CodeView";
 
 interface IProps {
     schema?: any
@@ -39,7 +40,7 @@ const XForm = (props: IProps) => {
 
     >{({submitForm, isSubmitting, values, errors, touched}) => (
         <Form>
-            <Grid container spacing={0} style={{minWidth: 350}}>
+            <Grid container spacing={0}>
                 {
                     hasValue(errors) &&
                     <Grid item xs={12}>
@@ -49,9 +50,7 @@ const XForm = (props: IProps) => {
                     </Grid>
                 }
                 <Grid item xs={12}>
-                    <Box >
-                        {props.children}
-                    </Box>
+                    {props.children}
                 </Grid>
                 <Grid item xs={12}>
                     <Box p={1} pt={2}>
@@ -92,9 +91,7 @@ const XForm = (props: IProps) => {
                 {
                     props.debug &&
                     <Grid item xs={12}>
-                                <pre style={{width: '100%', height: "100%"}}>
-                                    {JSON.stringify({values, errors, touched}, null, 2)}
-                                </pre>
+                        <CodeView data={{values, errors, touched}}/>
                     </Grid>
                 }
             </Grid>

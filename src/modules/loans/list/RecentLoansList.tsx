@@ -2,22 +2,22 @@ import React, {useEffect, useState} from "react";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import Grid from '@material-ui/core/Grid';
-import Loading from "../../../components/Loading";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {useDispatch, useSelector} from "react-redux";
 import {recentLoansHeadCells} from "./config";
-import {IState} from "../../../data/types";
+import {AppState} from "../../../data/types";
 import {ILoanState, loanConstants} from "../../../data/redux/loans/reducer";
 import {ILoanFilter} from "../types";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
+import TableLoading from "../../../components/loaders/TableLoading";
 
 const headCells: XHeadCell[] = [...recentLoansHeadCells];
 
 const RecentLoansList = () => {
     const dispatch = useDispatch();
-    const {recent}: ILoanState = useSelector((state: IState) => state.loans)
+    const {recent}: ILoanState = useSelector((state: AppState) => state.loans)
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const filter: ILoanFilter = {
@@ -40,7 +40,7 @@ const RecentLoansList = () => {
                 <Typography variant='h5'>New Loans</Typography>
             </Box>
             {
-                loading ? <Loading/> :
+                loading ? <TableLoading rows={4}/>  :
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <XTable

@@ -1,6 +1,7 @@
-import {ICrmState} from "./redux/contacts/reducer";
+import {ICrmState} from "./redux/crm/reducer";
 import {ILoanState} from "./redux/loans/reducer";
 import {IHomeState} from "../modules/home/types";
+
 
 export interface BaseModel {
     id: string
@@ -9,7 +10,13 @@ export interface BaseModel {
     isDeleted: boolean
 }
 
-export interface IAuthUser {
+
+export interface ComboModel {
+    id: string
+    name: string
+}
+
+export interface AppUser {
     id: string
     avatar: string
     username: string
@@ -18,27 +25,28 @@ export interface IAuthUser {
     roles: string[]
 }
 
-export interface ILoginResponse {
+export interface LoginResponse {
     token: string
-    user: IAuthUser
+    user: AppUser
 }
 
-export interface IState {
-    core: ICoreState
+export interface AppState {
+    core: CoreState
     crm: ICrmState
     loans: ILoanState
+
 }
 
-export interface ICoreState {
-    user: IAuthUser | null
+export interface CoreState {
+    user: AppUser | null
     token: string | null
     splash: boolean,
-    isLoadingUser: true,
-    globalLoader: false
+    isLoadingUser: boolean,
+    globalLoader: boolean,
     home: IHomeState
 }
 
-export interface ISearch {
+export interface BaseSearch {
     limit: number,
     skip: number,
     query?: string
@@ -54,4 +62,5 @@ export interface IXDocument {
     id: string;
     createdAt: Date;
 }
+
 

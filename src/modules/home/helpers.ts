@@ -1,5 +1,6 @@
-import {ILoanPayment, ILoanSettings} from "./types";
+import {ILoanPayment} from "./types";
 import {printInteger} from "../../utils/numberHelpers";
+import {ILoanSettings} from "../loans/types";
 
 export const computeLoanPayment = (amount: number, settings: ILoanSettings): ILoanPayment => {
 

@@ -54,9 +54,9 @@ const Payout = ({data}: IProps) => {
     }
 
     let buttonText = "Trigger";
-    if(payment.status === PayoutStatus.Failed){
+    if (payment.status === PayoutStatus.Failed) {
         buttonText = "Re-Trigger"
-    }else if(payment.status === PayoutStatus.Sent){
+    } else if (payment.status === PayoutStatus.Sent) {
         buttonText = "Check status"
     }
 

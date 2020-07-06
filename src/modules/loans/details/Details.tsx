@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Typography from '@material-ui/core/Typography';
-import {getRouteParam} from "../../../utils/routHelpers";
+import {getRouteParam} from "../../../utils/routeHelpers";
 import {useDispatch, useSelector} from "react-redux";
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
-import {IState} from "../../../data/types";
+import {AppState} from "../../../data/types";
 import {ILoan} from "../types";
 import {loanConstants} from "../../../data/redux/loans/reducer";
-import Layout from "../../layout/Layout";
+import Layout from "../../../layout/Layout";
 import Box from "@material-ui/core/Box";
 import {RouteComponentProps, withRouter} from "react-router";
 import ApplicantDetails from "./applicant/ApplicantDetails";
-import Loading from "../../../components/Loading";
 import Grid from "@material-ui/core/Grid";
 import {trimGuid} from "../../../utils/stringHelpers";
 import {renderStatus, renderSubStatus} from "../list/config";
@@ -23,6 +22,7 @@ import {get} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 import ErrorMessage from "../../../components/messages/ErrorMessage";
 import Payments from "./payments/Payments";
+import DetailsLoader from "../../../components/loaders/DetailsLoader";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -54,7 +54,7 @@ const Details = (props: RouteComponentProps) => {
     const loanId = getRouteParam(props, 'loanId')
     const classes = useStyles()
     const dispatch = useDispatch();
-    const data: ILoan | undefined = useSelector((state: IState) => state.loans.selected)
+    const data: ILoan | undefined = useSelector((state: AppState) => state.loans.selected)
 
     useEffect(() => {
         dispatch({
@@ -77,7 +77,7 @@ const Details = (props: RouteComponentProps) => {
     if (loading)
         return (
             <Layout>
-                <Loading/>
+                <DetailsLoader/>
             </Layout>
         );
     if (!data)
@@ -102,7 +102,7 @@ const Details = (props: RouteComponentProps) => {
                     </Paper>
                 </Grid>
                 <Grid item xl={9} xs={8}>
-                    <Box p={1} >
+                    <Box p={1}>
                         <Typography variant='h6' style={{fontSize: '1.0rem'}}>Details</Typography>
                     </Box>
                     <Divider/>

@@ -40,11 +40,8 @@ export const renderSubStatus = (value: LoanSubStatus) => {
         case LoanSubStatus.Recovered:
             color = successColor
             break
-        case LoanSubStatus.LowCredit:
-        case LoanSubStatus.MissingInformation:
         case LoanSubStatus.Overdue:
         case LoanSubStatus.PayoutFailure:
-        case LoanSubStatus.ReachedLimit:
             color = errorColor
             break
         case LoanSubStatus.PaidOut:
@@ -133,7 +130,7 @@ export const columns: XHeadCell[] = [
     }
 ];
 
-export const companyColumn:XHeadCell = {
+export const companyColumn: XHeadCell = {
     name: 'organization.name',
     label: 'Company',
     render: (value, rec) => <ContactLink id={rec.organizationId} name={trimString(value)} title={value}/>

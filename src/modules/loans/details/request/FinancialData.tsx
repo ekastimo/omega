@@ -4,7 +4,7 @@ import {XStep} from "../../stepper/XStepLabel";
 import {ILoan} from "../../types";
 import DetailView, {IRec} from "../../../../components/DetailView";
 import ContactLink from "../../../../components/links/ContactLink";
-import {getAddress, getEmail, getPhone, IContact, printAddress, renderName} from "../../../contacts/types";
+import {getAddress, getEmail, getPhone, IContact, printAddress, renderName} from "../../../crm/types";
 import {printDate} from "../../../../utils/dateHelpers";
 import EmailLink from "../../../../components/links/EmalLink";
 

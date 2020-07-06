@@ -5,7 +5,10 @@ import amber from "@material-ui/core/colors/amber";
 import {colors} from "@material-ui/core";
 import {grey} from "@material-ui/core/colors";
 
-
+//export const themeColorAzima = "#24647D";
+export const themeColor = '#24647D';
+export const themeColorSecondary = "#428bca"
+//export const themeColorSecondary = '#C3C3C3';
 export const backgroundGrey = grey[100]
 export const themeBackground = purple[700]
 export const successColor = green[600]
@@ -15,6 +18,7 @@ export const iconColor = colors.blueGrey[600]
 export const linkColor = "#428bca"
 export const white = '#FFFFFF';
 export const black = '#000000';
+
 
 export const warning = {
     contrastText: white,

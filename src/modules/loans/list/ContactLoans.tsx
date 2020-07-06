@@ -4,8 +4,8 @@ import Box from "@material-ui/core/Box";
 import XTable from "../../../components/table/XTable";
 import {XHeadCell} from "../../../components/table/XTableHead";
 import {companyLoansHeadCells, personLoansHeadCells} from "./config";
-import {ContactCategory, IContact} from "../../contacts/types";
-import Loading from "../../../components/Loading";
+import {ContactCategory, IContact} from "../../crm/types";
+import Loading from "../../../components/loaders/Loading";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
 

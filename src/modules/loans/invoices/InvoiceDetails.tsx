@@ -2,10 +2,9 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Typography from '@material-ui/core/Typography';
 import {useSelector} from "react-redux";
 import {createStyles, makeStyles} from "@material-ui/core";
-import Layout from "../../layout/Layout";
+import Layout from "../../../layout/Layout";
 import Box from "@material-ui/core/Box";
 import {useParams} from "react-router";
-import Loading from "../../../components/Loading";
 import Grid from "@material-ui/core/Grid";
 import {trimGuid} from "../../../utils/stringHelpers";
 import {downLoad, get} from "../../../utils/ajax";
@@ -17,7 +16,6 @@ import Button from "@material-ui/core/Button";
 import PrintIcon from "@material-ui/icons/Print";
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import EmailIcon from '@material-ui/icons/Email';
-import {IState} from "../../../data/types";
 import {dataFields, renderInvoiceStatus} from "./config";
 import EditDialog from "../../../components/EditDialog";
 import InvoiceRecover from "./InvoiceRecover";
@@ -25,6 +23,7 @@ import Toast from "../../../utils/Toast";
 import {DetailViewX} from "../../../components/DetailView";
 import {hasValue} from "../../../components/inputs/inputHelpers";
 import PaySlip from "./PaySlip";
+import DetailsLoader from "../../../components/loaders/DetailsLoader";
 
 
 const useStyles = makeStyles(() =>
@@ -110,10 +109,9 @@ const InvoiceDetails = () => {
         setDialog(true)
     }
 
-    const handleComplete = (dt: IInvoice) => {
+    const handleComplete = () => {
         handleClose()
         loadData()
-
     }
 
     const handleClose = () => {
@@ -124,7 +122,7 @@ const InvoiceDetails = () => {
     if (loading)
         return (
             <Layout>
-                <Loading/>
+                <DetailsLoader/>
             </Layout>
         );
     if (data === null)
@@ -234,7 +232,7 @@ const InvoiceDetails = () => {
                 />
             </EditDialog>
             {
-                data?.documentId&&
+                data?.documentId &&
                 <EditDialog
                     maxWidth='lg'
                     title='Pay slip'
