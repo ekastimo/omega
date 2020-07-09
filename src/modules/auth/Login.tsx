@@ -73,7 +73,7 @@ function Login() {
                                     type='email'
                                     name='username'
                                     label='Email'
-                                    autoComplete="off"
+                                    autoComplete="username"
                                     autoFocus
                                     margin="normal"
                                     variant='outlined'
@@ -82,7 +82,7 @@ function Login() {
                                     type='password'
                                     name='password'
                                     label='Password'
-                                    autoComplete="off"
+                                    autoComplete="password"
                                     margin="normal"
                                     variant='outlined'
                                 />

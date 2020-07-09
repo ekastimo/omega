@@ -16,6 +16,7 @@ import {clientAssignRoles, isPrimaryUser, primaryAssignRoles} from "../../../dat
 import {useSelector} from "react-redux";
 import {AppUser} from "../../../data/types";
 import {UserEditModel, UserListModel} from "./config";
+import {cleanComboValue} from "../../../utils/dataHelpers";
 
 interface IProps {
     data: UserListModel | null
@@ -62,7 +63,7 @@ const UserEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
             ...values,
             contactId: values.contact.value,
             password: values.password,
-            roles: values.roles?.map((it: any) => it.value)
+            roles: cleanComboValue(values.roles)
         }
         const submission: ISubmission = {
             url: remoteRoutes.users,

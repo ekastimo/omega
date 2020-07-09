@@ -22,5 +22,5 @@ export const cleanComboValue = (value: any): any => {
     } else if (typeof value === 'string') {
         return value
     }
-    return value
+    return null
 }

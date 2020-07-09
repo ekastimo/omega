@@ -62,7 +62,7 @@ export const columns: XHeadCell[] = [
     }, {
         name: 'roles',
         label: 'Roles',
-        render: (roles: string[]) => roles.map(it => (
+        render: (roles: string[]) => roles?.map(it => (
             <Chip
                 color='primary'
                 variant='outlined'

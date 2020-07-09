@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,15 +15,13 @@ import LoanCalculator from "./LoanCalculator";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../data/types";
-import {localRoutes, remoteRoutes} from "../../data/constants";
+import {localRoutes} from "../../data/constants";
 import {isBackOfficeUser} from "../../data/appRoles";
 import ApprovalStep from "./ApprovalStep";
 import {Profile} from "../../layout/Profile";
 import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
 import {coreSetHomeStep} from "../../data/redux/coreActions";
 import {homeSteps} from "./types";
-import {get} from "../../utils/ajax";
-import {addLoanSettings} from "../../data/redux/loans/reducer";
 import {Copyright} from "./Copyright";
 
 const useStyles = makeStyles((theme) => ({
@@ -75,12 +73,6 @@ const Home = () => {
     const dispatch = useDispatch();
     const [amount, setAmount] = React.useState<number>(0);
     const homeState = useSelector((state: AppState) => state.core.home);
-
-    useEffect(()=>{
-        get(remoteRoutes.loansRequestLoan,(data)=>{
-            dispatch(addLoanSettings(data))
-        })
-    },[dispatch])
 
     function handleAdminConsole(e: any) {
         e.preventDefault()

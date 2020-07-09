@@ -8,23 +8,26 @@ import {doLogin, handleLogout, startLoading, stopLoading} from "../../data/redux
 import {get, getToken} from "../../utils/ajax";
 import {Box} from "@material-ui/core";
 import {AppUser} from "../../data/types";
+import {addLoanSettings} from "../../data/redux/loans/reducer";
 
 export default function Splash() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(startLoading())
-        get(remoteRoutes.profile,
-            (user: AppUser) => {
-                dispatch(doLogin({user, token: getToken()!}))
-            }, (err) => {
-                console.log("Profile loading failed", err)
-                dispatch(handleLogout())
-            }, () => {
-                dispatch(stopLoading())
-            }
-        )
+        get(remoteRoutes.loansRequestLoan,(data)=>{
+            dispatch(addLoanSettings(data))
+            get(remoteRoutes.profile,
+                (user: AppUser) => {
+                    dispatch(doLogin({user, token: getToken()!}))
+                }, (err) => {
+                    console.log("Profile loading failed", err)
+                    dispatch(handleLogout())
+                }, () => {
+                    dispatch(stopLoading())
+                }
+            )
+        })
     }, [dispatch])
-
 
     return <GridWrapper>
         <Grid container spacing={10} justify='center' alignItems="center">

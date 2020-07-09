@@ -9,4 +9,4 @@ In the project directory, you can run:
 
 scp -r build/* maneger@102.133.171.75:/opt/azima-client
 
-scp -r D:/tmp/hive/* maneger@102.133.171.75:/opt/azima
+scp -r D:/tmp/azima/* maneger@102.133.171.75:/opt/azima
