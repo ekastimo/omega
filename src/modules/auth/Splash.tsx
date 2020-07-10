@@ -26,6 +26,8 @@ export default function Splash() {
                     dispatch(stopLoading())
                 }
             )
+        },undefined,()=>{
+            dispatch(stopLoading())
         })
     }, [dispatch])
 

@@ -64,7 +64,8 @@
     "start": "set REACT_APP_ENV=dev && react-scripts start",
     "build": "react-scripts build",
     "build-test": "react-scripts build",
-    "build-prod": "set REACT_APP_ENV=production && react-scripts build && rm build/static/js/*.map",
+    "build-prod": "set REACT_APP_ENV=production && react-scripts build && rm build/static/js/*.map && rm build/static/css/*.map",
+
     "build-prod-linux": "export REACT_APP_ENV=production && react-scripts build",
     "test": "react-scripts test"
   },

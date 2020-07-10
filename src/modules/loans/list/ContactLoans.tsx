@@ -8,6 +8,7 @@ import {ContactCategory, IContact} from "../../crm/types";
 import Loading from "../../../components/loaders/Loading";
 import {search} from "../../../utils/ajax";
 import {remoteRoutes} from "../../../data/constants";
+import TableLoading from "../../../components/loaders/TableLoading";
 
 interface IProps {
     contact: IContact
@@ -40,20 +41,17 @@ const ContactLoans = ({contact}: IProps) => {
     return (
         <Box width='100%'>
             {
-                loading ? <Box style={{height: 400}}><Loading/></Box> :
+                loading ? <TableLoading rows={10}/> :
                     <Box>
                         <XTable
                             headCells={headCells}
                             data={data}
-                            initialRowsPerPage={5}
+                            initialRowsPerPage={10}
                             usePagination={true}
                         />
                     </Box>
-
             }
         </Box>
     );
 }
-
-
 export default ContactLoans;

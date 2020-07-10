@@ -300,26 +300,7 @@ const ApprovalStep = (props: IProps) => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box px={inputPaddingX}>
-                                <Box width="100%" display='flex'>
-                                    <Box width="50%">
-                                        <Typography variant='body2' color='primary'>
-                                            {printFloatNumber(loanSettings.minAmount)}
-                                        </Typography>
-                                    </Box>
-                                    <Box width="50%" display='flex' justifyContent='flex-end'>
-                                        <Typography variant='body2' color='primary'>
-                                            {printFloatNumber(loanSettings.maxAmount)}
-                                        </Typography>
-                                    </Box>
-                                </Box>
-                                <XSlider
-                                    step={loanSettings.stepAmount}
-                                    value={Number(request.amount)}
-                                    min={loanSettings.minAmount}
-                                    max={loanSettings.maxAmount}
-                                    onChange={handleAmountChange}
-                                    disabled={loading}
-                                />
+
                                 <XMaskedInput
                                     hiddenLabel
                                     className={calcClasses.textField}
@@ -336,6 +317,26 @@ const ApprovalStep = (props: IProps) => {
                                     }
                                     disabled={loading}
                                 />
+                                <XSlider
+                                    step={loanSettings.stepAmount}
+                                    value={Number(request.amount)}
+                                    min={loanSettings.minAmount}
+                                    max={loanSettings.maxAmount}
+                                    onChange={handleAmountChange}
+                                    disabled={loading}
+                                />
+                                <Box width="100%" display='flex'>
+                                    <Box width="50%">
+                                        <Typography variant='body2' color='primary'>
+                                            {printFloatNumber(loanSettings.minAmount)}
+                                        </Typography>
+                                    </Box>
+                                    <Box width="50%" display='flex' justifyContent='flex-end'>
+                                        <Typography variant='body2' color='primary'>
+                                            {printFloatNumber(loanSettings.maxAmount)}
+                                        </Typography>
+                                    </Box>
+                                </Box>
                             </Box>
                         </Grid>
                         <Grid item xs={12}>

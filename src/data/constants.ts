@@ -1,6 +1,7 @@
 export const AUTH_KEY_TOKEN = '__ri_client__token'
 export const AUTH_KEY_USER = '__ri_client__user'
 export const APP_NAME = 'Azima Credit Platform'
+export const APP_NAME_SHORT = 'Azima'
 export const COMPANY_NAME = 'Azima Credit Technologies'
 
 

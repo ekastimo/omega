@@ -21,7 +21,7 @@ import {crmConstants} from "../../../data/redux/crm/reducer";
 import Layout from "../../../layout/Layout";
 import DetailsLoader from "../../../components/loaders/DetailsLoader";
 
-// import ContactLoans from "../../loans/list/ContactLoans";
+import ContactLoans from "../../loans/list/ContactLoans";
 
 interface IProps extends RouteComponentProps {
 
@@ -135,7 +135,7 @@ const ContactDetails = (props: IProps) => {
                                     <Info data={data}/>
                                 </TabPanel>
                                 <TabPanel value={value} index="two">
-                                    {/*<ContactLoans contact={data}/>*/}
+                                    <ContactLoans contact={data}/>
                                 </TabPanel>
                             </Grid>
                         </Grid>

@@ -6,7 +6,7 @@ import Box from "@material-ui/core/Box";
 import Divider from "@material-ui/core/Divider";
 import {useTheme} from "@material-ui/styles";
 
-// import ContactLoansSummary from "../../../loans/list/ContactLoansSummary";
+import ContactLoansSummary from "../../../loans/list/ContactLoansSummary";
 
 interface IProps {
     data: IContact
@@ -28,7 +28,7 @@ const PreviousLoans = ({data}: IProps) => {
                 <Divider/>
             </Grid>
             <Grid item xs={12}>
-                {/*<ContactLoansSummary contact={data}/>*/}
+                <ContactLoansSummary contact={data}/>
             </Grid>
         </Grid>
     );

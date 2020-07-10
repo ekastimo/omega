@@ -61,7 +61,7 @@ const UserEditor = ({data, isNew, done, onDeleted, onCancel}: IProps) => {
     function handleSubmit(values: any, actions: FormikHelpers<any>) {
         const toSave: any = {
             ...values,
-            contactId: values.contact.value,
+            contactId: cleanComboValue(values.contact),
             password: values.password,
             roles: cleanComboValue(values.roles)
         }

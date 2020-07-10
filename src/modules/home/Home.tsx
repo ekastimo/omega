@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
@@ -15,7 +15,7 @@ import LoanCalculator from "./LoanCalculator";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppState} from "../../data/types";
-import {localRoutes} from "../../data/constants";
+import {APP_NAME, APP_NAME_SHORT, localRoutes} from "../../data/constants";
 import {isBackOfficeUser} from "../../data/appRoles";
 import ApprovalStep from "./ApprovalStep";
 import {Profile} from "../../layout/Profile";
@@ -23,6 +23,7 @@ import HiddenJs from "@material-ui/core/Hidden/HiddenJs";
 import {coreSetHomeStep} from "../../data/redux/coreActions";
 import {homeSteps} from "./types";
 import {Copyright} from "./Copyright";
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         margin: theme.spacing(1, 1.5),
-        cursor:'pointer'
+        cursor: 'pointer'
     },
     toolbarTitle: {
         flexGrow: 1,
@@ -67,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Home = () => {
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
     const user: any = useSelector((state: AppState) => state.core.user);
     const history = useHistory();
@@ -98,7 +101,7 @@ const Home = () => {
                 <Toolbar>
                     <Avatar alt="Logo" src={logo} className={classes.icon}/>
                     <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-                        Azima Credit Technologies
+                        {isSmall ? APP_NAME_SHORT : APP_NAME}
                     </Typography>
                     <nav>
                         <HiddenJs smDown>

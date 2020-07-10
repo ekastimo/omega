@@ -35,29 +35,6 @@ const AmountPicker = ({loanSettings, onChange, value}: IProps) => {
 
     return (
         <div>
-            <Box width="100%" display='flex'>
-                <Box width="50%">
-                    <Typography variant='h6'>
-                        {printFloatNumber(loanSettings.minAmount)}
-                    </Typography>
-                </Box>
-                <Box width="50%" display='flex' justifyContent='flex-end'>
-                    <Typography
-                        variant='h6'
-                        component='label'
-                    >{printFloatNumber(loanSettings.maxAmount)}
-                    </Typography>
-                </Box>
-            </Box>
-            <Box width="100%">
-                <XSlider
-                    step={loanSettings.stepAmount}
-                    value={value}
-                    min={loanSettings.minAmount}
-                    max={loanSettings.maxAmount}
-                    onChange={handleChange}
-                />
-            </Box>
             <Box width="100%" pb={2}>
                 <XMaskedInput
                     margin='dense'
@@ -78,6 +55,30 @@ const AmountPicker = ({loanSettings, onChange, value}: IProps) => {
                     }}
                 />
             </Box>
+            <Box width="100%">
+                <XSlider
+                    step={loanSettings.stepAmount}
+                    value={value}
+                    min={loanSettings.minAmount}
+                    max={loanSettings.maxAmount}
+                    onChange={handleChange}
+                />
+            </Box>
+            <Box width="100%" display='flex'>
+                <Box width="50%">
+                    <Typography variant='h6'>
+                        {printFloatNumber(loanSettings.minAmount)}
+                    </Typography>
+                </Box>
+                <Box width="50%" display='flex' justifyContent='flex-end'>
+                    <Typography
+                        variant='h6'
+                        component='label'
+                    >{printFloatNumber(loanSettings.maxAmount)}
+                    </Typography>
+                </Box>
+            </Box>
+
         </div>
     );
 }
