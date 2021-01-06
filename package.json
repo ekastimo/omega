@@ -29,7 +29,7 @@
     "@types/superagent": "^4.1.7",
     "@types/uuid": "^3.4.9",
     "@types/yup": "^0.29.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chart.js": "^2.9.3",
     "clsx": "^1.1.0",
     "date-fns": "^2.14.0",
